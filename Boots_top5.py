@@ -36,7 +36,7 @@ def is_footwear_title(title: str) -> bool:
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.5"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.6"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -149,9 +149,9 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
     if "brooklynclothing.com" in collection_url:
         cad = parse_price_to_float(price_str)
         if cad is None:
-            return f"{price_str} CAD (~USD unavailable)"
+            return f"{price_str} CAD"
         if fx is None:
-            return f"{price_str} CAD (~USD unavailable)"
+            return f"{price_str} CAD (USD unavailable)"
         usd_per_cad, rate_date = fx
         usd = cad * usd_per_cad
         return f"{price_str} CAD (~${usd:,.2f} USD @ {rate_date})"
@@ -160,64 +160,96 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
     return price_str
 
 
-def build_embed_payload(dr_top5, bc_top5, fx):
+def _truncate(s: str, max_len: int) -> str:
+    s = s or ""
+    return s if len(s) <= max_len else s[: max_len - 1] + "…"
+
+
+def build_discord_payload(dr_top5, bc_top5, fx):
     """
-    Build a Discord embed payload (much nicer formatting than plain text).
+    Build Discord payload using embeds in a way that respects Discord limits:
+    - Field name <= 256 chars
+    - Field value <= 1024 chars
     """
-    # Division Road block
+    # Header embed
+    embeds = [
+        {
+            "title": "🧾 Boots Watch — Top 5 Newest",
+            "description": (
+                "Sorted by **Date: new → old**.\n"
+                f"Division Road: <{DIVISIONROAD_URL}>\n"
+                f"Brooklyn Clothing: <{BROOKLYN_URL}>"
+            ),
+        }
+    ]
+
+    # --- Division Road embed ---
+    dr_desc = ""
     if dr_top5:
         latest_norm = norm(dr_top5[0][0])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
-        target_line = f"**Target still #1?** {'✅ YES' if latest_norm == target_norm else '🚨 NO'}\n"
+        dr_desc = f"Target still #1? {'✅ YES' if latest_norm == target_norm else '🚨 NO'}"
+    else:
+        dr_desc = "No footwear entries found."
 
-        dr_lines = [target_line]
+    dr_embed = {
+        "title": "🏷️ Division Road — Top 5",
+        "description": dr_desc,
+        "fields": [],
+    }
+
+    if dr_top5:
         for i, (title, url, price_raw) in enumerate(dr_top5, start=1):
             price_fmt = format_price(DIVISIONROAD_URL, price_raw, fx)
-            price_part = f" — {price_fmt}" if price_fmt else ""
-            dr_lines.append(f"**{i}. {title}**{price_part}\n<{url}>")
+            name = _truncate(f"{i}. {title}", 256)
+            value = f"<{url}>"
+            if price_fmt:
+                value = f"{price_fmt}\n<{url}>"
+            dr_embed["fields"].append(
+                {"name": name, "value": _truncate(value, 1024), "inline": False}
+            )
 
-        dr_value = "\n\n".join(dr_lines)
-    else:
-        dr_value = "_No footwear entries found._"
+    embeds.append(dr_embed)
 
-    # Brooklyn block
+    # --- Brooklyn embed ---
     if fx:
         usd_per_cad, rate_date = fx
-        fx_line = f"**CAD→USD:** 1 CAD = **{usd_per_cad:.4f} USD** (as of {rate_date})\n\n"
+        bc_desc = f"CAD→USD: 1 CAD = **{usd_per_cad:.4f} USD** (as of {rate_date})"
     else:
-        fx_line = "**CAD→USD:** _unavailable (FX fetch failed)_\n\n"
+        bc_desc = "CAD→USD: **unavailable** (FX fetch failed)"
+
+    bc_embed = {
+        "title": "🏷️ Brooklyn Clothing — Top 5",
+        "description": bc_desc,
+        "fields": [],
+    }
 
     if bc_top5:
-        bc_lines = [fx_line.strip()]
         for i, (title, url, price_raw) in enumerate(bc_top5, start=1):
             price_fmt = format_price(BROOKLYN_URL, price_raw, fx)
-            price_part = f" — {price_fmt}" if price_fmt else ""
-            bc_lines.append(f"**{i}. {title}**{price_part}\n<{url}>")
-        bc_value = "\n\n".join(bc_lines)
+            name = _truncate(f"{i}. {title}", 256)
+            value = f"<{url}>"
+            if price_fmt:
+                value = f"{price_fmt}\n<{url}>"
+            bc_embed["fields"].append(
+                {"name": name, "value": _truncate(value, 1024), "inline": False}
+            )
     else:
-        bc_value = fx_line + "_No footwear entries found._"
+        bc_embed["fields"].append(
+            {"name": "No footwear entries found", "value": "—", "inline": False}
+        )
+
+    embeds.append(bc_embed)
 
     payload = {
         "content": None,
-        "embeds": [
-            {
-                "title": "🧾 Boots Watch — Top 5 Newest (new → old)",
-                "description": "Sources are sorted by **Date: new → old**.",
-                "fields": [
-                    {"name": "🏷️ Division Road", "value": f"<{DIVISIONROAD_URL}>\n\n{dr_value}", "inline": False},
-                    {"name": "🏷️ Brooklyn Clothing", "value": f"<{BROOKLYN_URL}>\n\n{bc_value}", "inline": False},
-                ],
-            }
-        ],
+        "embeds": embeds,
         "allowed_mentions": {"parse": []},
     }
     return payload
 
 
 def send_discord_embed(webhook_url: str, payload: dict):
-    """
-    Send one Discord webhook message with an embed.
-    """
     resp = requests.post(webhook_url, json=payload, timeout=30)
     if resp.status_code not in (200, 204):
         raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
@@ -237,18 +269,19 @@ def main():
     dr_top5 = extract_top_entries(DIVISIONROAD_URL, fetch_html(DIVISIONROAD_URL), 5)
     bc_top5 = extract_top_entries(BROOKLYN_URL, fetch_html(BROOKLYN_URL), 5)
 
-    # Print a plain log summary in GitHub (optional but helpful)
+    # Log summary in GitHub
     print("Division Road top 5:", len(dr_top5))
     print("Brooklyn Clothing top 5:", len(bc_top5))
     print("FX available:", "YES" if fx else "NO")
 
-    # Build and send embed to Discord if webhook is present
     webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
-    if webhook:
-        payload = build_embed_payload(dr_top5, bc_top5, fx)
-        send_discord_embed(webhook, payload)
-    else:
+    if not webhook:
         print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
+        return
+
+    payload = build_discord_payload(dr_top5, bc_top5, fx)
+    send_discord_embed(webhook, payload)
+    print("Discord message sent successfully.")
 
 
 if __name__ == "__main__":
