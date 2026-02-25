@@ -20,4 +20,4 @@ jobs:
           pip install requests beautifulsoup4
 
       - name: Run script
-        run: python divisionroad_top5.py
+        run: python boots_top5.py
