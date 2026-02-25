@@ -1,4 +1,4 @@
-name: Run Division Road Top 5 (Manual)
+name: Run Boots Top 5 (Manual)
 
 on:
   workflow_dispatch:
@@ -20,4 +20,4 @@ jobs:
           pip install requests beautifulsoup4
 
       - name: Run script
-        run: python boots_top5.py
+        run: python Boots_top5.py
