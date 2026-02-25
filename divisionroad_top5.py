@@ -26,6 +26,9 @@ def extract_top5(html: str, n: int = 5):
     for a in soup.select("a[href*='/products/']"):
         href = (a.get("href") or "").strip()
         title = norm(a.get_text(" ", strip=True))
+        # Only include actual boots (exclude mocs, etc.)
+    if "boot" not in title.lower():
+    continue
         if not href or "/products/" not in href or not title or len(title) < 8:
             continue
 
