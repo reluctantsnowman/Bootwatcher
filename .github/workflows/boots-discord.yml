@@ -1,0 +1,29 @@
+name: Boots Watcher → Discord (Twice Daily)
+
+on:
+  schedule:
+    # GitHub cron is UTC. These match 9:00 AM / 9:00 PM New York during EST (winter).
+    - cron: "0 14 * * *"
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: Run boots watcher (posts to Discord)
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python Boots_top5.py
