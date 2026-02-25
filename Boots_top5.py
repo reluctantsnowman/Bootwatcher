@@ -1,3 +1,4 @@
+import os
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -35,7 +36,7 @@ def is_footwear_title(title: str) -> bool:
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.4"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.5"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -144,6 +145,7 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
     if not price_str:
         return None
 
+    # Brooklyn uses CAD (they display "$" but it's CAD)
     if "brooklynclothing.com" in collection_url:
         cad = parse_price_to_float(price_str)
         if cad is None:
@@ -154,82 +156,75 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
         usd = cad * usd_per_cad
         return f"{price_str} CAD (~${usd:,.2f} USD @ {rate_date})"
 
+    # Division Road is USD
     return price_str
 
 
-def build_report_text(dr_top5, bc_top5, fx) -> str:
-    def fmt_line(i, title, url, price_fmt):
-        # Discord-friendly: bold index, title, then link on its own line
-        if price_fmt:
-            return f"**{i}. {title}** — {price_fmt}\n<{url}>"
-        return f"**{i}. {title}**\n<{url}>"
-
-    lines = []
-    lines.append("**🧾 Boots Watch — Top 5 Newest (new → old)**")
-    lines.append("")
-
-    # Division Road
-    lines.append("**🏷️ Division Road**")
-    lines.append(f"<{DIVISIONROAD_URL}>")
+def build_embed_payload(dr_top5, bc_top5, fx):
+    """
+    Build a Discord embed payload (much nicer formatting than plain text).
+    """
+    # Division Road block
     if dr_top5:
         latest_norm = norm(dr_top5[0][0])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
-        lines.append(f"Target still #1? **{'YES ✅' if latest_norm == target_norm else 'NO 🚨'}**")
-        lines.append("")
+        target_line = f"**Target still #1?** {'✅ YES' if latest_norm == target_norm else '🚨 NO'}\n"
+
+        dr_lines = [target_line]
         for i, (title, url, price_raw) in enumerate(dr_top5, start=1):
             price_fmt = format_price(DIVISIONROAD_URL, price_raw, fx)
-            lines.append(fmt_line(i, title, url, price_fmt))
-            lines.append("")  # spacer
-    else:
-        lines.append("_No footwear entries found._")
-        lines.append("")
+            price_part = f" — {price_fmt}" if price_fmt else ""
+            dr_lines.append(f"**{i}. {title}**{price_part}\n<{url}>")
 
-    # Brooklyn
-    lines.append("**🏷️ Brooklyn Clothing**")
-    lines.append(f"<{BROOKLYN_URL}>")
+        dr_value = "\n\n".join(dr_lines)
+    else:
+        dr_value = "_No footwear entries found._"
+
+    # Brooklyn block
     if fx:
         usd_per_cad, rate_date = fx
-        lines.append(f"CAD→USD (latest): **1 CAD = {usd_per_cad:.4f} USD** (as of {rate_date})")
+        fx_line = f"**CAD→USD:** 1 CAD = **{usd_per_cad:.4f} USD** (as of {rate_date})\n\n"
     else:
-        lines.append("CAD→USD: **unavailable** (FX fetch failed)")
-    lines.append("")
+        fx_line = "**CAD→USD:** _unavailable (FX fetch failed)_\n\n"
 
     if bc_top5:
+        bc_lines = [fx_line.strip()]
         for i, (title, url, price_raw) in enumerate(bc_top5, start=1):
             price_fmt = format_price(BROOKLYN_URL, price_raw, fx)
-            lines.append(fmt_line(i, title, url, price_fmt))
-            lines.append("")  # spacer
+            price_part = f" — {price_fmt}" if price_fmt else ""
+            bc_lines.append(f"**{i}. {title}**{price_part}\n<{url}>")
+        bc_value = "\n\n".join(bc_lines)
     else:
-        lines.append("_No footwear entries found._")
+        bc_value = fx_line + "_No footwear entries found._"
 
-    return "\n".join(lines).strip()
+    payload = {
+        "content": None,
+        "embeds": [
+            {
+                "title": "🧾 Boots Watch — Top 5 Newest (new → old)",
+                "description": "Sources are sorted by **Date: new → old**.",
+                "fields": [
+                    {"name": "🏷️ Division Road", "value": f"<{DIVISIONROAD_URL}>\n\n{dr_value}", "inline": False},
+                    {"name": "🏷️ Brooklyn Clothing", "value": f"<{BROOKLYN_URL}>\n\n{bc_value}", "inline": False},
+                ],
+            }
+        ],
+        "allowed_mentions": {"parse": []},
+    }
+    return payload
 
-def send_discord(webhook_url: str, message: str):
+
+def send_discord_embed(webhook_url: str, payload: dict):
     """
-    Discord message hard limit is ~2000 chars. Chunk safely.
+    Send one Discord webhook message with an embed.
     """
-    max_len = 1900  # leave some slack
-    parts = []
-    while message:
-        if len(message) <= max_len:
-            parts.append(message)
-            break
-        cut = message.rfind("\n", 0, max_len)
-        if cut == -1:
-            cut = max_len
-        parts.append(message[:cut])
-        message = message[cut:].lstrip("\n")
-
-    for idx, part in enumerate(parts, start=1):
-        prefix = "" if len(parts) == 1 else f"Part {idx}/{len(parts)}\n"
-        payload = {"content": prefix + part}
-        resp = requests.post(webhook_url, json=payload, timeout=30)
-        if resp.status_code not in (200, 204):
-            raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
+    resp = requests.post(webhook_url, json=payload, timeout=30)
+    if resp.status_code not in (200, 204):
+        raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
 
 
 def main():
-    # FX once per run
+    # Fetch FX once per run
     fx = None
     try:
         fx = get_cad_to_usd_rate_latest()
@@ -238,18 +233,22 @@ def main():
         print(f"Reason: {e}")
         print()
 
+    # Scrape both pages
     dr_top5 = extract_top_entries(DIVISIONROAD_URL, fetch_html(DIVISIONROAD_URL), 5)
     bc_top5 = extract_top_entries(BROOKLYN_URL, fetch_html(BROOKLYN_URL), 5)
 
-    report = build_report_text(dr_top5, bc_top5, fx)
+    # Print a plain log summary in GitHub (optional but helpful)
+    print("Division Road top 5:", len(dr_top5))
+    print("Brooklyn Clothing top 5:", len(bc_top5))
+    print("FX available:", "YES" if fx else "NO")
 
-    # Always print for GitHub logs
-    print(report)
-
-    # If webhook secret exists, send to Discord
-    webhook = (requests.utils.os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
+    # Build and send embed to Discord if webhook is present
+    webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
     if webhook:
-        send_discord(webhook, report)
+        payload = build_embed_payload(dr_top5, bc_top5, fx)
+        send_discord_embed(webhook, payload)
+    else:
+        print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
 
 
 if __name__ == "__main__":
