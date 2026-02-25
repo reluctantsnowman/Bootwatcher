@@ -158,40 +158,51 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
 
 
 def build_report_text(dr_top5, bc_top5, fx) -> str:
+    def fmt_line(i, title, url, price_fmt):
+        # Discord-friendly: bold index, title, then link on its own line
+        if price_fmt:
+            return f"**{i}. {title}** — {price_fmt}\n<{url}>"
+        return f"**{i}. {title}**\n<{url}>"
+
     lines = []
-    lines.append("Division Road + Brooklyn Clothing — Top 5 newest FOOTWEAR (new → old)")
+    lines.append("**🧾 Boots Watch — Top 5 Newest (new → old)**")
     lines.append("")
 
-    # Division Road section
-    lines.append("=== Division Road ===")
-    lines.append(DIVISIONROAD_URL)
+    # Division Road
+    lines.append("**🏷️ Division Road**")
+    lines.append(f"<{DIVISIONROAD_URL}>")
     if dr_top5:
         latest_norm = norm(dr_top5[0][0])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
-        lines.append(f"Target still #1? {'YES' if latest_norm == target_norm else 'NO'}")
+        lines.append(f"Target still #1? **{'YES ✅' if latest_norm == target_norm else 'NO 🚨'}**")
         lines.append("")
         for i, (title, url, price_raw) in enumerate(dr_top5, start=1):
             price_fmt = format_price(DIVISIONROAD_URL, price_raw, fx)
-            lines.append(f"{i}. {title}" + (f" — {price_fmt}" if price_fmt else ""))
-            lines.append(f"   {url}")
+            lines.append(fmt_line(i, title, url, price_fmt))
+            lines.append("")  # spacer
     else:
-        lines.append("No footwear entries found.")
+        lines.append("_No footwear entries found._")
+        lines.append("")
+
+    # Brooklyn
+    lines.append("**🏷️ Brooklyn Clothing**")
+    lines.append(f"<{BROOKLYN_URL}>")
+    if fx:
+        usd_per_cad, rate_date = fx
+        lines.append(f"CAD→USD (latest): **1 CAD = {usd_per_cad:.4f} USD** (as of {rate_date})")
+    else:
+        lines.append("CAD→USD: **unavailable** (FX fetch failed)")
     lines.append("")
 
-    # Brooklyn section
-    lines.append("=== Brooklyn Clothing ===")
-    lines.append(BROOKLYN_URL)
-    lines.append("")
     if bc_top5:
         for i, (title, url, price_raw) in enumerate(bc_top5, start=1):
             price_fmt = format_price(BROOKLYN_URL, price_raw, fx)
-            lines.append(f"{i}. {title}" + (f" — {price_fmt}" if price_fmt else ""))
-            lines.append(f"   {url}")
+            lines.append(fmt_line(i, title, url, price_fmt))
+            lines.append("")  # spacer
     else:
-        lines.append("No footwear entries found.")
+        lines.append("_No footwear entries found._")
 
-    return "\n".join(lines)
-
+    return "\n".join(lines).strip()
 
 def send_discord(webhook_url: str, message: str):
     """
