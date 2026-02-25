@@ -2,14 +2,15 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-# --- URLs (sorted: new -> old) ---
+# --- URLs (sorted: Date, new -> old) ---
 DIVISIONROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
 BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?grid_list=grid-view&sort_by=created-descending"
 
-# Optional: target check for Division Road (#1 item)
+# Optional: check whether Division Road #1 is still this exact title
 DIVISIONROAD_TARGET_TITLE = "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio"
 
-# ---- Keyword filters (tune these if needed) ----
+
+# --- Keyword filters (boot-like footwear allowed; non-footwear excluded) ---
 INCLUDE_WORDS = [
     "boot", "moc", "chukka", "shoe", "oxford", "derby", "blucher", "loafer",
     "slip-on", "slipper", "monkey", "service", "chelsea", "roper", "engineer",
@@ -24,6 +25,7 @@ EXCLUDE_WORDS = [
 
 
 def norm(s: str) -> str:
+    """Normalize punctuation + whitespace for stable comparisons."""
     s = s.replace("\u2019", "'")
     s = re.sub(r"\s+", " ", s).strip()
     return s
@@ -37,18 +39,25 @@ def is_footwear_title(title: str) -> bool:
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.0"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.1"}, timeout=30)
     r.raise_for_status()
     return r.text
 
 
-def extract_top_entries(url: str, html: str, n: int = 5):
+def make_absolute_url(collection_url: str, href: str) -> str:
+    if href.startswith("http"):
+        return href
+    base = re.match(r"^(https?://[^/]+)", collection_url)
+    return (base.group(1) if base else "") + href
+
+
+def extract_top_entries(collection_url: str, html: str, n: int = 5):
     """
-    Generic extractor for Shopify-like collection pages:
+    Extract top N footwear entries from a Shopify-like collection page:
     - finds /products/ links
-    - gets title from link text
-    - best-effort extracts $ price from nearby card text
-    - filters to footwear-ish items
+    - pulls title from link text OR nearby card heading/title (Brooklyn needs this)
+    - best-effort extracts price from nearby text
+    - filters to footwear-ish titles and excludes accessories
     """
     soup = BeautifulSoup(html, "html.parser")
     seen = set()
@@ -56,40 +65,65 @@ def extract_top_entries(url: str, html: str, n: int = 5):
 
     for a in soup.select("a[href*='/products/']"):
         href = (a.get("href") or "").strip()
-        title = norm(a.get_text(" ", strip=True))
-
-        if not href or "/products/" not in href or not title or len(title) < 4:
+        if not href or "/products/" not in href:
             continue
 
+        prod_url = make_absolute_url(collection_url, href)
+        if prod_url in seen:
+            continue
+
+        # 1) Try link text first (works on many sites)
+        title = norm(a.get_text(" ", strip=True))
+
+        # 2) If empty (common on Brooklyn: image links), search within the product card
+        if not title:
+            card = a.find_parent()
+            for _ in range(10):
+                if not card:
+                    break
+
+                # Try headings
+                h = card.find(["h1", "h2", "h3"])
+                if h:
+                    t = norm(h.get_text(" ", strip=True))
+                    if t:
+                        title = t
+                        break
+
+                # Try common "title-ish" nodes
+                tnode = card.select_one(
+                    ".product-title, .card__heading, .grid-product__title, "
+                    ".productitem--title, [class*='title']"
+                )
+                if tnode:
+                    t = norm(tnode.get_text(" ", strip=True))
+                    if t:
+                        title = t
+                        break
+
+                card = card.find_parent()
+
+        if not title or len(title) < 4:
+            continue
+
+        # Keep only footwear / boot-like entries
         if not is_footwear_title(title):
             continue
 
-        # Make absolute URL
-        if href.startswith("http"):
-            prod_url = href
-        else:
-            # base domain from the collection URL
-            m = re.match(r"^(https?://[^/]+)", url)
-            base = m.group(1) if m else ""
-            prod_url = base + href
-
-        if prod_url in seen:
-            continue
-        seen.add(prod_url)
-
-        # Best-effort price capture (theme-dependent)
+        # Best-effort price capture near the link/card
         price = None
         card = a.find_parent()
-        for _ in range(8):
+        for _ in range(10):
             if not card:
                 break
             text = card.get_text(" ", strip=True)
-            m = re.search(r"\$\s?\d{1,3}(?:,\d{3})*(?:\.\d{2})?", text)
-            if m:
-                price = m.group(0).replace(" ", "")
+            pm = re.search(r"\$\s?\d{1,3}(?:,\d{3})*(?:\.\d{2})?", text)
+            if pm:
+                price = pm.group(0).replace(" ", "")
                 break
             card = card.find_parent()
 
+        seen.add(prod_url)
         out.append((title, prod_url, price))
         if len(out) >= n:
             break
