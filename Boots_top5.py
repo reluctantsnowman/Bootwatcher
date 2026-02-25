@@ -6,10 +6,8 @@ from bs4 import BeautifulSoup
 DIVISIONROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
 BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?grid_list=grid-view&sort_by=created-descending"
 
-# Optional: check whether Division Road #1 is still this exact title
 DIVISIONROAD_TARGET_TITLE = "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio"
 
-# --- Keyword filters (boot-like footwear allowed; non-footwear excluded) ---
 INCLUDE_WORDS = [
     "boot", "moc", "chukka", "shoe", "oxford", "derby", "blucher", "loafer",
     "slip-on", "slipper", "monkey", "service", "chelsea", "roper", "engineer",
@@ -24,7 +22,6 @@ EXCLUDE_WORDS = [
 
 
 def norm(s: str) -> str:
-    """Normalize punctuation + whitespace for stable comparisons."""
     s = s.replace("\u2019", "'")
     s = re.sub(r"\s+", " ", s).strip()
     return s
@@ -38,7 +35,7 @@ def is_footwear_title(title: str) -> bool:
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.3"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.4"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -51,10 +48,6 @@ def make_absolute_url(collection_url: str, href: str) -> str:
 
 
 def parse_price_to_float(price_str: str) -> float | None:
-    """
-    Convert strings like '$1,475.00' into 1475.00
-    Returns None if parsing fails.
-    """
     if not price_str:
         return None
     s = price_str.replace("$", "").replace(",", "").strip()
@@ -67,29 +60,17 @@ def parse_price_to_float(price_str: str) -> float | None:
 def get_cad_to_usd_rate_latest() -> tuple[float, str]:
     """
     Fetch latest CAD->USD FX from Frankfurter (no key).
-    Returns: (usd_per_cad, date_string)
     """
-    # Frankfurter supports latest rates with query params. :contentReference[oaicite:1]{index=1}
     url = "https://api.frankfurter.dev/v1/latest?from=CAD&to=USD"
     r = requests.get(url, timeout=30)
     r.raise_for_status()
     data = r.json()
-
-    # Example shape:
-    # {"amount":1.0,"base":"CAD","date":"2026-02-25","rates":{"USD":0.73}}
     usd_per_cad = float(data["rates"]["USD"])
     rate_date = str(data.get("date", "unknown"))
     return usd_per_cad, rate_date
 
 
 def extract_top_entries(collection_url: str, html: str, n: int = 5):
-    """
-    Extract top N footwear entries from a Shopify-like collection page:
-    - finds /products/ links
-    - pulls title from link text OR nearby card heading/title (Brooklyn needs this)
-    - best-effort extracts price from nearby text
-    - filters to footwear-ish titles and excludes accessories
-    """
     soup = BeautifulSoup(html, "html.parser")
     seen = set()
     out = []
@@ -113,7 +94,6 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
                 if not card:
                     break
 
-                # Try headings
                 h = card.find(["h1", "h2", "h3"])
                 if h:
                     t = norm(h.get_text(" ", strip=True))
@@ -121,7 +101,6 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
                         title = t
                         break
 
-                # Try common "title-ish" nodes
                 tnode = card.select_one(
                     ".product-title, .card__heading, .grid-product__title, "
                     ".productitem--title, [class*='title']"
@@ -162,57 +141,84 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
 
 
 def format_price(collection_url: str, price_str: str | None, fx: tuple[float, str] | None) -> str | None:
-    """
-    Division Road: treat '$' as USD, display as-is.
-    Brooklyn Clothing: treat '$' as CAD, convert to USD using fetched latest FX.
-    """
     if not price_str:
         return None
 
-    # Brooklyn: CAD -> USD
     if "brooklynclothing.com" in collection_url:
         cad = parse_price_to_float(price_str)
         if cad is None:
             return f"{price_str} CAD (~USD unavailable)"
-
         if fx is None:
             return f"{price_str} CAD (~USD unavailable)"
-
         usd_per_cad, rate_date = fx
         usd = cad * usd_per_cad
         return f"{price_str} CAD (~${usd:,.2f} USD @ {rate_date})"
 
-    # Default (Division Road): show as-is (USD)
     return price_str
 
 
-def print_section(name: str, url: str, top5, fx: tuple[float, str] | None, target_title: str | None = None):
-    print("=" * 80)
-    print(f"{name} — Top 5 newest FOOTWEAR entries (Date: new → old)")
-    print(url)
-    print()
+def build_report_text(dr_top5, bc_top5, fx) -> str:
+    lines = []
+    lines.append("Division Road + Brooklyn Clothing — Top 5 newest FOOTWEAR (new → old)")
+    lines.append("")
 
-    if not top5:
-        print("No footwear entries found (page structure may have changed).")
-        return
+    # Division Road section
+    lines.append("=== Division Road ===")
+    lines.append(DIVISIONROAD_URL)
+    if dr_top5:
+        latest_norm = norm(dr_top5[0][0])
+        target_norm = norm(DIVISIONROAD_TARGET_TITLE)
+        lines.append(f"Target still #1? {'YES' if latest_norm == target_norm else 'NO'}")
+        lines.append("")
+        for i, (title, url, price_raw) in enumerate(dr_top5, start=1):
+            price_fmt = format_price(DIVISIONROAD_URL, price_raw, fx)
+            lines.append(f"{i}. {title}" + (f" — {price_fmt}" if price_fmt else ""))
+            lines.append(f"   {url}")
+    else:
+        lines.append("No footwear entries found.")
+    lines.append("")
 
-    if target_title:
-        target_norm = norm(target_title)
-        latest_norm = norm(top5[0][0])
-        print("Target still #1?", "YES" if latest_norm == target_norm else "NO")
-        print()
+    # Brooklyn section
+    lines.append("=== Brooklyn Clothing ===")
+    lines.append(BROOKLYN_URL)
+    lines.append("")
+    if bc_top5:
+        for i, (title, url, price_raw) in enumerate(bc_top5, start=1):
+            price_fmt = format_price(BROOKLYN_URL, price_raw, fx)
+            lines.append(f"{i}. {title}" + (f" — {price_fmt}" if price_fmt else ""))
+            lines.append(f"   {url}")
+    else:
+        lines.append("No footwear entries found.")
 
-    for i, (title, prod_url, price_raw) in enumerate(top5, start=1):
-        price_fmt = format_price(url, price_raw, fx)
-        if price_fmt:
-            print(f"{i}. {title} — {price_fmt}")
-        else:
-            print(f"{i}. {title}")
-        print(f"   {prod_url}")
+    return "\n".join(lines)
+
+
+def send_discord(webhook_url: str, message: str):
+    """
+    Discord message hard limit is ~2000 chars. Chunk safely.
+    """
+    max_len = 1900  # leave some slack
+    parts = []
+    while message:
+        if len(message) <= max_len:
+            parts.append(message)
+            break
+        cut = message.rfind("\n", 0, max_len)
+        if cut == -1:
+            cut = max_len
+        parts.append(message[:cut])
+        message = message[cut:].lstrip("\n")
+
+    for idx, part in enumerate(parts, start=1):
+        prefix = "" if len(parts) == 1 else f"Part {idx}/{len(parts)}\n"
+        payload = {"content": prefix + part}
+        resp = requests.post(webhook_url, json=payload, timeout=30)
+        if resp.status_code not in (200, 204):
+            raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
 
 
 def main():
-    # Fetch FX once per run (only needed for Brooklyn)
+    # FX once per run
     fx = None
     try:
         fx = get_cad_to_usd_rate_latest()
@@ -221,16 +227,18 @@ def main():
         print(f"Reason: {e}")
         print()
 
-    # Division Road
-    dr_html = fetch_html(DIVISIONROAD_URL)
-    dr_top5 = extract_top_entries(DIVISIONROAD_URL, dr_html, 5)
+    dr_top5 = extract_top_entries(DIVISIONROAD_URL, fetch_html(DIVISIONROAD_URL), 5)
+    bc_top5 = extract_top_entries(BROOKLYN_URL, fetch_html(BROOKLYN_URL), 5)
 
-    # Brooklyn Clothing
-    bc_html = fetch_html(BROOKLYN_URL)
-    bc_top5 = extract_top_entries(BROOKLYN_URL, bc_html, 5)
+    report = build_report_text(dr_top5, bc_top5, fx)
 
-    print_section("Division Road", DIVISIONROAD_URL, dr_top5, fx=fx, target_title=DIVISIONROAD_TARGET_TITLE)
-    print_section("Brooklyn Clothing", BROOKLYN_URL, bc_top5, fx=fx, target_title=None)
+    # Always print for GitHub logs
+    print(report)
+
+    # If webhook secret exists, send to Discord
+    webhook = (requests.utils.os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
+    if webhook:
+        send_discord(webhook, report)
 
 
 if __name__ == "__main__":
