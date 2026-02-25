@@ -9,7 +9,6 @@ BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?grid_list=grid-vi
 # Optional: check whether Division Road #1 is still this exact title
 DIVISIONROAD_TARGET_TITLE = "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio"
 
-
 # --- Keyword filters (boot-like footwear allowed; non-footwear excluded) ---
 INCLUDE_WORDS = [
     "boot", "moc", "chukka", "shoe", "oxford", "derby", "blucher", "loafer",
@@ -39,7 +38,7 @@ def is_footwear_title(title: str) -> bool:
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.1"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.3"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -49,6 +48,38 @@ def make_absolute_url(collection_url: str, href: str) -> str:
         return href
     base = re.match(r"^(https?://[^/]+)", collection_url)
     return (base.group(1) if base else "") + href
+
+
+def parse_price_to_float(price_str: str) -> float | None:
+    """
+    Convert strings like '$1,475.00' into 1475.00
+    Returns None if parsing fails.
+    """
+    if not price_str:
+        return None
+    s = price_str.replace("$", "").replace(",", "").strip()
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
+def get_cad_to_usd_rate_latest() -> tuple[float, str]:
+    """
+    Fetch latest CAD->USD FX from Frankfurter (no key).
+    Returns: (usd_per_cad, date_string)
+    """
+    # Frankfurter supports latest rates with query params. :contentReference[oaicite:1]{index=1}
+    url = "https://api.frankfurter.dev/v1/latest?from=CAD&to=USD"
+    r = requests.get(url, timeout=30)
+    r.raise_for_status()
+    data = r.json()
+
+    # Example shape:
+    # {"amount":1.0,"base":"CAD","date":"2026-02-25","rates":{"USD":0.73}}
+    usd_per_cad = float(data["rates"]["USD"])
+    rate_date = str(data.get("date", "unknown"))
+    return usd_per_cad, rate_date
 
 
 def extract_top_entries(collection_url: str, html: str, n: int = 5):
@@ -72,7 +103,7 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         if prod_url in seen:
             continue
 
-        # 1) Try link text first (works on many sites)
+        # 1) Try link text first
         title = norm(a.get_text(" ", strip=True))
 
         # 2) If empty (common on Brooklyn: image links), search within the product card
@@ -106,7 +137,6 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         if not title or len(title) < 4:
             continue
 
-        # Keep only footwear / boot-like entries
         if not is_footwear_title(title):
             continue
 
@@ -131,7 +161,32 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
     return out
 
 
-def print_section(name: str, url: str, top5, target_title: str | None = None):
+def format_price(collection_url: str, price_str: str | None, fx: tuple[float, str] | None) -> str | None:
+    """
+    Division Road: treat '$' as USD, display as-is.
+    Brooklyn Clothing: treat '$' as CAD, convert to USD using fetched latest FX.
+    """
+    if not price_str:
+        return None
+
+    # Brooklyn: CAD -> USD
+    if "brooklynclothing.com" in collection_url:
+        cad = parse_price_to_float(price_str)
+        if cad is None:
+            return f"{price_str} CAD (~USD unavailable)"
+
+        if fx is None:
+            return f"{price_str} CAD (~USD unavailable)"
+
+        usd_per_cad, rate_date = fx
+        usd = cad * usd_per_cad
+        return f"{price_str} CAD (~${usd:,.2f} USD @ {rate_date})"
+
+    # Default (Division Road): show as-is (USD)
+    return price_str
+
+
+def print_section(name: str, url: str, top5, fx: tuple[float, str] | None, target_title: str | None = None):
     print("=" * 80)
     print(f"{name} — Top 5 newest FOOTWEAR entries (Date: new → old)")
     print(url)
@@ -147,15 +202,25 @@ def print_section(name: str, url: str, top5, target_title: str | None = None):
         print("Target still #1?", "YES" if latest_norm == target_norm else "NO")
         print()
 
-    for i, (title, prod_url, price) in enumerate(top5, start=1):
-        if price:
-            print(f"{i}. {title} — {price}")
+    for i, (title, prod_url, price_raw) in enumerate(top5, start=1):
+        price_fmt = format_price(url, price_raw, fx)
+        if price_fmt:
+            print(f"{i}. {title} — {price_fmt}")
         else:
             print(f"{i}. {title}")
         print(f"   {prod_url}")
 
 
 def main():
+    # Fetch FX once per run (only needed for Brooklyn)
+    fx = None
+    try:
+        fx = get_cad_to_usd_rate_latest()
+    except Exception as e:
+        print("WARNING: Could not fetch latest CAD→USD rate. USD conversion will be unavailable.")
+        print(f"Reason: {e}")
+        print()
+
     # Division Road
     dr_html = fetch_html(DIVISIONROAD_URL)
     dr_top5 = extract_top_entries(DIVISIONROAD_URL, dr_html, 5)
@@ -164,8 +229,8 @@ def main():
     bc_html = fetch_html(BROOKLYN_URL)
     bc_top5 = extract_top_entries(BROOKLYN_URL, bc_html, 5)
 
-    print_section("Division Road", DIVISIONROAD_URL, dr_top5, target_title=DIVISIONROAD_TARGET_TITLE)
-    print_section("Brooklyn Clothing", BROOKLYN_URL, bc_top5, target_title=None)
+    print_section("Division Road", DIVISIONROAD_URL, dr_top5, fx=fx, target_title=DIVISIONROAD_TARGET_TITLE)
+    print_section("Brooklyn Clothing", BROOKLYN_URL, bc_top5, fx=fx, target_title=None)
 
 
 if __name__ == "__main__":
