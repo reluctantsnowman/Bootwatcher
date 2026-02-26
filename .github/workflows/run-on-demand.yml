@@ -19,5 +19,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
-      - name: Run script
+      - name: Run script (print results in GitHub)
+        env:
+          OUTPUT_MODE: github
         run: python Boots_top5.py
