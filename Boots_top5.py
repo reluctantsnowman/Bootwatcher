@@ -276,16 +276,42 @@ def format_price(collection_url: str, price_str: str | None, fx_map: dict) -> st
 
 
 def load_state() -> dict:
+    """
+    Supports both:
+    - NEW format: {"saved_at_utc": "...", "sites": {"divisionroad": {"urls": [...]}, ...}}
+    - LEGACY format: [{"title": "...", "url": "..."}, ...]  (assumed Division Road)
+    """
     if not os.path.exists(STATE_FILE):
         return {"saved_at_utc": None, "sites": {}}
+
     try:
         with open(STATE_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-        if not isinstance(data, dict):
-            return {"saved_at_utc": None, "sites": {}}
-        data.setdefault("sites", {})
-        data.setdefault("saved_at_utc", None)
-        return data
+
+        # Legacy: list of {title,url}
+        if isinstance(data, list):
+            urls = []
+            for it in data:
+                if isinstance(it, dict):
+                    u = (it.get("url") or "").strip()
+                    if u:
+                        urls.append(u)
+
+            return {
+                "saved_at_utc": None,
+                "sites": {
+                    "divisionroad": {"urls": urls}
+                },
+            }
+
+        # New format: dict
+        if isinstance(data, dict):
+            data.setdefault("saved_at_utc", None)
+            data.setdefault("sites", {})
+            return data
+
+        return {"saved_at_utc": None, "sites": {}}
+
     except Exception:
         return {"saved_at_utc": None, "sites": {}}
 
