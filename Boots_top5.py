@@ -25,8 +25,9 @@ INCLUDE_WORDS = [
 # “Exclude” words for all sites (filters obvious non-footwear)
 EXCLUDE_WORDS = [
     "garment bag", "bag", "tote", "shoe tree", "tree", "gift card", "gift",
-    "belt", "wallet", "keychain", "lace", "laces", "brush", "cream", "wax",
-    "conditioner", "oil", "spray", "socks", "provisions"
+    "belt", "wallet", "billfold", "key clip", "keychain", "key chain", "key fob",
+    "lace", "laces", "brush", "cream", "wax", "conditioner", "oil", "spray",
+    "socks", "provisions", "shade case", "case"
 ]
 
 
@@ -38,23 +39,27 @@ def norm(s: str) -> str:
 
 def is_footwear_title(collection_url: str, title: str) -> bool:
     """
-    Division Road + Nick's: accept anything in curated boot collections unless excluded.
-    Brooklyn: require INCLUDE_WORDS (plus not excluded) to avoid accessories/noise.
+    Division Road: accept anything in Boots collection unless excluded.
+    Brooklyn: require INCLUDE_WORDS (plus not excluded).
+    Nick's: require footwear keywords because their RTS collection includes accessories.
     """
     t = title.lower()
+
     if any(bad in t for bad in EXCLUDE_WORDS):
         return False
 
     if "divisionroadinc.com" in collection_url:
         return True
+
     if "nicksboots.com" in collection_url:
-        return True
+        nicks_keywords = ["boot", "boots", "shoe", "shoes", "chukka", "moc", "chelsea", "engineer"]
+        return any(k in t for k in nicks_keywords)
 
     return any(good in t for good in INCLUDE_WORDS)
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/2.0"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/2.1"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -77,6 +82,9 @@ def parse_price_to_float(price_str: str) -> float | None:
 
 
 def get_cad_to_usd_rate_latest() -> tuple[float, str]:
+    """
+    Fetch latest CAD->USD FX from Frankfurter (no key).
+    """
     url = "https://api.frankfurter.dev/v1/latest?from=CAD&to=USD"
     r = requests.get(url, timeout=30)
     r.raise_for_status()
@@ -131,6 +139,7 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
 
         if not title or len(title) < 4:
             continue
+
         if not is_footwear_title(collection_url, title):
             continue
 
@@ -235,7 +244,11 @@ def build_discord_payload(dr_top5, bc_top5, nicks_top5, fx):
     embeds.append(bc_embed)
 
     # Nick's embed
-    n_embed = {"title": "🏷️ Nick’s Ready-to-Ship (10.5D) — Top 5", "description": "Filtered to 10.5 D.", "fields": []}
+    n_embed = {
+        "title": "🏷️ Nick’s Ready-to-Ship (10.5D) — Top 5",
+        "description": "Filtered to **10.5 D** via collection filters.",
+        "fields": [],
+    }
     for i, (title, url, price_raw) in enumerate(nicks_top5, start=1):
         price_fmt = format_price(NICKS_URL, price_raw, fx)
         name = _truncate(f"{i}. {title}", 256)
@@ -255,7 +268,7 @@ def send_discord_embed(webhook_url: str, payload: dict):
 
 
 def main():
-    # FX once per run
+    # FX once per run (Brooklyn CAD→USD)
     fx = None
     try:
         fx = get_cad_to_usd_rate_latest()
