@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 # --- URLs (sorted: Date, new -> old) ---
 DIVISIONROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
 BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?grid_list=grid-view&sort_by=created-descending"
-
-# Nick's: Ready-to-ship + Free shipping, filtered to 10.5 D
 NICKS_URL = (
     "https://nicksboots.com/collections/ready-to-ship-free-shipping"
     "?sort_by=created-descending"
@@ -40,26 +38,23 @@ def norm(s: str) -> str:
 
 def is_footwear_title(collection_url: str, title: str) -> bool:
     """
-    Division Road + Nick's: accept anything in the curated boot collection unless excluded.
+    Division Road + Nick's: accept anything in curated boot collections unless excluded.
     Brooklyn: require INCLUDE_WORDS (plus not excluded) to avoid accessories/noise.
     """
     t = title.lower()
-
     if any(bad in t for bad in EXCLUDE_WORDS):
         return False
 
     if "divisionroadinc.com" in collection_url:
         return True
-
     if "nicksboots.com" in collection_url:
         return True
 
-    # Brooklyn (and any other site): require a footwear keyword
     return any(good in t for good in INCLUDE_WORDS)
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.8"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/2.0"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -82,9 +77,6 @@ def parse_price_to_float(price_str: str) -> float | None:
 
 
 def get_cad_to_usd_rate_latest() -> tuple[float, str]:
-    """
-    Fetch latest CAD->USD FX from Frankfurter (no key).
-    """
     url = "https://api.frankfurter.dev/v1/latest?from=CAD&to=USD"
     r = requests.get(url, timeout=30)
     r.raise_for_status()
@@ -111,7 +103,7 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         # 1) Try link text first
         title = norm(a.get_text(" ", strip=True))
 
-        # 2) If empty (common on Brooklyn: image links), search within the product card
+        # 2) If empty (Brooklyn image links), search within the product card
         if not title:
             card = a.find_parent()
             for _ in range(10):
@@ -139,7 +131,6 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
 
         if not title or len(title) < 4:
             continue
-
         if not is_footwear_title(collection_url, title):
             continue
 
@@ -168,7 +159,6 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
     if not price_str:
         return None
 
-    # Brooklyn uses CAD (they display "$" but it's CAD)
     if "brooklynclothing.com" in collection_url:
         cad = parse_price_to_float(price_str)
         if cad is None:
@@ -179,8 +169,18 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
         usd = cad * usd_per_cad
         return f"{price_str} CAD (~${usd:,.2f} USD @ {rate_date})"
 
-    # Division Road + Nick's are USD
-    return price_str
+    return price_str  # Division Road + Nick's are USD
+
+
+def print_top5(name: str, items, collection_url: str, fx):
+    print(f"\n=== {name} ===")
+    for i, (title, url, price_raw) in enumerate(items, start=1):
+        price_fmt = format_price(collection_url, price_raw, fx)
+        if price_fmt:
+            print(f"{i}. {title} — {price_fmt}")
+        else:
+            print(f"{i}. {title}")
+        print(f"   {url}")
 
 
 def _truncate(s: str, max_len: int) -> str:
@@ -189,7 +189,6 @@ def _truncate(s: str, max_len: int) -> str:
 
 
 def build_discord_payload(dr_top5, bc_top5, nicks_top5, fx):
-    # Header embed
     embeds = [
         {
             "title": "🧾 Boots Watch — Top 5 Newest",
@@ -202,7 +201,7 @@ def build_discord_payload(dr_top5, bc_top5, nicks_top5, fx):
         }
     ]
 
-    # --- Division Road embed ---
+    # Division Road embed
     if dr_top5:
         latest_norm = norm(dr_top5[0][0])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
@@ -218,7 +217,7 @@ def build_discord_payload(dr_top5, bc_top5, nicks_top5, fx):
         dr_embed["fields"].append({"name": name, "value": _truncate(value, 1024), "inline": False})
     embeds.append(dr_embed)
 
-    # --- Brooklyn embed ---
+    # Brooklyn embed
     if fx:
         usd_per_cad, rate_date = fx
         bc_desc = f"CAD→USD: 1 CAD = **{usd_per_cad:.4f} USD** (as of {rate_date})"
@@ -235,20 +234,16 @@ def build_discord_payload(dr_top5, bc_top5, nicks_top5, fx):
         bc_embed["fields"].append({"name": "No entries found", "value": "—", "inline": False})
     embeds.append(bc_embed)
 
-    # --- Nick's embed ---
-    nicks_embed = {
-        "title": "🏷️ Nick’s Ready-to-Ship (10.5D) — Top 5",
-        "description": "Filtered to **10.5 D** via collection filters.",
-        "fields": [],
-    }
+    # Nick's embed
+    n_embed = {"title": "🏷️ Nick’s Ready-to-Ship (10.5D) — Top 5", "description": "Filtered to 10.5 D.", "fields": []}
     for i, (title, url, price_raw) in enumerate(nicks_top5, start=1):
         price_fmt = format_price(NICKS_URL, price_raw, fx)
         name = _truncate(f"{i}. {title}", 256)
         value = f"{price_fmt}\n<{url}>" if price_fmt else f"<{url}>"
-        nicks_embed["fields"].append({"name": name, "value": _truncate(value, 1024), "inline": False})
+        n_embed["fields"].append({"name": name, "value": _truncate(value, 1024), "inline": False})
     if not nicks_top5:
-        nicks_embed["fields"].append({"name": "No entries found", "value": "—", "inline": False})
-    embeds.append(nicks_embed)
+        n_embed["fields"].append({"name": "No entries found", "value": "—", "inline": False})
+    embeds.append(n_embed)
 
     return {"content": None, "embeds": embeds, "allowed_mentions": {"parse": []}}
 
@@ -258,18 +253,9 @@ def send_discord_embed(webhook_url: str, payload: dict):
     if resp.status_code not in (200, 204):
         raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
 
-def print_top5(name, items, collection_url, fx):
-    print(f"\n=== {name} ===")
-    for i, (title, url, price_raw) in enumerate(items, start=1):
-        price_fmt = format_price(collection_url, price_raw, fx)
-        if price_fmt:
-            print(f"{i}. {title} — {price_fmt}")
-        else:
-            print(f"{i}. {title}")
-        print(f"   {url}")
 
 def main():
-    # Fetch FX once per run (only needed for Brooklyn CAD→USD)
+    # FX once per run
     fx = None
     try:
         fx = get_cad_to_usd_rate_latest()
@@ -286,12 +272,6 @@ def main():
     print("Nick's top 5:", len(nicks_top5))
     print("FX available:", "YES" if fx else "NO")
 
-       print("Division Road top 5:", len(dr_top5))
-    print("Brooklyn Clothing top 5:", len(bc_top5))
-    print("Nick's top 5:", len(nicks_top5))
-    print("FX available:", "YES" if fx else "NO")
-
-    # If running in GitHub preview mode, PRINT full lists and stop (no Discord)
     mode = (os.environ.get("OUTPUT_MODE") or "").lower()
     if mode == "github":
         print_top5("Division Road", dr_top5, DIVISIONROAD_URL, fx)
@@ -299,7 +279,6 @@ def main():
         print_top5("Nick's (10.5D RTS)", nicks_top5, NICKS_URL, fx)
         return
 
-    # Otherwise (scheduled workflow), post to Discord if webhook is set
     webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
     if not webhook:
         print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
@@ -309,9 +288,6 @@ def main():
     send_discord_embed(webhook, payload)
     print("Discord message sent successfully.")
 
-    payload = build_discord_payload(dr_top5, bc_top5, nicks_top5, fx)
-    send_discord_embed(webhook, payload)
-    print("Discord message sent successfully.")
 
 if __name__ == "__main__":
     main()
