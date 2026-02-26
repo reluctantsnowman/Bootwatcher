@@ -22,4 +22,5 @@ jobs:
       - name: Run script (print results in GitHub)
         env:
           OUTPUT_MODE: github
+          SAVE_STATE: 0
         run: python Boots_top5.py
