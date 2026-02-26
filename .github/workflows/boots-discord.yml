@@ -26,4 +26,5 @@ jobs:
       - name: Run boots watcher (posts to Discord)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SAVE_STATE: 1
         run: python Boots_top5.py
