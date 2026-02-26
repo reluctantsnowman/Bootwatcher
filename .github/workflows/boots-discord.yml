@@ -2,7 +2,6 @@ name: Boots Watcher → Discord (Twice Daily)
 
 on:
   schedule:
-    # GitHub cron is UTC. These match 9:00 AM / 9:00 PM New York during EST (winter).
     - cron: "0 14 * * *"
     - cron: "0 2 * * *"
   workflow_dispatch:
@@ -26,9 +25,9 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install requests beautifulsoup4 lxml
 
-      - name: Run boots watcher (posts to Discord + updates state)
+      - name: Run boots watcher (posts to Discord)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SAVE_STATE: 1
@@ -39,7 +38,6 @@ jobs:
           git config user.name "boots-watcher-bot"
           git config user.email "boots-watcher-bot@users.noreply.github.com"
 
-          # Only commit if the state file changed
           if git status --porcelain | grep -q "state_last_top5.json"; then
             git add state_last_top5.json
             git commit -m "Update boots watcher state"
