@@ -258,6 +258,15 @@ def send_discord_embed(webhook_url: str, payload: dict):
     if resp.status_code not in (200, 204):
         raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
 
+def print_top5(name, items, collection_url, fx):
+    print(f"\n=== {name} ===")
+    for i, (title, url, price_raw) in enumerate(items, start=1):
+        price_fmt = format_price(collection_url, price_raw, fx)
+        if price_fmt:
+            print(f"{i}. {title} — {price_fmt}")
+        else:
+            print(f"{i}. {title}")
+        print(f"   {url}")
 
 def main():
     # Fetch FX once per run (only needed for Brooklyn CAD→USD)
@@ -277,6 +286,20 @@ def main():
     print("Nick's top 5:", len(nicks_top5))
     print("FX available:", "YES" if fx else "NO")
 
+       print("Division Road top 5:", len(dr_top5))
+    print("Brooklyn Clothing top 5:", len(bc_top5))
+    print("Nick's top 5:", len(nicks_top5))
+    print("FX available:", "YES" if fx else "NO")
+
+    # If running in GitHub preview mode, PRINT full lists and stop (no Discord)
+    mode = (os.environ.get("OUTPUT_MODE") or "").lower()
+    if mode == "github":
+        print_top5("Division Road", dr_top5, DIVISIONROAD_URL, fx)
+        print_top5("Brooklyn Clothing", bc_top5, BROOKLYN_URL, fx)
+        print_top5("Nick's (10.5D RTS)", nicks_top5, NICKS_URL, fx)
+        return
+
+    # Otherwise (scheduled workflow), post to Discord if webhook is set
     webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
     if not webhook:
         print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
@@ -286,6 +309,9 @@ def main():
     send_discord_embed(webhook, payload)
     print("Discord message sent successfully.")
 
+    payload = build_discord_payload(dr_top5, bc_top5, nicks_top5, fx)
+    send_discord_embed(webhook, payload)
+    print("Discord message sent successfully.")
 
 if __name__ == "__main__":
     main()
