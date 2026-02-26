@@ -7,14 +7,24 @@ from bs4 import BeautifulSoup
 DIVISIONROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
 BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?grid_list=grid-view&sort_by=created-descending"
 
+# Nick's: Ready-to-ship + Free shipping, filtered to 10.5 D
+NICKS_URL = (
+    "https://nicksboots.com/collections/ready-to-ship-free-shipping"
+    "?sort_by=created-descending"
+    "&filter.p.m.custom.left_boot_length=10.5"
+    "&filter.p.m.custom.left_boot_width=D"
+)
+
 DIVISIONROAD_TARGET_TITLE = "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio"
 
+# “Include” words for Brooklyn (keeps it footwear-ish)
 INCLUDE_WORDS = [
     "boot", "moc", "chukka", "shoe", "oxford", "derby", "blucher", "loafer",
     "slip-on", "slipper", "monkey", "service", "chelsea", "roper", "engineer",
     "brogue", "wingtip"
 ]
 
+# “Exclude” words for all sites (filters obvious non-footwear)
 EXCLUDE_WORDS = [
     "garment bag", "bag", "tote", "shoe tree", "tree", "gift card", "gift",
     "belt", "wallet", "keychain", "lace", "laces", "brush", "cream", "wax",
@@ -28,15 +38,28 @@ def norm(s: str) -> str:
     return s
 
 
-def is_footwear_title(title: str) -> bool:
+def is_footwear_title(collection_url: str, title: str) -> bool:
+    """
+    Division Road + Nick's: accept anything in the curated boot collection unless excluded.
+    Brooklyn: require INCLUDE_WORDS (plus not excluded) to avoid accessories/noise.
+    """
     t = title.lower()
+
     if any(bad in t for bad in EXCLUDE_WORDS):
         return False
+
+    if "divisionroadinc.com" in collection_url:
+        return True
+
+    if "nicksboots.com" in collection_url:
+        return True
+
+    # Brooklyn (and any other site): require a footwear keyword
     return any(good in t for good in INCLUDE_WORDS)
 
 
 def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.6"}, timeout=30)
+    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/1.8"}, timeout=30)
     r.raise_for_status()
     return r.text
 
@@ -117,7 +140,7 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         if not title or len(title) < 4:
             continue
 
-        if not is_footwear_title(title):
+        if not is_footwear_title(collection_url, title):
             continue
 
         # Best-effort price capture near the link/card
@@ -156,7 +179,7 @@ def format_price(collection_url: str, price_str: str | None, fx: tuple[float, st
         usd = cad * usd_per_cad
         return f"{price_str} CAD (~${usd:,.2f} USD @ {rate_date})"
 
-    # Division Road is USD
+    # Division Road + Nick's are USD
     return price_str
 
 
@@ -165,12 +188,7 @@ def _truncate(s: str, max_len: int) -> str:
     return s if len(s) <= max_len else s[: max_len - 1] + "…"
 
 
-def build_discord_payload(dr_top5, bc_top5, fx):
-    """
-    Build Discord payload using embeds in a way that respects Discord limits:
-    - Field name <= 256 chars
-    - Field value <= 1024 chars
-    """
+def build_discord_payload(dr_top5, bc_top5, nicks_top5, fx):
     # Header embed
     embeds = [
         {
@@ -178,37 +196,26 @@ def build_discord_payload(dr_top5, bc_top5, fx):
             "description": (
                 "Sorted by **Date: new → old**.\n"
                 f"Division Road: <{DIVISIONROAD_URL}>\n"
-                f"Brooklyn Clothing: <{BROOKLYN_URL}>"
+                f"Brooklyn Clothing: <{BROOKLYN_URL}>\n"
+                f"Nick’s (10.5D RTS): <{NICKS_URL}>"
             ),
         }
     ]
 
     # --- Division Road embed ---
-    dr_desc = ""
     if dr_top5:
         latest_norm = norm(dr_top5[0][0])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
         dr_desc = f"Target still #1? {'✅ YES' if latest_norm == target_norm else '🚨 NO'}"
     else:
-        dr_desc = "No footwear entries found."
+        dr_desc = "No entries found."
 
-    dr_embed = {
-        "title": "🏷️ Division Road — Top 5",
-        "description": dr_desc,
-        "fields": [],
-    }
-
-    if dr_top5:
-        for i, (title, url, price_raw) in enumerate(dr_top5, start=1):
-            price_fmt = format_price(DIVISIONROAD_URL, price_raw, fx)
-            name = _truncate(f"{i}. {title}", 256)
-            value = f"<{url}>"
-            if price_fmt:
-                value = f"{price_fmt}\n<{url}>"
-            dr_embed["fields"].append(
-                {"name": name, "value": _truncate(value, 1024), "inline": False}
-            )
-
+    dr_embed = {"title": "🏷️ Division Road — Top 5", "description": dr_desc, "fields": []}
+    for i, (title, url, price_raw) in enumerate(dr_top5, start=1):
+        price_fmt = format_price(DIVISIONROAD_URL, price_raw, fx)
+        name = _truncate(f"{i}. {title}", 256)
+        value = f"{price_fmt}\n<{url}>" if price_fmt else f"<{url}>"
+        dr_embed["fields"].append({"name": name, "value": _truncate(value, 1024), "inline": False})
     embeds.append(dr_embed)
 
     # --- Brooklyn embed ---
@@ -218,35 +225,32 @@ def build_discord_payload(dr_top5, bc_top5, fx):
     else:
         bc_desc = "CAD→USD: **unavailable** (FX fetch failed)"
 
-    bc_embed = {
-        "title": "🏷️ Brooklyn Clothing — Top 5",
-        "description": bc_desc,
-        "fields": [],
-    }
-
-    if bc_top5:
-        for i, (title, url, price_raw) in enumerate(bc_top5, start=1):
-            price_fmt = format_price(BROOKLYN_URL, price_raw, fx)
-            name = _truncate(f"{i}. {title}", 256)
-            value = f"<{url}>"
-            if price_fmt:
-                value = f"{price_fmt}\n<{url}>"
-            bc_embed["fields"].append(
-                {"name": name, "value": _truncate(value, 1024), "inline": False}
-            )
-    else:
-        bc_embed["fields"].append(
-            {"name": "No footwear entries found", "value": "—", "inline": False}
-        )
-
+    bc_embed = {"title": "🏷️ Brooklyn Clothing — Top 5", "description": bc_desc, "fields": []}
+    for i, (title, url, price_raw) in enumerate(bc_top5, start=1):
+        price_fmt = format_price(BROOKLYN_URL, price_raw, fx)
+        name = _truncate(f"{i}. {title}", 256)
+        value = f"{price_fmt}\n<{url}>" if price_fmt else f"<{url}>"
+        bc_embed["fields"].append({"name": name, "value": _truncate(value, 1024), "inline": False})
+    if not bc_top5:
+        bc_embed["fields"].append({"name": "No entries found", "value": "—", "inline": False})
     embeds.append(bc_embed)
 
-    payload = {
-        "content": None,
-        "embeds": embeds,
-        "allowed_mentions": {"parse": []},
+    # --- Nick's embed ---
+    nicks_embed = {
+        "title": "🏷️ Nick’s Ready-to-Ship (10.5D) — Top 5",
+        "description": "Filtered to **10.5 D** via collection filters.",
+        "fields": [],
     }
-    return payload
+    for i, (title, url, price_raw) in enumerate(nicks_top5, start=1):
+        price_fmt = format_price(NICKS_URL, price_raw, fx)
+        name = _truncate(f"{i}. {title}", 256)
+        value = f"{price_fmt}\n<{url}>" if price_fmt else f"<{url}>"
+        nicks_embed["fields"].append({"name": name, "value": _truncate(value, 1024), "inline": False})
+    if not nicks_top5:
+        nicks_embed["fields"].append({"name": "No entries found", "value": "—", "inline": False})
+    embeds.append(nicks_embed)
+
+    return {"content": None, "embeds": embeds, "allowed_mentions": {"parse": []}}
 
 
 def send_discord_embed(webhook_url: str, payload: dict):
@@ -256,22 +260,21 @@ def send_discord_embed(webhook_url: str, payload: dict):
 
 
 def main():
-    # Fetch FX once per run
+    # Fetch FX once per run (only needed for Brooklyn CAD→USD)
     fx = None
     try:
         fx = get_cad_to_usd_rate_latest()
     except Exception as e:
         print("WARNING: Could not fetch latest CAD→USD rate. USD conversion will be unavailable.")
-        print(f"Reason: {e}")
-        print()
+        print(f"Reason: {e}\n")
 
-    # Scrape both pages
     dr_top5 = extract_top_entries(DIVISIONROAD_URL, fetch_html(DIVISIONROAD_URL), 5)
     bc_top5 = extract_top_entries(BROOKLYN_URL, fetch_html(BROOKLYN_URL), 5)
+    nicks_top5 = extract_top_entries(NICKS_URL, fetch_html(NICKS_URL), 5)
 
-    # Log summary in GitHub
     print("Division Road top 5:", len(dr_top5))
     print("Brooklyn Clothing top 5:", len(bc_top5))
+    print("Nick's top 5:", len(nicks_top5))
     print("FX available:", "YES" if fx else "NO")
 
     webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
@@ -279,7 +282,7 @@ def main():
         print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
         return
 
-    payload = build_discord_payload(dr_top5, bc_top5, fx)
+    payload = build_discord_payload(dr_top5, bc_top5, nicks_top5, fx)
     send_discord_embed(webhook, payload)
     print("Discord message sent successfully.")
 
