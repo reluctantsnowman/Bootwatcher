@@ -19,16 +19,13 @@ IRONHEART_DE_URL = "https://ironheartgermany.com/collections/boots?sort_by=creat
 IRONHEART_UK_URL = "https://ironheart.co.uk/collections/wesco?sort_by=created-descending"
 
 DIVISIONROAD_TARGET_TITLE = "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio"
-
 STATE_FILE = "state_last_top5.json"
 
-# “Include” words for noisier collections (Brooklyn)
 INCLUDE_WORDS = [
     "boot", "boots", "moc", "chukka", "shoe", "shoes", "oxford", "derby", "blucher", "loafer",
     "slip-on", "slipper", "monkey", "service", "chelsea", "roper", "engineer", "brogue", "wingtip"
 ]
 
-# “Exclude” words for all sites (filters obvious non-footwear)
 EXCLUDE_WORDS = [
     "garment bag", "bag", "tote", "shoe tree", "tree", "gift card", "gift",
     "belt", "wallet", "billfold", "key clip", "keychain", "key chain", "key fob",
@@ -44,7 +41,6 @@ def norm(s: str) -> str:
 
 
 def pick_bs4_parser() -> str:
-    # Use lxml if installed (faster), else fallback
     try:
         import lxml  # noqa: F401
         return "lxml"
@@ -56,12 +52,6 @@ BS4_PARSER = pick_bs4_parser()
 
 
 def is_footwear_title(collection_url: str, title: str) -> bool:
-    """
-    Division Road: accept anything in Boots collection unless excluded.
-    Brooklyn: require INCLUDE_WORDS (plus not excluded).
-    Nick's: require footwear keywords because RTS can include accessories.
-    Iron Heart DE/UK: require boot/boots keyword (keeps out random non-boot items).
-    """
     t = title.lower()
 
     if any(bad in t for bad in EXCLUDE_WORDS):
@@ -77,13 +67,12 @@ def is_footwear_title(collection_url: str, title: str) -> bool:
     if "ironheartgermany.com" in collection_url or "ironheart.co.uk" in collection_url:
         return ("boot" in t) or ("boots" in t)
 
-    # Brooklyn (and anything else): require general footwear keywords
     return any(good in t for good in INCLUDE_WORDS)
 
 
 def build_session() -> requests.Session:
     s = requests.Session()
-    s.headers.update({"User-Agent": "top5-footwear-bot/3.0"})
+    s.headers.update({"User-Agent": "top5-footwear-bot/3.1"})
     return s
 
 
@@ -94,10 +83,6 @@ def fetch_html(session: requests.Session, url: str) -> str:
 
 
 def fetch_all_html(session: requests.Session, urls: list[str], max_workers: int = 6) -> dict[str, str]:
-    """
-    Fetch multiple URLs concurrently.
-    Returns {url: html}. Raises on complete failure of a URL.
-    """
     out: dict[str, str] = {}
     errors: dict[str, str] = {}
 
@@ -111,7 +96,6 @@ def fetch_all_html(session: requests.Session, urls: list[str], max_workers: int 
                 errors[u] = str(e)
 
     if errors:
-        # Fail fast with useful info
         msg = "One or more fetches failed:\n" + "\n".join([f"- {u}: {err}" for u, err in errors.items()])
         raise RuntimeError(msg)
 
@@ -126,10 +110,6 @@ def make_absolute_url(collection_url: str, href: str) -> str:
 
 
 def parse_money(price_str: str):
-    """
-    Parse a price string like '$594', '$1,475.00', '€399.00', '£725'
-    Returns: (currency_code, amount_float) or (None, None)
-    """
     if not price_str:
         return None, None
     s = price_str.strip()
@@ -148,15 +128,11 @@ def parse_money(price_str: str):
     if sym == "£":
         return "GBP", amt
     if sym == "$":
-        return "USD", amt  # Brooklyn handled separately (CAD)
+        return "USD", amt
     return None, None
 
 
 def get_fx_map(session: requests.Session) -> dict:
-    """
-    One FX request total:
-    Get USD->(CAD,EUR,GBP), then invert to get (CAD/EUR/GBP)->USD.
-    """
     fx_map = {}
     try:
         url = "https://api.frankfurter.dev/v1/latest?from=USD&to=CAD,EUR,GBP"
@@ -166,7 +142,6 @@ def get_fx_map(session: requests.Session) -> dict:
         rate_date = str(data.get("date", "unknown"))
         rates = data.get("rates", {}) or {}
 
-        # rates["CAD"] = CAD per 1 USD  => USD per 1 CAD = 1 / rates["CAD"]
         for ccy in ("CAD", "EUR", "GBP"):
             v = rates.get(ccy)
             if v and float(v) != 0.0:
@@ -191,10 +166,8 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         if prod_url in seen:
             continue
 
-        # 1) Try link text
         title = norm(a.get_text(" ", strip=True))
 
-        # 2) If empty (image links), search parent card
         if not title:
             card = a.find_parent()
             for _ in range(10):
@@ -225,7 +198,6 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         if not is_footwear_title(collection_url, title):
             continue
 
-        # Best-effort price capture near the link/card (supports $, €, £)
         price_raw = None
         card = a.find_parent()
         for _ in range(10):
@@ -247,10 +219,6 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
 
 
 def format_price(collection_url: str, price_str: str | None, fx_map: dict) -> str | None:
-    """
-    Converts non-USD currencies to USD using latest FX.
-    Brooklyn "$" is treated as CAD and converted to USD.
-    """
     if not price_str:
         return None
 
@@ -269,10 +237,8 @@ def format_price(collection_url: str, price_str: str | None, fx_map: dict) -> st
     if not fx:
         return f"{price_str} {ccy} (USD unavailable)"
 
-    usd_per = fx["rate"]
-    rate_date = fx["date"]
-    usd_amt = amt * usd_per
-    return f"{price_str} {ccy} (~${usd_amt:,.2f} USD @ {rate_date})"
+    usd_amt = amt * fx["rate"]
+    return f"{price_str} {ccy} (~${usd_amt:,.2f} USD @ {fx['date']})"
 
 
 def load_state() -> dict:
@@ -288,7 +254,6 @@ def load_state() -> dict:
         with open(STATE_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        # Legacy: list of {title,url}
         if isinstance(data, list):
             urls = []
             for it in data:
@@ -296,22 +261,14 @@ def load_state() -> dict:
                     u = (it.get("url") or "").strip()
                     if u:
                         urls.append(u)
+            return {"saved_at_utc": None, "sites": {"divisionroad": {"urls": urls}}}
 
-            return {
-                "saved_at_utc": None,
-                "sites": {
-                    "divisionroad": {"urls": urls}
-                },
-            }
-
-        # New format: dict
         if isinstance(data, dict):
             data.setdefault("saved_at_utc", None)
             data.setdefault("sites", {})
             return data
 
         return {"saved_at_utc": None, "sites": {}}
-
     except Exception:
         return {"saved_at_utc": None, "sites": {}}
 
@@ -330,7 +287,7 @@ def compute_new_flags(site_key: str, items, prev_state: dict):
                 "title": title,
                 "url": url,
                 "price_raw": price_raw,
-                "is_new": (url not in prev_urls) if prev_urls else False,  # no baseline => no NEW spam
+                "is_new": (url not in prev_urls) if prev_urls else False,
             }
         )
     return out
@@ -353,39 +310,51 @@ def _truncate(s: str, max_len: int) -> str:
     return s if len(s) <= max_len else s[: max_len - 1] + "…"
 
 
+def compact_lines(site_url: str, items, fx_map: dict, max_title: int = 90) -> list[str]:
+    """
+    Compact list lines for Discord embed description.
+    """
+    lines = [f"<{site_url}>", ""]
+    for i, it in enumerate(items, start=1):
+        new_tag = "🆕 NEW " if it["is_new"] else ""
+        title = _truncate(it["title"], max_title)
+        price = format_price(site_url, it["price_raw"], fx_map)
+        if price:
+            lines.append(f"**{i}.** {new_tag}{title} — {price}")
+        else:
+            lines.append(f"**{i}.** {new_tag}{title}")
+        lines.append(f"<{it['url']}>")
+    return lines
+
+
 def build_discord_payload(all_sites, fx_map: dict, prev_saved_at_utc: str | None):
-    header_lines = ["Sorted by **Date: new → old**."]
+    """
+    Uses compact embed descriptions to stay under Discord 6000 limit per-embed.
+    """
+    header = []
+    header.append("Sorted by **Date: new → old**.")
+    if prev_saved_at_utc:
+        header.append(f"Baseline from: **{prev_saved_at_utc} UTC**")
+    else:
+        header.append("Baseline: **none yet**")
+
+    embeds = [{"title": "🧾 Boots Watch — Top 5 Newest", "description": "\n".join(header)}]
+
+    # Discord safe max: keep descriptions well under 4096
+    DESC_MAX = 3800
+
     for s in all_sites:
-        header_lines.append(f"{s['name']}: <{s['url']}>")
-    header_lines.append(f"\nBaseline from: **{prev_saved_at_utc} UTC**" if prev_saved_at_utc else "\nBaseline: **none yet**")
+        lines = []
+        if s.get("desc"):
+            lines.append(s["desc"])
+            lines.append("")
+        lines.extend(compact_lines(s["url"], s["items"], fx_map))
 
-    embeds = [{"title": "🧾 Boots Watch — Top 5 Newest", "description": "\n".join(header_lines)}]
+        desc = "\n".join(lines)
+        if len(desc) > DESC_MAX:
+            desc = desc[:DESC_MAX - 30].rstrip() + "\n…(truncated)"
 
-    for s in all_sites:
-        emb = {
-            "title": f"🏷️ {s['name']} — Top 5",
-            "description": s.get("desc", ""),
-            "fields": [],
-        }
-        for i, it in enumerate(s["items"], start=1):
-            price_fmt = format_price(s["url"], it["price_raw"], fx_map)
-            new_tag = "🆕 NEW — " if it["is_new"] else ""
-            field_name = _truncate(f"{i}. {it['title']}", 256)
-
-            value_lines = []
-            if price_fmt:
-                value_lines.append(f"{new_tag}{price_fmt}" if new_tag else price_fmt)
-            else:
-                if it["is_new"]:
-                    value_lines.append("🆕 NEW")
-            value_lines.append(f"<{it['url']}>")
-
-            emb["fields"].append({"name": field_name, "value": _truncate("\n".join(value_lines), 1024), "inline": False})
-
-        if not s["items"]:
-            emb["fields"].append({"name": "No entries found", "value": "—", "inline": False})
-
-        embeds.append(emb)
+        embeds.append({"title": f"🏷️ {s['name']} — Top 5", "description": desc})
 
     return {"content": None, "embeds": embeds, "allowed_mentions": {"parse": []}}
 
@@ -401,30 +370,23 @@ def main():
     prev_saved_at = prev_state.get("saved_at_utc")
 
     urls = [DIVISIONROAD_URL, BROOKLYN_URL, NICKS_URL, IRONHEART_DE_URL, IRONHEART_UK_URL]
-
     session = build_session()
 
-    # 1) FX (single call)
     fx_map = get_fx_map(session)
-
-    # 2) Fetch all pages concurrently
     html_map = fetch_all_html(session, urls, max_workers=6)
 
-    # 3) Parse
     dr_raw = extract_top_entries(DIVISIONROAD_URL, html_map[DIVISIONROAD_URL], 5)
     bc_raw = extract_top_entries(BROOKLYN_URL, html_map[BROOKLYN_URL], 5)
     n_raw = extract_top_entries(NICKS_URL, html_map[NICKS_URL], 5)
     ih_de_raw = extract_top_entries(IRONHEART_DE_URL, html_map[IRONHEART_DE_URL], 5)
     ih_uk_raw = extract_top_entries(IRONHEART_UK_URL, html_map[IRONHEART_UK_URL], 5)
 
-    # 4) NEW flags vs baseline
     dr_items = compute_new_flags("divisionroad", dr_raw, prev_state)
     bc_items = compute_new_flags("brooklyn", bc_raw, prev_state)
     n_items = compute_new_flags("nicks", n_raw, prev_state)
     ih_de_items = compute_new_flags("ironheart_de", ih_de_raw, prev_state)
     ih_uk_items = compute_new_flags("ironheart_uk", ih_uk_raw, prev_state)
 
-    # Descriptions for Discord
     if dr_items:
         latest_norm = norm(dr_items[0]["title"])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
@@ -446,7 +408,6 @@ def main():
     print("FX available:", ",".join(sorted(fx_map.keys())) if fx_map else "NO")
     print("BS4 parser:", BS4_PARSER)
 
-    # Manual mode: print only
     mode = (os.environ.get("OUTPUT_MODE") or "").lower()
     if mode == "github":
         print_top5("Division Road", dr_items, DIVISIONROAD_URL, fx_map)
@@ -470,7 +431,6 @@ def main():
         else:
             print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
 
-    # Save baseline if requested
     save_flag = (os.environ.get("SAVE_STATE") or "").strip().lower() in ("1", "true", "yes")
     if save_flag:
         new_state = {
