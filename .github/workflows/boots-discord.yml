@@ -7,11 +7,16 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -23,8 +28,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
-      - name: Run boots watcher (posts to Discord)
+      - name: Run boots watcher (posts to Discord + updates state)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SAVE_STATE: 1
         run: python Boots_top5.py
+
+      - name: Commit updated state file (if changed)
+        run: |
+          git config user.name "boots-watcher-bot"
+          git config user.email "boots-watcher-bot@users.noreply.github.com"
+
+          # Only commit if the state file changed
+          if git status --porcelain | grep -q "state_last_top5.json"; then
+            git add state_last_top5.json
+            git commit -m "Update boots watcher state"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No state change to commit."
+          fi
