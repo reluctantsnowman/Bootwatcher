@@ -4,6 +4,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- URLs (sorted: Date, new -> old) ---
 DIVISIONROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
@@ -14,7 +15,6 @@ NICKS_URL = (
     "&filter.p.m.custom.left_boot_length=10.5"
     "&filter.p.m.custom.left_boot_width=D"
 )
-
 IRONHEART_DE_URL = "https://ironheartgermany.com/collections/boots?sort_by=created-descending&filter.p.product_type=Boots"
 IRONHEART_UK_URL = "https://ironheart.co.uk/collections/wesco?sort_by=created-descending"
 
@@ -25,8 +25,7 @@ STATE_FILE = "state_last_top5.json"
 # “Include” words for noisier collections (Brooklyn)
 INCLUDE_WORDS = [
     "boot", "boots", "moc", "chukka", "shoe", "shoes", "oxford", "derby", "blucher", "loafer",
-    "slip-on", "slipper", "monkey", "service", "chelsea", "roper", "engineer",
-    "brogue", "wingtip"
+    "slip-on", "slipper", "monkey", "service", "chelsea", "roper", "engineer", "brogue", "wingtip"
 ]
 
 # “Exclude” words for all sites (filters obvious non-footwear)
@@ -39,9 +38,21 @@ EXCLUDE_WORDS = [
 
 
 def norm(s: str) -> str:
-    s = s.replace("\u2019", "'")
+    s = (s or "").replace("\u2019", "'")
     s = re.sub(r"\s+", " ", s).strip()
     return s
+
+
+def pick_bs4_parser() -> str:
+    # Use lxml if installed (faster), else fallback
+    try:
+        import lxml  # noqa: F401
+        return "lxml"
+    except Exception:
+        return "html.parser"
+
+
+BS4_PARSER = pick_bs4_parser()
 
 
 def is_footwear_title(collection_url: str, title: str) -> bool:
@@ -49,7 +60,7 @@ def is_footwear_title(collection_url: str, title: str) -> bool:
     Division Road: accept anything in Boots collection unless excluded.
     Brooklyn: require INCLUDE_WORDS (plus not excluded).
     Nick's: require footwear keywords because RTS can include accessories.
-    Iron Heart DE/UK: require boot/boots keywords (collections are mostly boots, but this avoids accessories).
+    Iron Heart DE/UK: require boot/boots keyword (keeps out random non-boot items).
     """
     t = title.lower()
 
@@ -70,10 +81,41 @@ def is_footwear_title(collection_url: str, title: str) -> bool:
     return any(good in t for good in INCLUDE_WORDS)
 
 
-def fetch_html(url: str) -> str:
-    r = requests.get(url, headers={"User-Agent": "top5-footwear-bot/2.3"}, timeout=30)
+def build_session() -> requests.Session:
+    s = requests.Session()
+    s.headers.update({"User-Agent": "top5-footwear-bot/3.0"})
+    return s
+
+
+def fetch_html(session: requests.Session, url: str) -> str:
+    r = session.get(url, timeout=30)
     r.raise_for_status()
     return r.text
+
+
+def fetch_all_html(session: requests.Session, urls: list[str], max_workers: int = 6) -> dict[str, str]:
+    """
+    Fetch multiple URLs concurrently.
+    Returns {url: html}. Raises on complete failure of a URL.
+    """
+    out: dict[str, str] = {}
+    errors: dict[str, str] = {}
+
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        fut_map = {ex.submit(fetch_html, session, u): u for u in urls}
+        for fut in as_completed(fut_map):
+            u = fut_map[fut]
+            try:
+                out[u] = fut.result()
+            except Exception as e:
+                errors[u] = str(e)
+
+    if errors:
+        # Fail fast with useful info
+        msg = "One or more fetches failed:\n" + "\n".join([f"- {u}: {err}" for u, err in errors.items()])
+        raise RuntimeError(msg)
+
+    return out
 
 
 def make_absolute_url(collection_url: str, href: str) -> str:
@@ -91,12 +133,9 @@ def parse_money(price_str: str):
     if not price_str:
         return None, None
     s = price_str.strip()
-
-    # Capture symbol + number
     m = re.search(r"([€£$])\s?(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)", s)
     if not m:
         return None, None
-
     sym = m.group(1)
     amt_s = m.group(2).replace(",", "")
     try:
@@ -104,36 +143,45 @@ def parse_money(price_str: str):
     except ValueError:
         return None, None
 
-    # Currency code by symbol (site-specific $ handled later)
     if sym == "€":
         return "EUR", amt
     if sym == "£":
         return "GBP", amt
     if sym == "$":
-        return "USD", amt  # may be CAD for Brooklyn, handled later
+        return "USD", amt  # Brooklyn handled separately (CAD)
     return None, None
 
 
-def get_fx_rate_latest(from_ccy: str, to_ccy: str = "USD") -> tuple[float, str]:
+def get_fx_map(session: requests.Session) -> dict:
     """
-    Fetch latest FX rate (no key) from Frankfurter.
-    Returns: (to_per_from, date)
+    One FX request total:
+    Get USD->(CAD,EUR,GBP), then invert to get (CAD/EUR/GBP)->USD.
     """
-    url = f"https://api.frankfurter.dev/v1/latest?from={from_ccy}&to={to_ccy}"
-    r = requests.get(url, timeout=30)
-    r.raise_for_status()
-    data = r.json()
-    rate = float(data["rates"][to_ccy])
-    rate_date = str(data.get("date", "unknown"))
-    return rate, rate_date
+    fx_map = {}
+    try:
+        url = "https://api.frankfurter.dev/v1/latest?from=USD&to=CAD,EUR,GBP"
+        r = session.get(url, timeout=30)
+        r.raise_for_status()
+        data = r.json()
+        rate_date = str(data.get("date", "unknown"))
+        rates = data.get("rates", {}) or {}
+
+        # rates["CAD"] = CAD per 1 USD  => USD per 1 CAD = 1 / rates["CAD"]
+        for ccy in ("CAD", "EUR", "GBP"):
+            v = rates.get(ccy)
+            if v and float(v) != 0.0:
+                fx_map[ccy] = {"rate": 1.0 / float(v), "date": rate_date}
+    except Exception as e:
+        print(f"WARNING: FX fetch failed (USD base). Reason: {e}")
+
+    return fx_map
 
 
 def extract_top_entries(collection_url: str, html: str, n: int = 5):
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(html, BS4_PARSER)
     seen = set()
     out = []
 
-    # Find product links
     for a in soup.select("a[href*='/products/']"):
         href = (a.get("href") or "").strip()
         if not href or "/products/" not in href:
@@ -143,10 +191,10 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
         if prod_url in seen:
             continue
 
-        # 1) Try link text first
+        # 1) Try link text
         title = norm(a.get_text(" ", strip=True))
 
-        # 2) If empty (common on image links), search within the product card
+        # 2) If empty (image links), search parent card
         if not title:
             card = a.find_parent()
             for _ in range(10):
@@ -200,7 +248,7 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
 
 def format_price(collection_url: str, price_str: str | None, fx_map: dict) -> str | None:
     """
-    Returns a display string. Converts non-USD currencies to USD using latest FX.
+    Converts non-USD currencies to USD using latest FX.
     Brooklyn "$" is treated as CAD and converted to USD.
     """
     if not price_str:
@@ -210,11 +258,10 @@ def format_price(collection_url: str, price_str: str | None, fx_map: dict) -> st
     if ccy is None or amt is None:
         return price_str
 
-    # Brooklyn: treat $ as CAD, not USD
+    # Brooklyn: treat $ as CAD
     if "brooklynclothing.com" in collection_url and ccy == "USD":
         ccy = "CAD"
 
-    # If already USD, return as-is
     if ccy == "USD":
         return price_str
 
@@ -257,7 +304,7 @@ def compute_new_flags(site_key: str, items, prev_state: dict):
                 "title": title,
                 "url": url,
                 "price_raw": price_raw,
-                "is_new": (url not in prev_urls) if prev_urls else False,  # first baseline -> don't spam NEW
+                "is_new": (url not in prev_urls) if prev_urls else False,  # no baseline => no NEW spam
             }
         )
     return out
@@ -281,17 +328,10 @@ def _truncate(s: str, max_len: int) -> str:
 
 
 def build_discord_payload(all_sites, fx_map: dict, prev_saved_at_utc: str | None):
-    """
-    all_sites: list of dicts [{key, name, url, items, desc(optional)}]
-    Creates 1 header embed + 1 embed per site (safe vs Discord length limits).
-    """
     header_lines = ["Sorted by **Date: new → old**."]
     for s in all_sites:
         header_lines.append(f"{s['name']}: <{s['url']}>")
-    if prev_saved_at_utc:
-        header_lines.append(f"\nBaseline from: **{prev_saved_at_utc} UTC**")
-    else:
-        header_lines.append("\nBaseline: **none yet**")
+    header_lines.append(f"\nBaseline from: **{prev_saved_at_utc} UTC**" if prev_saved_at_utc else "\nBaseline: **none yet**")
 
     embeds = [{"title": "🧾 Boots Watch — Top 5 Newest", "description": "\n".join(header_lines)}]
 
@@ -305,6 +345,7 @@ def build_discord_payload(all_sites, fx_map: dict, prev_saved_at_utc: str | None
             price_fmt = format_price(s["url"], it["price_raw"], fx_map)
             new_tag = "🆕 NEW — " if it["is_new"] else ""
             field_name = _truncate(f"{i}. {it['title']}", 256)
+
             value_lines = []
             if price_fmt:
                 value_lines.append(f"{new_tag}{price_fmt}" if new_tag else price_fmt)
@@ -312,7 +353,9 @@ def build_discord_payload(all_sites, fx_map: dict, prev_saved_at_utc: str | None
                 if it["is_new"]:
                     value_lines.append("🆕 NEW")
             value_lines.append(f"<{it['url']}>")
+
             emb["fields"].append({"name": field_name, "value": _truncate("\n".join(value_lines), 1024), "inline": False})
+
         if not s["items"]:
             emb["fields"].append({"name": "No entries found", "value": "—", "inline": False})
 
@@ -321,8 +364,8 @@ def build_discord_payload(all_sites, fx_map: dict, prev_saved_at_utc: str | None
     return {"content": None, "embeds": embeds, "allowed_mentions": {"parse": []}}
 
 
-def send_discord_embed(webhook_url: str, payload: dict):
-    resp = requests.post(webhook_url, json=payload, timeout=30)
+def send_discord_embed(session: requests.Session, webhook_url: str, payload: dict):
+    resp = session.post(webhook_url, json=payload, timeout=30)
     if resp.status_code not in (200, 204):
         raise RuntimeError(f"Discord webhook error {resp.status_code}: {resp.text}")
 
@@ -331,31 +374,31 @@ def main():
     prev_state = load_state()
     prev_saved_at = prev_state.get("saved_at_utc")
 
-    # FX map (only fetch what we need)
-    fx_map = {}
-    # CAD->USD, EUR->USD, GBP->USD
-    for ccy in ("CAD", "EUR", "GBP"):
-        try:
-            rate, date = get_fx_rate_latest(ccy, "USD")
-            fx_map[ccy] = {"rate": rate, "date": date}
-        except Exception as e:
-            print(f"WARNING: Could not fetch latest {ccy}→USD rate. Reason: {e}")
+    urls = [DIVISIONROAD_URL, BROOKLYN_URL, NICKS_URL, IRONHEART_DE_URL, IRONHEART_UK_URL]
 
-    # Scrape raw top5
-    dr_raw = extract_top_entries(DIVISIONROAD_URL, fetch_html(DIVISIONROAD_URL), 5)
-    bc_raw = extract_top_entries(BROOKLYN_URL, fetch_html(BROOKLYN_URL), 5)
-    n_raw = extract_top_entries(NICKS_URL, fetch_html(NICKS_URL), 5)
-    ih_de_raw = extract_top_entries(IRONHEART_DE_URL, fetch_html(IRONHEART_DE_URL), 5)
-    ih_uk_raw = extract_top_entries(IRONHEART_UK_URL, fetch_html(IRONHEART_UK_URL), 5)
+    session = build_session()
 
-    # Mark NEW
+    # 1) FX (single call)
+    fx_map = get_fx_map(session)
+
+    # 2) Fetch all pages concurrently
+    html_map = fetch_all_html(session, urls, max_workers=6)
+
+    # 3) Parse
+    dr_raw = extract_top_entries(DIVISIONROAD_URL, html_map[DIVISIONROAD_URL], 5)
+    bc_raw = extract_top_entries(BROOKLYN_URL, html_map[BROOKLYN_URL], 5)
+    n_raw = extract_top_entries(NICKS_URL, html_map[NICKS_URL], 5)
+    ih_de_raw = extract_top_entries(IRONHEART_DE_URL, html_map[IRONHEART_DE_URL], 5)
+    ih_uk_raw = extract_top_entries(IRONHEART_UK_URL, html_map[IRONHEART_UK_URL], 5)
+
+    # 4) NEW flags vs baseline
     dr_items = compute_new_flags("divisionroad", dr_raw, prev_state)
     bc_items = compute_new_flags("brooklyn", bc_raw, prev_state)
     n_items = compute_new_flags("nicks", n_raw, prev_state)
     ih_de_items = compute_new_flags("ironheart_de", ih_de_raw, prev_state)
     ih_uk_items = compute_new_flags("ironheart_uk", ih_uk_raw, prev_state)
 
-    # Division Road target indicator (for Discord desc)
+    # Descriptions for Discord
     if dr_items:
         latest_norm = norm(dr_items[0]["title"])
         target_norm = norm(DIVISIONROAD_TARGET_TITLE)
@@ -363,11 +406,8 @@ def main():
     else:
         dr_desc = "No entries found."
 
-    # Brooklyn FX line (for Discord desc)
     if fx_map.get("CAD"):
-        cad_rate = fx_map["CAD"]["rate"]
-        cad_date = fx_map["CAD"]["date"]
-        bc_desc = f"CAD→USD: 1 CAD = **{cad_rate:.4f} USD** (as of {cad_date})"
+        bc_desc = f"CAD→USD: 1 CAD = **{fx_map['CAD']['rate']:.4f} USD** (as of {fx_map['CAD']['date']})"
     else:
         bc_desc = "CAD→USD: **unavailable** (FX fetch failed)"
 
@@ -378,8 +418,9 @@ def main():
     print("Iron Heart Germany top 5:", len(ih_de_items))
     print("Iron Heart UK top 5:", len(ih_uk_items))
     print("FX available:", ",".join(sorted(fx_map.keys())) if fx_map else "NO")
+    print("BS4 parser:", BS4_PARSER)
 
-    # Manual GitHub preview mode: PRINT (no Discord)
+    # Manual mode: print only
     mode = (os.environ.get("OUTPUT_MODE") or "").lower()
     if mode == "github":
         print_top5("Division Road", dr_items, DIVISIONROAD_URL, fx_map)
@@ -387,20 +428,18 @@ def main():
         print_top5("Nick's (10.5D RTS)", n_items, NICKS_URL, fx_map)
         print_top5("Iron Heart Germany", ih_de_items, IRONHEART_DE_URL, fx_map)
         print_top5("Iron Heart UK (Wesco)", ih_uk_items, IRONHEART_UK_URL, fx_map)
-
     else:
-        # Scheduled mode: Discord if webhook set
         webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
         if webhook:
             sites = [
                 {"key": "divisionroad", "name": "Division Road", "url": DIVISIONROAD_URL, "items": dr_items, "desc": dr_desc},
                 {"key": "brooklyn", "name": "Brooklyn Clothing", "url": BROOKLYN_URL, "items": bc_items, "desc": bc_desc},
                 {"key": "nicks", "name": "Nick’s Ready-to-Ship (10.5D)", "url": NICKS_URL, "items": n_items, "desc": "Filtered to **10.5 D**."},
-                {"key": "ironheart_de", "name": "Iron Heart Germany", "url": IRONHEART_DE_URL, "items": ih_de_items, "desc": "Prices shown in EUR with USD conversion when available."},
-                {"key": "ironheart_uk", "name": "Iron Heart UK (Wesco)", "url": IRONHEART_UK_URL, "items": ih_uk_items, "desc": "Prices shown in GBP with USD conversion when available."},
+                {"key": "ironheart_de", "name": "Iron Heart Germany", "url": IRONHEART_DE_URL, "items": ih_de_items, "desc": "Prices in EUR with USD conversion when available."},
+                {"key": "ironheart_uk", "name": "Iron Heart UK (Wesco)", "url": IRONHEART_UK_URL, "items": ih_uk_items, "desc": "Prices in GBP with USD conversion when available."},
             ]
             payload = build_discord_payload(sites, fx_map, prev_saved_at)
-            send_discord_embed(webhook, payload)
+            send_discord_embed(session, webhook, payload)
             print("Discord message sent successfully.")
         else:
             print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
