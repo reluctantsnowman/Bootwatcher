@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from urllib.parse import urlsplit, urlunsplit
 
 # --- URLs (sorted: Date, new -> old) ---
 DIVISIONROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
@@ -40,6 +41,27 @@ def norm(s: str) -> str:
     return s
 
 
+def canonical_url(u: str) -> str:
+    """
+    Make URLs comparable across runs by removing volatile parts:
+    - strip query and fragments (?variant=..., utm_*, #...)
+    - normalize hostname (lowercase, remove www.)
+    - strip trailing slash
+    """
+    u = (u or "").strip()
+    if not u:
+        return u
+    parts = urlsplit(u)
+    scheme = parts.scheme.lower() if parts.scheme else "https"
+    netloc = parts.netloc.lower()
+    if netloc.startswith("www."):
+        netloc = netloc[4:]
+    path = parts.path or ""
+    if path != "/" and path.endswith("/"):
+        path = path[:-1]
+    return urlunsplit((scheme, netloc, path, "", ""))
+
+
 def pick_bs4_parser() -> str:
     try:
         import lxml  # noqa: F401
@@ -72,7 +94,7 @@ def is_footwear_title(collection_url: str, title: str) -> bool:
 
 def build_session() -> requests.Session:
     s = requests.Session()
-    s.headers.update({"User-Agent": "top5-footwear-bot/3.2"})
+    s.headers.update({"User-Agent": "top5-footwear-bot/3.3"})
     return s
 
 
@@ -110,10 +132,6 @@ def make_absolute_url(collection_url: str, href: str) -> str:
 
 
 def parse_money_symbol_amount(price_str: str):
-    """
-    Parse a price string like '$594', '$1,475.00', '€399.00', '£725'
-    Returns: (symbol, amount_float) or (None, None)
-    """
     if not price_str:
         return None, None
     s = price_str.strip()
@@ -130,35 +148,23 @@ def parse_money_symbol_amount(price_str: str):
 
 
 def price_context(collection_url: str, price_raw: str | None):
-    """
-    Normalize price into (currency_code, amount) for comparing vs prior state.
-    Brooklyn's '$' is treated as CAD.
-    """
     if not price_raw:
         return None, None
-
     sym, amt = parse_money_symbol_amount(price_raw)
     if sym is None or amt is None:
         return None, None
-
     if sym == "€":
         return "EUR", amt
     if sym == "£":
         return "GBP", amt
     if sym == "$":
-        # Brooklyn displays $ but it's CAD
         if "brooklynclothing.com" in collection_url:
             return "CAD", amt
         return "USD", amt
-
     return None, None
 
 
 def get_fx_map(session: requests.Session) -> dict:
-    """
-    One FX request:
-    Get USD->(CAD,EUR,GBP), then invert to get (CAD/EUR/GBP)->USD.
-    """
     fx_map = {}
     try:
         url = "https://api.frankfurter.dev/v1/latest?from=USD&to=CAD,EUR,GBP"
@@ -167,14 +173,12 @@ def get_fx_map(session: requests.Session) -> dict:
         data = r.json()
         rate_date = str(data.get("date", "unknown"))
         rates = data.get("rates", {}) or {}
-
         for ccy in ("CAD", "EUR", "GBP"):
             v = rates.get(ccy)
             if v and float(v) != 0.0:
                 fx_map[ccy] = {"rate": 1.0 / float(v), "date": rate_date}
     except Exception as e:
         print(f"WARNING: FX fetch failed (USD base). Reason: {e}")
-
     return fx_map
 
 
@@ -189,7 +193,9 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
             continue
 
         prod_url = make_absolute_url(collection_url, href)
-        if prod_url in seen:
+        prod_key = canonical_url(prod_url)
+
+        if not prod_key or prod_key in seen:
             continue
 
         title = norm(a.get_text(" ", strip=True))
@@ -236,7 +242,7 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
                 break
             card = card.find_parent()
 
-        seen.add(prod_url)
+        seen.add(prod_key)
         out.append((title, prod_url, price_raw))
         if len(out) >= n:
             break
@@ -245,24 +251,16 @@ def extract_top_entries(collection_url: str, html: str, n: int = 5):
 
 
 def format_price(collection_url: str, price_str: str | None, fx_map: dict) -> str | None:
-    """
-    Converts non-USD currencies to USD using latest FX.
-    Brooklyn "$" is treated as CAD and converted to USD.
-    """
     if not price_str:
         return None
-
     ccy, amt = price_context(collection_url, price_str)
     if ccy is None or amt is None:
         return price_str
-
     if ccy == "USD":
         return price_str
-
     fx = fx_map.get(ccy)
     if not fx:
         return f"{price_str} {ccy} (USD unavailable)"
-
     usd_amt = amt * fx["rate"]
     return f"{price_str} {ccy} (~${usd_amt:,.2f} USD @ {fx['date']})"
 
@@ -274,7 +272,7 @@ def load_state() -> dict:
       {
         "saved_at_utc": "...",
         "sites": {
-          "divisionroad": {"urls":[...], "prices":{"url":{"ccy":"USD","amt":123.0,"raw":"$123"}}},
+          "divisionroad": {"urls":[canonical_urls...], "prices":{canonical_url:{...}}},
           ...
         }
       }
@@ -292,24 +290,28 @@ def load_state() -> dict:
             urls = []
             for it in data:
                 if isinstance(it, dict):
-                    u = (it.get("url") or "").strip()
+                    u = canonical_url((it.get("url") or "").strip())
                     if u:
                         urls.append(u)
-            return {
-                "saved_at_utc": None,
-                "sites": {
-                    "divisionroad": {"urls": urls, "prices": {}}
-                },
-            }
+            return {"saved_at_utc": None, "sites": {"divisionroad": {"urls": urls, "prices": {}}}}
 
         if isinstance(data, dict):
             data.setdefault("saved_at_utc", None)
             data.setdefault("sites", {})
-            # Ensure structure
-            for _, s in (data.get("sites") or {}).items():
-                if isinstance(s, dict):
-                    s.setdefault("urls", [])
-                    s.setdefault("prices", {})
+            # migrate/normalize existing stored urls/prices to canonical form
+            for sk, s in (data.get("sites") or {}).items():
+                if not isinstance(s, dict):
+                    continue
+                s.setdefault("urls", [])
+                s.setdefault("prices", {})
+                s["urls"] = [canonical_url(u) for u in (s.get("urls") or []) if canonical_url(u)]
+                # prices keyed by canonical url
+                new_prices = {}
+                for u, pv in (s.get("prices") or {}).items():
+                    cu = canonical_url(u)
+                    if cu:
+                        new_prices[cu] = pv
+                s["prices"] = new_prices
             return data
 
         return {"saved_at_utc": None, "sites": {}}
@@ -323,14 +325,10 @@ def save_state(state: dict):
 
 
 def price_trend_symbol(prev_ccy, prev_amt, cur_ccy, cur_amt) -> str:
-    """
-    Only compare if currencies match and both amounts exist.
-    """
     if prev_ccy is None or prev_amt is None or cur_ccy is None or cur_amt is None:
         return ""
     if prev_ccy != cur_ccy:
         return ""
-    # small tolerance for display quirks
     if cur_amt > prev_amt + 0.0001:
         return " 🔺"
     if cur_amt < prev_amt - 0.0001:
@@ -339,46 +337,33 @@ def price_trend_symbol(prev_ccy, prev_amt, cur_ccy, cur_amt) -> str:
 
 
 def compute_flags(site_key: str, collection_url: str, items, prev_state: dict):
-    """
-    Returns list of dicts:
-      {title,url,price_raw,is_new,trend_symbol,ccy,amt}
-    """
     site_prev = (prev_state.get("sites", {}) or {}).get(site_key, {}) or {}
     prev_urls = set(site_prev.get("urls", []) or [])
     prev_prices = site_prev.get("prices", {}) or {}
 
     out = []
     for title, url, price_raw in items:
+        url_key = canonical_url(url)
+
         cur_ccy, cur_amt = price_context(collection_url, price_raw)
-        prev_p = prev_prices.get(url) if isinstance(prev_prices, dict) else None
+
+        prev_p = prev_prices.get(url_key) if isinstance(prev_prices, dict) else None
         prev_ccy = prev_p.get("ccy") if isinstance(prev_p, dict) else None
         prev_amt = prev_p.get("amt") if isinstance(prev_p, dict) else None
 
         out.append(
             {
                 "title": title,
-                "url": url,
+                "url": url,           # pretty/actual link
+                "url_key": url_key,   # canonical key for comparisons/state
                 "price_raw": price_raw,
                 "ccy": cur_ccy,
                 "amt": cur_amt,
-                "is_new": (url not in prev_urls) if prev_urls else False,
+                "is_new": (url_key not in prev_urls) if prev_urls else False,
                 "trend_symbol": price_trend_symbol(prev_ccy, prev_amt, cur_ccy, cur_amt),
             }
         )
     return out
-
-
-def print_top5(name: str, items_dicts, collection_url: str, fx_map: dict):
-    print(f"\n=== {name} ===")
-    for i, it in enumerate(items_dicts, start=1):
-        price_fmt = format_price(collection_url, it["price_raw"], fx_map)
-        new_tag = " 🆕 NEW" if it["is_new"] else ""
-        trend = it.get("trend_symbol", "")
-        if price_fmt:
-            print(f"{i}. {it['title']}{new_tag}{trend} — {price_fmt}")
-        else:
-            print(f"{i}. {it['title']}{new_tag}{trend}")
-        print(f"   {it['url']}")
 
 
 def _truncate(s: str, max_len: int) -> str:
@@ -402,10 +387,11 @@ def compact_lines(site_url: str, items, fx_map: dict, max_title: int = 90) -> li
 
 
 def build_discord_payload(all_sites, fx_map: dict, prev_saved_at_utc: str | None):
-    header = []
-    header.append("Sorted by **Date: new → old**.")
-    header.append(f"Baseline from: **{prev_saved_at_utc} UTC**" if prev_saved_at_utc else "Baseline: **none yet**")
-    header.append("Alerts only when a 🆕 NEW item appears in the **Top 3**.")
+    header = [
+        "Sorted by **Date: new → old**.",
+        (f"Baseline from: **{prev_saved_at_utc} UTC**" if prev_saved_at_utc else "Baseline: **none yet**"),
+        "Alerts only when a 🆕 NEW item appears in the **Top 3**.",
+    ]
 
     embeds = [{"title": "🧾 Boots Watch — Top 5 Newest", "description": "\n".join(header)}]
 
@@ -432,7 +418,7 @@ def send_discord_embed(session: requests.Session, webhook_url: str, payload: dic
 
 def any_new_in_top3(*site_items_lists) -> bool:
     for items in site_items_lists:
-        for idx, it in enumerate(items[:3], start=1):
+        for it in items[:3]:
             if it.get("is_new"):
                 return True
     return False
@@ -483,24 +469,36 @@ def main():
 
     mode = (os.environ.get("OUTPUT_MODE") or "").lower()
     if mode == "github":
-        print_top5("Division Road", dr_items, DIVISIONROAD_URL, fx_map)
-        print_top5("Brooklyn Clothing", bc_items, BROOKLYN_URL, fx_map)
-        print_top5("Nick's (10.5D RTS)", n_items, NICKS_URL, fx_map)
-        print_top5("Iron Heart Germany", ih_de_items, IRONHEART_DE_URL, fx_map)
-        print_top5("Iron Heart UK (Wesco)", ih_uk_items, IRONHEART_UK_URL, fx_map)
+        # Print view only (no discord)
+        for name, items, url in [
+            ("Division Road", dr_items, DIVISIONROAD_URL),
+            ("Brooklyn Clothing", bc_items, BROOKLYN_URL),
+            ("Nick's (10.5D RTS)", n_items, NICKS_URL),
+            ("Iron Heart Germany", ih_de_items, IRONHEART_DE_URL),
+            ("Iron Heart UK (Wesco)", ih_uk_items, IRONHEART_UK_URL),
+        ]:
+            print(f"\n=== {name} ===")
+            for i, it in enumerate(items, start=1):
+                price_fmt = format_price(url, it["price_raw"], fx_map)
+                new_tag = " 🆕 NEW" if it["is_new"] else ""
+                trend = it.get("trend_symbol", "")
+                if price_fmt:
+                    print(f"{i}. {it['title']}{new_tag}{trend} — {price_fmt}")
+                else:
+                    print(f"{i}. {it['title']}{new_tag}{trend}")
+                print(f"   {it['url']}")
     else:
         webhook = (os.environ.get("DISCORD_WEBHOOK_URL") or "").strip()
-
         alert = any_new_in_top3(dr_items, bc_items, n_items, ih_de_items, ih_uk_items)
         if not alert:
             print("No 🆕 NEW items in Top 3 across sites. Skipping Discord alert.")
         elif webhook:
             sites = [
-                {"key": "divisionroad", "name": "Division Road", "url": DIVISIONROAD_URL, "items": dr_items, "desc": dr_desc},
-                {"key": "brooklyn", "name": "Brooklyn Clothing", "url": BROOKLYN_URL, "items": bc_items, "desc": bc_desc},
-                {"key": "nicks", "name": "Nick’s Ready-to-Ship (10.5D)", "url": NICKS_URL, "items": n_items, "desc": "Filtered to **10.5 D**."},
-                {"key": "ironheart_de", "name": "Iron Heart Germany", "url": IRONHEART_DE_URL, "items": ih_de_items, "desc": "Prices in EUR with USD conversion when available."},
-                {"key": "ironheart_uk", "name": "Iron Heart UK (Wesco)", "url": IRONHEART_UK_URL, "items": ih_uk_items, "desc": "Prices in GBP with USD conversion when available."},
+                {"name": "Division Road", "url": DIVISIONROAD_URL, "items": dr_items, "desc": dr_desc},
+                {"name": "Brooklyn Clothing", "url": BROOKLYN_URL, "items": bc_items, "desc": bc_desc},
+                {"name": "Nick’s Ready-to-Ship (10.5D)", "url": NICKS_URL, "items": n_items, "desc": "Filtered to **10.5 D**."},
+                {"name": "Iron Heart Germany", "url": IRONHEART_DE_URL, "items": ih_de_items, "desc": "Prices in EUR with USD conversion when available."},
+                {"name": "Iron Heart UK (Wesco)", "url": IRONHEART_UK_URL, "items": ih_uk_items, "desc": "Prices in GBP with USD conversion when available."},
             ]
             payload = build_discord_payload(sites, fx_map, prev_saved_at)
             send_discord_embed(session, webhook, payload)
@@ -508,23 +506,23 @@ def main():
         else:
             print("DISCORD_WEBHOOK_URL not set; skipping Discord send.")
 
-    # Save baseline if requested (this also saves price snapshots for next run comparisons)
+    # Save baseline if requested (stores canonical urls + prices)
     save_flag = (os.environ.get("SAVE_STATE") or "").strip().lower() in ("1", "true", "yes")
     if save_flag:
         def site_prices(items):
             d = {}
             for it in items:
-                d[it["url"]] = {"ccy": it["ccy"], "amt": it["amt"], "raw": it["price_raw"]}
+                d[it["url_key"]] = {"ccy": it["ccy"], "amt": it["amt"], "raw": it["price_raw"]}
             return d
 
         new_state = {
             "saved_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
             "sites": {
-                "divisionroad": {"urls": [it["url"] for it in dr_items], "prices": site_prices(dr_items)},
-                "brooklyn": {"urls": [it["url"] for it in bc_items], "prices": site_prices(bc_items)},
-                "nicks": {"urls": [it["url"] for it in n_items], "prices": site_prices(n_items)},
-                "ironheart_de": {"urls": [it["url"] for it in ih_de_items], "prices": site_prices(ih_de_items)},
-                "ironheart_uk": {"urls": [it["url"] for it in ih_uk_items], "prices": site_prices(ih_uk_items)},
+                "divisionroad": {"urls": [it["url_key"] for it in dr_items], "prices": site_prices(dr_items)},
+                "brooklyn": {"urls": [it["url_key"] for it in bc_items], "prices": site_prices(bc_items)},
+                "nicks": {"urls": [it["url_key"] for it in n_items], "prices": site_prices(n_items)},
+                "ironheart_de": {"urls": [it["url_key"] for it in ih_de_items], "prices": site_prices(ih_de_items)},
+                "ironheart_uk": {"urls": [it["url_key"] for it in ih_uk_items], "prices": site_prices(ih_uk_items)},
             },
         }
         save_state(new_state)
