@@ -1,22 +1,47 @@
-[
-  {
-    "title": "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio",
-    "url": "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio"
-  },
-  {
-    "title": "Churchill Boot - 4497 - Commando - Badalassi Tabacco Carlo Wax",
-    "url": "https://divisionroadinc.com/products/trickers-churchill-boot-4497-commando-badalassi-tabacco-carlo-wax"
-  },
-  {
-    "title": "Stow Boot - 4497 - Dainite - Badalassi Cognac Carlo Wax",
-    "url": "https://divisionroadinc.com/products/trickers-stow-boot-4497-dainite-badalassi-cognac-carlo-wax"
-  },
-  {
-    "title": "Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton",
-    "url": "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton"
-  },
-  {
-    "title": "Super Monkey Boot - 5402 - Vibram Morflex - Tempesti Cuoio & Ambra Elbamatt",
-    "url": "https://divisionroadinc.com/products/trickers-super-monkey-boot-5402-vibram-morflex-tempesti-cuoio-ambra-elbamatt"
+{
+  "saved_at_utc": "2026-02-27 00:00:33",
+  "sites": {
+    "divisionroad": {
+      "urls": [
+        "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio",
+        "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton",
+        "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-black",
+        "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-espresso-brown",
+        "https://divisionroadinc.com/products/trickers-super-monkey-boot-5402-vibram-morflex-tempesti-cuoio-ambra-elbamatt"
+      ]
+    },
+    "brooklyn": {
+      "urls": [
+        "https://brooklynclothing.com/collections/boots/products/service-boot-2040-horween-natural-cypress",
+        "https://brooklynclothing.com/collections/boots/products/service-boot-1035-chamois-aged-bark",
+        "https://brooklynclothing.com/collections/boots/products/lk-014-combat-boots-shinki-hikaku-shell-cordovan-black-ops",
+        "https://brooklynclothing.com/collections/boots/products/lk-013-monkey-boots-shinki-hikaku-shell-cordovan-black-ops",
+        "https://brooklynclothing.com/collections/boots/products/lk-003-wabash-engineer-boots-horween-leather-cxl-natural-roughout"
+      ]
+    },
+    "nicks": {
+      "urls": [
+        "https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship",
+        "https://nicksboots.com/products/chukka-10-5-d-ready-to-ship"
+      ]
+    },
+    "ironheart_de": {
+      "urls": [
+        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600brcxl-d-brn-wesco-mister-lou-engineer-d-width-brown?_pos=2&_fid=1220f4f3b&_ss=c",
+        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600brcxl-brn-wesco-mister-lou-engineer-brown?_pos=11&_fid=1220f4f3b&_ss=c",
+        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600bkh-blk-wesco-mister-lou-engineer-horsehide-black?_pos=12&_fid=1220f4f3b&_ss=c",
+        "https://ironheartgermany.com/collections/boots/products/wesco-we-907cxl-brn-wesco-custom-warren-chromexcel-brown?_pos=14&_fid=1220f4f3b&_ss=c",
+        "https://ironheartgermany.com/collections/boots/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black?_pos=15&_fid=1220f4f3b&_ss=c"
+      ]
+    },
+    "ironheart_uk": {
+      "urls": [
+        "https://ironheart.co.uk/collections/wesco/products/ihwe-jou-blk",
+        "https://ironheart.co.uk/collections/wesco/products/ihwe-glmn-nat",
+        "https://ironheart.co.uk/collections/wesco/products/ihwe-fp-blp",
+        "https://ironheart.co.uk/collections/wesco/products/ihwe-jou-tan",
+        "https://ironheart.co.uk/collections/wesco/products/ihwe-glmn-blk"
+      ]
+    }
   }
-]
+}
