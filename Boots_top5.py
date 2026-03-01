@@ -436,6 +436,55 @@ def render_run_log(run_ts_utc: str, prev_saved_at: str | None, fx_map: dict, sit
         lines.append("")
     return "\n".join(lines).rstrip()
 
+def update_readme_summary(run_ts_utc: str, sites: list[dict], fx_map: dict):
+    readme_path = "README.md"
+    if not os.path.exists(readme_path):
+        return
+
+    lines = []
+    lines.append(f"**Last Run (UTC):** {run_ts_utc}")
+    lines.append("")
+    lines.append("| Site | #1 Item | Price |")
+    lines.append("|------|---------|-------|")
+
+    for s in sites:
+        if not s["items"]:
+            lines.append(f"| {s['name']} | _(none)_ | - |")
+            continue
+
+        top = s["items"][0]
+        title = top["title"]
+        new_tag = " 🆕" if top["is_new"] else ""
+        trend = top.get("trend_symbol", "")
+        price = format_price(s["url"], top["price_raw"], fx_map) or "-"
+        lines.append(f"| {s['name']} | {title}{new_tag}{trend} | {price} |")
+
+    summary_block = "\n".join(lines)
+
+    with open(readme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    start_marker = "<!-- BOOTS_SUMMARY_START -->"
+    end_marker = "<!-- BOOTS_SUMMARY_END -->"
+
+    if start_marker not in content or end_marker not in content:
+        return
+
+    before = content.split(start_marker)[0]
+    after = content.split(end_marker)[1]
+
+    new_content = (
+        before
+        + start_marker
+        + "\n"
+        + summary_block
+        + "\n"
+        + end_marker
+        + after
+    )
+
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(new_content)
 
 def main():
     prev_state = load_state()
@@ -480,6 +529,56 @@ def main():
         {"key": "ironheart_de", "name": "Iron Heart Germany", "url": IRONHEART_DE_URL, "items": ih_de_items, "desc": "EUR with USD conversion when available."},
         {"key": "ironheart_uk", "name": "Iron Heart UK (Wesco)", "url": IRONHEART_UK_URL, "items": ih_uk_items, "desc": "GBP with USD conversion when available."},
     ]
+
+    def update_readme_summary(run_ts_utc: str, sites: list[dict], fx_map: dict):
+    readme_path = "README.md"
+    if not os.path.exists(readme_path):
+        return
+
+    lines = []
+    lines.append(f"**Last Run (UTC):** {run_ts_utc}")
+    lines.append("")
+    lines.append("| Site | #1 Item | Price |")
+    lines.append("|------|---------|-------|")
+
+    for s in sites:
+        if not s["items"]:
+            lines.append(f"| {s['name']} | _(none)_ | - |")
+            continue
+
+        top = s["items"][0]
+        title = top["title"]
+        new_tag = " 🆕" if top["is_new"] else ""
+        trend = top.get("trend_symbol", "")
+        price = format_price(s["url"], top["price_raw"], fx_map) or "-"
+        lines.append(f"| {s['name']} | {title}{new_tag}{trend} | {price} |")
+
+    summary_block = "\n".join(lines)
+
+    with open(readme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    start_marker = "<!-- BOOTS_SUMMARY_START -->"
+    end_marker = "<!-- BOOTS_SUMMARY_END -->"
+
+    if start_marker not in content or end_marker not in content:
+        return
+
+    before = content.split(start_marker)[0]
+    after = content.split(end_marker)[1]
+
+    new_content = (
+        before
+        + start_marker
+        + "\n"
+        + summary_block
+        + "\n"
+        + end_marker
+        + after
+    )
+
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(new_content)
 
     # Print summary in Actions log
     print("Baseline saved_at_utc:", prev_saved_at)
