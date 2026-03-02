@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+from bs4 import BeautifulSoup
 from datetime import datetime
 
 STATE_FILE = "state_last_top5.json"
@@ -9,6 +10,8 @@ README_FILE = "README.md"
 
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SAVE_STATE = os.getenv("SAVE_STATE") == "1"
+
+IRON_HEART_UK_URL = "https://ironheart.co.uk/collections/wesco?sort_by=created-descending"
 
 
 # --------------------------------------------------
@@ -24,31 +27,18 @@ def log(message: str):
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(line + "\n")
 
-def post_to_discord(boots):
-    if not DISCORD_WEBHOOK_URL:
-        log("No Discord webhook set.")
-        return
-
-    content_lines = ["**🔥 Top 5 Boots Update 🔥**\n"]
-
-    for i, boot in enumerate(boots, start=1):
-        content_lines.append(
-            f"{i}. **{boot['name']}** — {boot['price']} {boot['currency']}\n{boot['url']}\n"
-        )
-
-    payload = {"content": "\n".join(content_lines)}
-
-    response = requests.post(DISCORD_WEBHOOK_URL, json=payload)
-
-    if response.status_code == 204:
-        log("Posted update to Discord.")
-    else:
-        log(f"Failed to post to Discord: {response.status_code}")
-
 
 # --------------------------------------------------
-# State Saving
+# Load / Save State
 # --------------------------------------------------
+
+def load_previous_state():
+    if not os.path.exists(STATE_FILE):
+        return []
+
+    with open(STATE_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 
 def save_state(boots):
     if not SAVE_STATE:
@@ -61,12 +51,89 @@ def save_state(boots):
 
 
 # --------------------------------------------------
-# README Update (Marker Safe)
+# Scraper (Iron Heart UK - Wesco)
+# --------------------------------------------------
+
+def scrape_iron_heart_uk():
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    response = requests.get(IRON_HEART_UK_URL, headers=headers, timeout=30)
+    soup = BeautifulSoup(response.text, "lxml")
+
+    products = soup.select(".product-item")
+    boots = []
+
+    for product in products[:5]:
+        title_tag = product.select_one(".product-item__title")
+        price_tag = product.select_one(".price-item")
+        link_tag = product.select_one("a")
+
+        if not title_tag or not link_tag:
+            continue
+
+        name = title_tag.get_text(strip=True)
+        price = price_tag.get_text(strip=True) if price_tag else ""
+        url = "https://ironheart.co.uk" + link_tag["href"]
+
+        boots.append({
+            "name": name,
+            "price": price,
+            "currency": "GBP",
+            "url": url
+        })
+
+    return boots
+
+
+# --------------------------------------------------
+# Detect NEW in Top 3
+# --------------------------------------------------
+
+def detect_new_top3(current, previous):
+    previous_urls = {boot["url"] for boot in previous}
+    new_items = []
+
+    for boot in current[:3]:
+        if boot["url"] not in previous_urls:
+            new_items.append(boot)
+
+    return new_items
+
+
+# --------------------------------------------------
+# Discord Posting
+# --------------------------------------------------
+
+def post_to_discord(new_items):
+    if not DISCORD_WEBHOOK_URL:
+        log("No Discord webhook set.")
+        return
+
+    content_lines = ["**🆕 NEW Boots Detected (Top 3) 🆕**\n"]
+
+    for boot in new_items:
+        content_lines.append(
+            f"**{boot['name']}**\n{boot['price']}\n{boot['url']}\n"
+        )
+
+    payload = {"content": "\n".join(content_lines)}
+
+    response = requests.post(DISCORD_WEBHOOK_URL, json=payload)
+
+    if response.status_code == 204:
+        log("Posted NEW boots to Discord.")
+    else:
+        log(f"Discord error: {response.status_code} {response.text}")
+
+
+# --------------------------------------------------
+# README Update
 # --------------------------------------------------
 
 def update_readme_summary(run_ts_utc: str, boots: list[dict]):
     if not os.path.exists(README_FILE):
-        log("README not found. Skipping update.")
         return
 
     with open(README_FILE, "r", encoding="utf-8") as f:
@@ -76,24 +143,18 @@ def update_readme_summary(run_ts_utc: str, boots: list[dict]):
     end_marker = "<!-- BOOTS_SUMMARY_END -->"
 
     if start_marker not in content or end_marker not in content:
-        log("README markers missing. Skipping update.")
         return
 
     summary_lines = []
     summary_lines.append(f"**Last Run (UTC):** `{run_ts_utc}`\n")
-    summary_lines.append("### Top 5 Boots\n")
+    summary_lines.append("### Iron Heart UK - Wesco (Top 5)\n")
     summary_lines.append("| Rank | Name | Price | Link |")
     summary_lines.append("|------|------|-------|------|")
 
     for i, boot in enumerate(boots, start=1):
-        price_display = f"{boot['price']} {boot['currency']}".strip()
         summary_lines.append(
-            f"| {i} | {boot['name']} | {price_display} | [View]({boot['url']}) |"
+            f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
         )
-
-    summary_lines.append(
-        f"\n_Auto-updated at {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC_"
-    )
 
     new_summary = "\n".join(summary_lines)
 
@@ -113,7 +174,7 @@ def update_readme_summary(run_ts_utc: str, boots: list[dict]):
     with open(README_FILE, "w", encoding="utf-8") as f:
         f.write(updated_content)
 
-    log("README updated successfully.")
+    log("README updated.")
 
 
 # --------------------------------------------------
@@ -125,11 +186,23 @@ def main():
 
     log("Boots watcher started.")
 
-    boots = get_top_5_boots()
+    previous_state = load_previous_state()
+    current_boots = scrape_iron_heart_uk()
 
-    post_to_discord(boots)
-    save_state(boots)
-    update_readme_summary(run_ts_utc, boots)
+    if not current_boots:
+        log("No boots scraped. Exiting.")
+        return
+
+    new_items = detect_new_top3(current_boots, previous_state)
+
+    if new_items:
+        log(f"NEW detected: {len(new_items)} item(s).")
+        post_to_discord(new_items)
+    else:
+        log("No NEW in top 3.")
+
+    save_state(current_boots)
+    update_readme_summary(run_ts_utc, current_boots)
 
     log("Boots watcher completed.")
 
