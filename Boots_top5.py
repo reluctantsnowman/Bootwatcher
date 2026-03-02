@@ -24,34 +24,6 @@ def log(message: str):
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(line + "\n")
 
-
-# --------------------------------------------------
-# Fake Top 5 Data (Replace With Your Real Scraper)
-# --------------------------------------------------
-
-def get_top_5_boots():
-    """
-    Replace this with your real scraping logic.
-    Must return a list of dicts:
-    [
-        {"name": "...", "price": "...", "currency": "...", "url": "..."},
-        ...
-    ]
-    """
-
-    return [
-        {"name": "Viberg Service Boot", "price": "725", "currency": "USD", "url": "https://example.com/1"},
-        {"name": "Alden Indy", "price": "699", "currency": "USD", "url": "https://example.com/2"},
-        {"name": "White's MP", "price": "649", "currency": "USD", "url": "https://example.com/3"},
-        {"name": "Tricker's Stow", "price": "595", "currency": "USD", "url": "https://example.com/4"},
-        {"name": "Grant Stone Diesel", "price": "380", "currency": "USD", "url": "https://example.com/5"},
-    ]
-
-
-# --------------------------------------------------
-# Discord Posting
-# --------------------------------------------------
-
 def post_to_discord(boots):
     if not DISCORD_WEBHOOK_URL:
         log("No Discord webhook set.")
