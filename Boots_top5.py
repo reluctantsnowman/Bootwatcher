@@ -4,6 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+# ==================================================
+# CONFIG
+# ==================================================
+
 STATE_FILE = "state_last_top5.json"
 LOG_FILE = "logs/boots_watcher.log"
 README_FILE = "README.md"
@@ -11,12 +15,17 @@ README_FILE = "README.md"
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SAVE_STATE = os.getenv("SAVE_STATE") == "1"
 
+DIVISION_ROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
+BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?sort_by=created-descending"
+NICKS_URL = "https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending"
+IRON_HEART_GERMANY_URL = "https://ironheartgermany.com/collections/boots?sort_by=created-descending"
 IRON_HEART_UK_URL = "https://ironheart.co.uk/collections/wesco?sort_by=created-descending"
 
+HEADERS = {"User-Agent": "Mozilla/5.0"}
 
-# --------------------------------------------------
-# Logging
-# --------------------------------------------------
+# ==================================================
+# LOGGING
+# ==================================================
 
 def log(message: str):
     os.makedirs("logs", exist_ok=True)
@@ -27,47 +36,47 @@ def log(message: str):
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(line + "\n")
 
-
-# --------------------------------------------------
-# Load / Save State
-# --------------------------------------------------
+# ==================================================
+# STATE HANDLING
+# ==================================================
 
 def load_previous_state():
     if not os.path.exists(STATE_FILE):
-        return []
+        return {}
 
     with open(STATE_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def save_state(boots):
+def save_state(state: dict):
     if not SAVE_STATE:
         return
 
     with open(STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump(boots, f, indent=2)
+        json.dump(state, f, indent=2)
 
     log("State saved.")
 
+# ==================================================
+# GENERIC SHOPIFY SCRAPER
+# ==================================================
 
-# --------------------------------------------------
-# Scraper (Iron Heart UK - Wesco)
-# --------------------------------------------------
+def scrape_shopify_collection(base_url: str, base_domain: str):
+    try:
+        response = requests.get(base_url, headers=HEADERS, timeout=30)
+        response.raise_for_status()
+    except Exception as e:
+        log(f"Request failed: {e}")
+        return []
 
-def scrape_iron_heart_uk():
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
-
-    response = requests.get(IRON_HEART_UK_URL, headers=headers, timeout=30)
     soup = BeautifulSoup(response.text, "lxml")
+    products = soup.select(".product-item, .grid-product")
 
-    products = soup.select(".product-item")
     boots = []
 
     for product in products[:5]:
-        title_tag = product.select_one(".product-item__title")
-        price_tag = product.select_one(".price-item")
+        title_tag = product.select_one(".product-item__title, .grid-product__title")
+        price_tag = product.select_one(".price-item, .grid-product__price")
         link_tag = product.select_one("a")
 
         if not title_tag or not link_tag:
@@ -75,24 +84,61 @@ def scrape_iron_heart_uk():
 
         name = title_tag.get_text(strip=True)
         price = price_tag.get_text(strip=True) if price_tag else ""
-        url = "https://ironheart.co.uk" + link_tag["href"]
+        url = link_tag.get("href")
+
+        if url and not url.startswith("http"):
+            url = base_domain + url
 
         boots.append({
             "name": name,
             "price": price,
-            "currency": "GBP",
             "url": url
         })
 
     return boots
 
+# ==================================================
+# SITE SCRAPERS
+# ==================================================
 
-# --------------------------------------------------
-# Detect NEW in Top 3
-# --------------------------------------------------
+def scrape_division_road():
+    return scrape_shopify_collection(
+        DIVISION_ROAD_URL,
+        "https://divisionroadinc.com"
+    )
 
-def detect_new_top3(current, previous):
-    previous_urls = {boot["url"] for boot in previous}
+def scrape_brooklyn_clothing():
+    return scrape_shopify_collection(
+        BROOKLYN_URL,
+        "https://brooklynclothing.com"
+    )
+
+def scrape_nicks():
+    return scrape_shopify_collection(
+        NICKS_URL,
+        "https://nicksboots.com"
+    )
+
+def scrape_iron_heart_germany():
+    return scrape_shopify_collection(
+        IRON_HEART_GERMANY_URL,
+        "https://ironheartgermany.com"
+    )
+
+def scrape_iron_heart_uk():
+    return scrape_shopify_collection(
+        IRON_HEART_UK_URL,
+        "https://ironheart.co.uk"
+    )
+
+# ==================================================
+# NEW DETECTION
+# ==================================================
+
+def detect_new_top3(site_name: str, current: list, state: dict):
+    previous = state.get(site_name, [])
+    previous_urls = {boot["url"] for boot in previous[:3]}
+
     new_items = []
 
     for boot in current[:3]:
@@ -101,38 +147,41 @@ def detect_new_top3(current, previous):
 
     return new_items
 
+# ==================================================
+# DISCORD ALERT
+# ==================================================
 
-# --------------------------------------------------
-# Discord Posting
-# --------------------------------------------------
-
-def post_to_discord(new_items):
+def post_to_discord(site_new_map: dict):
     if not DISCORD_WEBHOOK_URL:
         log("No Discord webhook set.")
         return
 
-    content_lines = ["**🆕 NEW Boots Detected (Top 3) 🆕**\n"]
+    lines = ["**🆕 NEW Boots Detected (Top 3) 🆕**\n"]
 
-    for boot in new_items:
-        content_lines.append(
-            f"**{boot['name']}**\n{boot['price']}\n{boot['url']}\n"
-        )
+    for site, boots in site_new_map.items():
+        lines.append(f"\n__{site.replace('_',' ').upper()}__\n")
 
-    payload = {"content": "\n".join(content_lines)}
+        for boot in boots:
+            lines.append(
+                f"**{boot['name']}**\n{boot['price']}\n{boot['url']}\n"
+            )
 
-    response = requests.post(DISCORD_WEBHOOK_URL, json=payload)
+    payload = {"content": "\n".join(lines)}
 
-    if response.status_code == 204:
-        log("Posted NEW boots to Discord.")
-    else:
-        log(f"Discord error: {response.status_code} {response.text}")
+    try:
+        response = requests.post(DISCORD_WEBHOOK_URL, json=payload)
+        if response.status_code == 204:
+            log("Posted NEW boots to Discord.")
+        else:
+            log(f"Discord error: {response.status_code} {response.text}")
+    except Exception as e:
+        log(f"Discord post failed: {e}")
 
+# ==================================================
+# README UPDATE (Iron Heart UK Section)
+# ==================================================
 
-# --------------------------------------------------
-# README Update
-# --------------------------------------------------
-
-def update_readme_summary(run_ts_utc: str, boots: list[dict]):
+def update_readme_summary(run_ts_utc: str, boots: list):
     if not os.path.exists(README_FILE):
         return
 
@@ -145,23 +194,23 @@ def update_readme_summary(run_ts_utc: str, boots: list[dict]):
     if start_marker not in content or end_marker not in content:
         return
 
-    summary_lines = []
-    summary_lines.append(f"**Last Run (UTC):** `{run_ts_utc}`\n")
-    summary_lines.append("### Iron Heart UK - Wesco (Top 5)\n")
-    summary_lines.append("| Rank | Name | Price | Link |")
-    summary_lines.append("|------|------|-------|------|")
+    lines = []
+    lines.append(f"**Last Run (UTC):** `{run_ts_utc}`\n")
+    lines.append("### Iron Heart UK - Wesco (Top 5)\n")
+    lines.append("| Rank | Name | Price | Link |")
+    lines.append("|------|------|-------|------|")
 
     for i, boot in enumerate(boots, start=1):
-        summary_lines.append(
+        lines.append(
             f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
         )
 
-    new_summary = "\n".join(summary_lines)
+    new_summary = "\n".join(lines)
 
     before = content.split(start_marker)[0]
     after = content.split(end_marker)[1]
 
-    updated_content = (
+    updated = (
         before
         + start_marker
         + "\n"
@@ -172,37 +221,60 @@ def update_readme_summary(run_ts_utc: str, boots: list[dict]):
     )
 
     with open(README_FILE, "w", encoding="utf-8") as f:
-        f.write(updated_content)
+        f.write(updated)
 
     log("README updated.")
 
-
-# --------------------------------------------------
-# Main
-# --------------------------------------------------
+# ==================================================
+# MAIN
+# ==================================================
 
 def main():
     run_ts_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-
     log("Boots watcher started.")
 
-    previous_state = load_previous_state()
-    current_boots = scrape_iron_heart_uk()
+    state = load_previous_state()
 
-    if not current_boots:
-        log("No boots scraped. Exiting.")
+    site_results = {
+        "division_road": scrape_division_road(),
+        "brooklyn_clothing": scrape_brooklyn_clothing(),
+        "nicks_ready_to_ship": scrape_nicks(),
+        "iron_heart_germany": scrape_iron_heart_germany(),
+        "iron_heart_uk": scrape_iron_heart_uk(),
+    }
+
+    # Remove failed scrapes
+    site_results = {k: v for k, v in site_results.items() if v}
+
+    if not site_results:
+        log("No sites scraped successfully. Exiting.")
         return
 
-    new_items = detect_new_top3(current_boots, previous_state)
+    site_new_map = {}
 
-    if new_items:
-        log(f"NEW detected: {len(new_items)} item(s).")
-        post_to_discord(new_items)
+    for site_name, boots in site_results.items():
+        new_items = detect_new_top3(site_name, boots, state)
+
+        if new_items:
+            log(f"{site_name}: {len(new_items)} NEW item(s).")
+            site_new_map[site_name] = new_items
+        else:
+            log(f"{site_name}: No NEW in top 3.")
+
+    if site_new_map:
+        post_to_discord(site_new_map)
     else:
-        log("No NEW in top 3.")
+        log("No NEW items across any site.")
 
-    save_state(current_boots)
-    update_readme_summary(run_ts_utc, current_boots)
+    # Save updated state
+    for site_name, boots in site_results.items():
+        state[site_name] = boots
+
+    save_state(state)
+
+    # Update README using Iron Heart UK
+    if "iron_heart_uk" in site_results:
+        update_readme_summary(run_ts_utc, site_results["iron_heart_uk"])
 
     log("Boots watcher completed.")
 
