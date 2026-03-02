@@ -12,8 +12,10 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -22,7 +24,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml
@@ -33,16 +35,22 @@ jobs:
           SAVE_STATE: 1
         run: python Boots_top5.py
 
-      - name: Commit updated state + log (if changed)
+      - name: Commit updated state + log (safe mode)
         run: |
-          git config user.name "boots-watcher-bot"
-          git config user.email "boots-watcher-bot@users.noreply.github.com"
+          git config --global user.name "boots-watcher-bot"
+          git config --global user.email "boots-watcher-bot@users.noreply.github.com"
 
-          if git status --porcelain | grep -E -q "state_last_top5.json|logs/boots_watcher.log"; then
-            git add state_last_top5.json logs/boots_watcher.log
-            git commit -m "Update boots watcher state/log"
-            git pull --rebase origin main
-            git push origin main
-          else
+          # Make sure files exist before adding
+          mkdir -p logs
+          touch state_last_top5.json
+          touch logs/boots_watcher.log
+
+          git add state_last_top5.json logs/boots_watcher.log
+
+          # Only commit if there are staged changes
+          if git diff --cached --quiet; then
             echo "No changes to commit."
+          else
+            git commit -m "Update boots watcher state/log"
+            git push origin main
           fi
