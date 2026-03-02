@@ -1,6 +1,10 @@
 # Boots Watcher
 
-This section is auto-generated.
+Tracks top 5 boots and posts to Discord twice daily.
+
+---
+
+## Live Summary
 
 <!-- BOOTS_SUMMARY_START -->
 Updating...
