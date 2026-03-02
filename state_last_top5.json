@@ -1,167 +1,32 @@
-{
-  "saved_at_utc": "2026-03-02 19:00:17",
-  "sites": {
-    "divisionroad": {
-      "urls": [
-        "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio",
-        "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton",
-        "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-black",
-        "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-espresso-brown",
-        "https://divisionroadinc.com/products/trickers-super-monkey-boot-5402-vibram-morflex-tempesti-cuoio-ambra-elbamatt"
-      ],
-      "prices": {
-        "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio": {
-          "ccy": "USD",
-          "amt": 765.0,
-          "raw": "$765.00"
-        },
-        "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton": {
-          "ccy": "USD",
-          "amt": 795.0,
-          "raw": "$795.00"
-        },
-        "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-black": {
-          "ccy": "USD",
-          "amt": 1225.0,
-          "raw": "$1,225.00"
-        },
-        "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-espresso-brown": {
-          "ccy": "USD",
-          "amt": 1225.0,
-          "raw": "$1,225.00"
-        },
-        "https://divisionroadinc.com/products/trickers-super-monkey-boot-5402-vibram-morflex-tempesti-cuoio-ambra-elbamatt": {
-          "ccy": "USD",
-          "amt": 765.0,
-          "raw": "$765.00"
-        }
-      }
-    },
-    "brooklyn": {
-      "urls": [
-        "https://brooklynclothing.com/collections/boots/products/service-boot-2040-horween-natural-cypress",
-        "https://brooklynclothing.com/collections/boots/products/service-boot-1035-chamois-aged-bark",
-        "https://brooklynclothing.com/collections/boots/products/lk-014-combat-boots-shinki-hikaku-shell-cordovan-black-ops",
-        "https://brooklynclothing.com/collections/boots/products/lk-013-monkey-boots-shinki-hikaku-shell-cordovan-black-ops",
-        "https://brooklynclothing.com/collections/boots/products/lk-003-wabash-engineer-boots-horween-leather-cxl-natural-roughout"
-      ],
-      "prices": {
-        "https://brooklynclothing.com/collections/boots/products/service-boot-2040-horween-natural-cypress": {
-          "ccy": "CAD",
-          "amt": 1475.0,
-          "raw": "$1,475.00"
-        },
-        "https://brooklynclothing.com/collections/boots/products/service-boot-1035-chamois-aged-bark": {
-          "ccy": "CAD",
-          "amt": 1449.0,
-          "raw": "$1,449.00"
-        },
-        "https://brooklynclothing.com/collections/boots/products/lk-014-combat-boots-shinki-hikaku-shell-cordovan-black-ops": {
-          "ccy": "CAD",
-          "amt": 2250.0,
-          "raw": "$2,250.00"
-        },
-        "https://brooklynclothing.com/collections/boots/products/lk-013-monkey-boots-shinki-hikaku-shell-cordovan-black-ops": {
-          "ccy": "CAD",
-          "amt": 2250.0,
-          "raw": "$2,250.00"
-        },
-        "https://brooklynclothing.com/collections/boots/products/lk-003-wabash-engineer-boots-horween-leather-cxl-natural-roughout": {
-          "ccy": "CAD",
-          "amt": 1575.0,
-          "raw": "$1,575.00"
-        }
-      }
-    },
-    "nicks": {
-      "urls": [
-        "https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship",
-        "https://nicksboots.com/products/chukka-10-5-d-ready-to-ship"
-      ],
-      "prices": {
-        "https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship": {
-          "ccy": "USD",
-          "amt": 594.0,
-          "raw": "$594"
-        },
-        "https://nicksboots.com/products/chukka-10-5-d-ready-to-ship": {
-          "ccy": "USD",
-          "amt": 515.0,
-          "raw": "$515"
-        }
-      }
-    },
-    "ironheart_de": {
-      "urls": [
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600brcxl-d-brn-wesco-mister-lou-engineer-d-width-brown",
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600brcxl-brn-wesco-mister-lou-engineer-brown",
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600bkh-blk-wesco-mister-lou-engineer-horsehide-black",
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-907cxl-brn-wesco-custom-warren-chromexcel-brown",
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black"
-      ],
-      "prices": {
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600brcxl-d-brn-wesco-mister-lou-engineer-d-width-brown": {
-          "ccy": "EUR",
-          "amt": 849.0,
-          "raw": "€849"
-        },
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600brcxl-brn-wesco-mister-lou-engineer-brown": {
-          "ccy": "EUR",
-          "amt": 849.0,
-          "raw": "€849"
-        },
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-7600bkh-blk-wesco-mister-lou-engineer-horsehide-black": {
-          "ccy": "EUR",
-          "amt": 980.0,
-          "raw": "€980"
-        },
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-907cxl-brn-wesco-custom-warren-chromexcel-brown": {
-          "ccy": "EUR",
-          "amt": 849.0,
-          "raw": "€849"
-        },
-        "https://ironheartgermany.com/collections/boots/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black": {
-          "ccy": "EUR",
-          "amt": 989.0,
-          "raw": "€989"
-        }
-      }
-    },
-    "ironheart_uk": {
-      "urls": [
-        "https://ironheart.co.uk/collections/wesco/products/wesco-mrlou-pur",
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-jou-blk",
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-glmn-nat",
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-fp-blp",
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-jou-tan"
-      ],
-      "prices": {
-        "https://ironheart.co.uk/collections/wesco/products/wesco-mrlou-pur": {
-          "ccy": "GBP",
-          "amt": 829.0,
-          "raw": "£829"
-        },
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-jou-blk": {
-          "ccy": "GBP",
-          "amt": 705.0,
-          "raw": "£705"
-        },
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-glmn-nat": {
-          "ccy": "GBP",
-          "amt": 870.0,
-          "raw": "£870"
-        },
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-fp-blp": {
-          "ccy": "GBP",
-          "amt": 742.0,
-          "raw": "£742"
-        },
-        "https://ironheart.co.uk/collections/wesco/products/ihwe-jou-tan": {
-          "ccy": "GBP",
-          "amt": 659.0,
-          "raw": "£659"
-        }
-      }
-    }
+[
+  {
+    "name": "Viberg Service Boot",
+    "price": "725",
+    "currency": "USD",
+    "url": "https://example.com/1"
+  },
+  {
+    "name": "Alden Indy",
+    "price": "699",
+    "currency": "USD",
+    "url": "https://example.com/2"
+  },
+  {
+    "name": "White's MP",
+    "price": "649",
+    "currency": "USD",
+    "url": "https://example.com/3"
+  },
+  {
+    "name": "Tricker's Stow",
+    "price": "595",
+    "currency": "USD",
+    "url": "https://example.com/4"
+  },
+  {
+    "name": "Grant Stone Diesel",
+    "price": "380",
+    "currency": "USD",
+    "url": "https://example.com/5"
   }
-}
+]
