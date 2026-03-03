@@ -93,7 +93,7 @@ def save_state(state: dict):
         log(f"Failed to save state: {e}")
 
 # ==================================================
-# SHOPIFY JSON SCRAPER (STRICT FOOTWEAR FILTER)
+# SHOPIFY SCRAPER
 # ==================================================
 
 def scrape_shopify_json(site_name: str, base: str, collection: str):
@@ -155,7 +155,7 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         if len(boots) == 5:
             break
 
-    log(f"{site_name}: returning {len(boots)} filtered boots")
+    log(f"{site_name}: returning {len(boots)} boots")
     return boots
 
 # ==================================================
@@ -168,7 +168,7 @@ def detect_new_top3(site_name: str, current: list, state: dict):
     return [boot for boot in current[:3] if boot["url"] not in previous_urls]
 
 # ==================================================
-# DISCORD ALERT
+# DISCORD
 # ==================================================
 
 def post_to_discord(site_new_map: dict):
@@ -197,15 +197,12 @@ def post_to_discord(site_new_map: dict):
         log(f"Discord post failed: {e}")
 
 # ==================================================
-# README UPDATE
+# README UPDATE (ALL SITES)
 # ==================================================
 
-def update_readme_summary(run_ts_utc: str, boots: list):
-    log(f"Working directory: {os.getcwd()}")
-    log(f"README exists: {os.path.exists(README_FILE)}")
-
+def update_readme_summary(run_ts_utc: str, site_results: dict):
     if not os.path.exists(README_FILE):
-        log("README file not found. Skipping update.")
+        log("README not found. Skipping.")
         return
 
     with open(README_FILE, "r", encoding="utf-8") as f:
@@ -215,23 +212,25 @@ def update_readme_summary(run_ts_utc: str, boots: list):
     end_marker = "<!-- BOOTS_SUMMARY_END -->"
 
     if start_marker not in content or end_marker not in content:
-        log("README markers missing. Skipping update.")
+        log("Markers missing in README. Skipping.")
         return
 
     lines = [
-        f"**Last Run (UTC):** `{run_ts_utc}`\n",
-        "### Iron Heart UK - Wesco (Top 5)\n",
-        "| Rank | Name | Price | Link |",
-        "|------|------|-------|------|",
+        f"**Last Run (UTC):** `{run_ts_utc}`\n"
     ]
 
-    if boots:
-        for i, boot in enumerate(boots, start=1):
-            lines.append(
-                f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
-            )
-    else:
-        lines.append("| - | No boots found | - | - |")
+    for site_name, boots in site_results.items():
+        lines.append(f"\n## {site_name.replace('_',' ').title()} (Top 5)\n")
+        lines.append("| Rank | Name | Price | Link |")
+        lines.append("|------|------|-------|------|")
+
+        if boots:
+            for i, boot in enumerate(boots, start=1):
+                lines.append(
+                    f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
+                )
+        else:
+            lines.append("| - | No boots found | - | - |")
 
     new_summary = "\n".join(lines)
 
@@ -243,7 +242,7 @@ def update_readme_summary(run_ts_utc: str, boots: list):
     with open(README_FILE, "w", encoding="utf-8") as f:
         f.write(updated)
 
-    log("README updated successfully.")
+    log("README updated with all sites.")
 
 # ==================================================
 # MAIN
@@ -262,9 +261,6 @@ def main():
             config["base"],
             config["collection"]
         )
-
-        log(f"{site_name} scraped {len(boots)} boots")
-
         site_results[site_name] = boots
 
     if not site_results:
@@ -286,11 +282,7 @@ def main():
 
     save_state(state)
 
-    # ALWAYS attempt README update for iron_heart_uk
-    update_readme_summary(
-        run_ts_utc,
-        site_results.get("iron_heart_uk", [])
-    )
+    update_readme_summary(run_ts_utc, site_results)
 
     log("Boots watcher completed.")
 
