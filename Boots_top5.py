@@ -31,12 +31,17 @@ SITES = {
     },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
-        # Use the user-provided in-stock + size filter and newest-first sort.
+        # User-provided: newest-first + in-stock only + size 10.5
         "collection": "/collections/boots?sort_by=created-descending&filter.v.availability=1&filter.v.option.size=10+1%2F2"
     },
     "iron_heart_uk": {
         "base": "https://ironheart.co.uk",
-        "collection": "/collections/wesco"
+        # Better Iron Heart setup:
+        # - Wesco collection
+        # - in-stock only
+        # - newest-first
+        # - size 10.5
+        "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
     }
 }
 
@@ -49,9 +54,18 @@ FOOTWEAR_KEYWORDS = [
     "oxford", "derby", "wesco", "viberg"
 ]
 
+# Global exclusions (applies to all sites)
 EXCLUDED_KEYWORDS = [
     "bag", "bags"
 ]
+
+# Site-specific exclusions (do not change state schema; this is runtime filtering only)
+SITE_EXCLUDED_KEYWORDS = {
+    # Iron Heart UK Wesco collection includes non-boot items like boot dressings, laces, kilties.
+    # Exclude those to focus alerts on actual footwear/collab drops.
+    "iron_heart_uk": ["dressing", "dressings", "lace", "laces", "kiltie", "kilties"],
+    # You can add more site-specific exclusions here if needed, without changing state schema.
+}
 
 # ==================================================
 # LOGGING
@@ -215,13 +229,6 @@ def _build_collection_products_json_url(base: str, collection: str, limit: int =
     """
     Build a Shopify collection products.json URL while preserving any query params
     present on the collection URL (e.g., sort/filter params).
-
-    Examples:
-      collection="/collections/boots"
-        -> https://.../collections/boots/products.json?limit=50
-
-      collection="/collections/boots?sort_by=created-descending&filter.v.availability=1"
-        -> https://.../collections/boots/products.json?sort_by=created-descending&filter.v.availability=1&limit=50
     """
     collection = collection or ""
     if "?" in collection:
@@ -250,12 +257,26 @@ def _build_collection_products_json_url(base: str, collection: str, limit: int =
 # SHOPIFY SCRAPER (JSON + FALLBACK)
 # ==================================================
 
-def _is_footwear_product(title: str, product_type: str = "", tags_text: str = "") -> bool:
+def _site_exclusions(site_name: str):
+    extras = SITE_EXCLUDED_KEYWORDS.get(site_name, [])
+    return set(str(x).lower() for x in extras if isinstance(x, str))
+
+def _is_footwear_product(site_name: str, title: str, product_type: str = "", tags_text: str = "") -> bool:
     title_lower = (title or "").lower()
     product_type_lower = (product_type or "").lower()
     tags_lower = (tags_text or "").lower()
 
+    # Global exclusions
     if any(k in title_lower for k in EXCLUDED_KEYWORDS):
+        return False
+
+    # Site-specific exclusions
+    site_ex = _site_exclusions(site_name)
+    if site_ex and any(k in title_lower for k in site_ex):
+        return False
+
+    # Avoid obvious non-footwear categories when product_type indicates accessories/care.
+    if "accessor" in product_type_lower or "care" in product_type_lower:
         return False
 
     return (
@@ -339,7 +360,7 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
                 cents = v0.get("price")
                 price = _cents_to_usd_string(cents)
 
-        if not _is_footwear_product(str(title), str(product_type), str(tags_text)):
+        if not _is_footwear_product(site_name, str(title), str(product_type), str(tags_text)):
             continue
 
         seen_urls.add(product_url)
@@ -385,10 +406,10 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
     for product in products:
         title = product.get("title", "")
         handle = product.get("handle", "")
-        product_type = product.get("product_type", "").lower()
-        tags = " ".join(product.get("tags", [])).lower()
+        product_type = product.get("product_type", "")
+        tags = " ".join(product.get("tags", []))
 
-        if not _is_footwear_product(str(title), str(product_type), str(tags)):
+        if not _is_footwear_product(site_name, str(title), str(product_type), str(tags)):
             continue
 
         if not handle:
@@ -433,6 +454,11 @@ def _previous_seen_urls(site_name: str, state: dict):
     return urls
 
 def detect_new_top3(site_name: str, current: list, state: dict):
+    """
+    Detect meaningful change using stable identifiers (URL).
+    - Not position-based: ordering shifts do not alert.
+    - Only alerts if a URL in current top 3 was not seen previously for that site.
+    """
     seen_urls = _previous_seen_urls(site_name, state)
 
     new_items = []
@@ -450,6 +476,13 @@ def detect_new_top3(site_name: str, current: list, state: dict):
 # ==================================================
 
 def post_to_discord(site_new_map: dict) -> bool:
+    """
+    Idempotency strategy:
+    - Message content is aggregated across sites.
+    - Caller controls state persistence; if posting fails when there are new items,
+      state is NOT saved, so reruns will retry rather than silently skipping.
+    - Webhook failure never crashes the run.
+    """
     if not DISCORD_WEBHOOK_URL:
         log("No Discord webhook set.")
         return False
@@ -565,6 +598,9 @@ def main():
 
     update_readme_summary(run_ts_utc, site_results)
 
+    # Only persist state if the run is considered successful:
+    # - scraping ran (any_site_success)
+    # - and if there were new items, Discord posting succeeded
     if posted_ok:
         for site_name, boots in site_results.items():
             state[site_name] = boots
