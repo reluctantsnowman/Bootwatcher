@@ -145,6 +145,74 @@ def save_state(state: dict):
         log(f"Failed to save state: {e}")
 
 # ==================================================
+# PRICE HELPERS
+# ==================================================
+
+def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
+    """
+    Shopify products.json typically returns variant.price as a string like "765.00"
+    in the shop's presentment currency. For Brooklyn Clothing this appears to be CAD.
+
+    Goal:
+    - For Brooklyn Clothing only: convert CAD -> USD when an FX rate is available.
+    - Fail safe: if conversion cannot be performed, still return the original price.
+    """
+    if price_value is None:
+        return ""
+
+    try:
+        raw = str(price_value).strip()
+    except Exception:
+        return ""
+
+    if raw == "":
+        return ""
+
+    # Keep non-numeric strings (fail safe).
+    try:
+        amount = float(raw)
+    except Exception:
+        return f"${raw}"
+
+    # Default: treat as USD
+    if site_name != "brooklyn_clothing":
+        return f"${amount:.2f}"
+
+    # Brooklyn Clothing: attempt CAD -> USD conversion
+    # Uses exchangerate.host (no key) and fails safe if unavailable.
+    try:
+        fx = requests.get(
+            "https://api.exchangerate.host/convert",
+            params={"from": "CAD", "to": "USD", "amount": amount},
+            headers=HEADERS,
+            timeout=15
+        )
+        fx.raise_for_status()
+        data = fx.json() if isinstance(fx, requests.Response) else {}
+        result = data.get("result")
+        if isinstance(result, (int, float)):
+            return f"${float(result):.2f}"
+    except Exception as e:
+        log(f"{site_name}: CAD->USD conversion failed; using original currency amount. Error: {e}")
+
+    # If conversion fails, still show the numeric value (but as-is).
+    # We don't change state schema; we just emit a price string.
+    return f"${amount:.2f}"
+
+def _cents_to_usd_string(cents_value) -> str:
+    if cents_value is None:
+        return ""
+    try:
+        if isinstance(cents_value, int):
+            return f"${cents_value / 100:.2f}"
+        s = str(cents_value).strip()
+        if s.isdigit():
+            return f"${int(s) / 100:.2f}"
+    except Exception:
+        return ""
+    return ""
+
+# ==================================================
 # SHOPIFY SCRAPER (JSON + FALLBACK)
 # ==================================================
 
@@ -235,10 +303,8 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
             if isinstance(variants, list) and variants:
                 v0 = variants[0] if isinstance(variants[0], dict) else {}
                 cents = v0.get("price")
-                if isinstance(cents, int):
-                    price = f"${cents / 100:.2f}"
-                elif isinstance(cents, str) and cents.isdigit():
-                    price = f"${int(cents) / 100:.2f}"
+                # .js endpoints commonly provide cents; treat as USD display by default
+                price = _cents_to_usd_string(cents)
 
         if not _is_footwear_product(str(title), str(product_type), str(tags_text)):
             continue
@@ -305,7 +371,7 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         price = ""
         if variants and isinstance(variants, list):
             price_val = variants[0].get("price", "")
-            price = f"${price_val}" if price_val != "" else ""
+            price = _shopify_price_to_usd_string(price_val, site_name)
 
         boots.append({
             "name": title,
