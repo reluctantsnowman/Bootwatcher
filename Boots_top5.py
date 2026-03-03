@@ -37,25 +37,49 @@ def log(message: str):
         f.write(line + "\n")
 
 # ==================================================
-# STATE HANDLING
+# STATE HANDLING (FIXED + SAFE)
 # ==================================================
 
 def load_previous_state():
     if not os.path.exists(STATE_FILE):
+        log("State file does not exist. Starting fresh.")
         return {}
 
-    with open(STATE_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(STATE_FILE, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+
+            if not content:
+                log("State file is empty. Resetting state.")
+                return {}
+
+            return json.loads(content)
+
+    except json.JSONDecodeError:
+        log("State file is corrupted. Resetting state.")
+        return {}
+
+    except Exception as e:
+        log(f"Unexpected error loading state: {e}")
+        return {}
 
 
 def save_state(state: dict):
     if not SAVE_STATE:
+        log("SAVE_STATE disabled. Skipping state save.")
         return
 
-    with open(STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump(state, f, indent=2)
+    try:
+        temp_file = STATE_FILE + ".tmp"
 
-    log("State saved.")
+        with open(temp_file, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2)
+
+        os.replace(temp_file, STATE_FILE)  # atomic write
+        log("State saved.")
+
+    except Exception as e:
+        log(f"Failed to save state: {e}")
 
 # ==================================================
 # GENERIC SHOPIFY SCRAPER
@@ -66,7 +90,7 @@ def scrape_shopify_collection(base_url: str, base_domain: str):
         response = requests.get(base_url, headers=HEADERS, timeout=30)
         response.raise_for_status()
     except Exception as e:
-        log(f"Request failed: {e}")
+        log(f"Request failed for {base_url}: {e}")
         return []
 
     soup = BeautifulSoup(response.text, "lxml")
@@ -169,16 +193,18 @@ def post_to_discord(site_new_map: dict):
     payload = {"content": "\n".join(lines)}
 
     try:
-        response = requests.post(DISCORD_WEBHOOK_URL, json=payload)
-        if response.status_code == 204:
+        response = requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=15)
+
+        if response.status_code in (200, 204):
             log("Posted NEW boots to Discord.")
         else:
             log(f"Discord error: {response.status_code} {response.text}")
+
     except Exception as e:
         log(f"Discord post failed: {e}")
 
 # ==================================================
-# README UPDATE (Iron Heart UK Section)
+# README UPDATE
 # ==================================================
 
 def update_readme_summary(run_ts_utc: str, boots: list):
@@ -243,7 +269,6 @@ def main():
         "iron_heart_uk": scrape_iron_heart_uk(),
     }
 
-    # Remove failed scrapes
     site_results = {k: v for k, v in site_results.items() if v}
 
     if not site_results:
@@ -266,13 +291,11 @@ def main():
     else:
         log("No NEW items across any site.")
 
-    # Save updated state
     for site_name, boots in site_results.items():
         state[site_name] = boots
 
     save_state(state)
 
-    # Update README using Iron Heart UK
     if "iron_heart_uk" in site_results:
         update_readme_summary(run_ts_utc, site_results["iron_heart_uk"])
 
