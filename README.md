@@ -7,18 +7,18 @@ Tracks top 5 boots and posts to Discord twice daily.
 ## Live Summary
 
 <!-- BOOTS_SUMMARY_START -->
-**Last Run (UTC):** `2026-03-03 23:13:04`
+**Last Run (UTC):** `2026-03-03 23:50:40`
 
 
 ## Division Road (Top 5)
 
 | Rank | Name | Price | Link |
 |------|------|-------|------|
-| 1 | Division Road Garment Bag - 11oz Black Oxford | $40.00 | [View](https://divisionroadinc.com/products/division-provisions-division-road-garment-bag-11oz-black-oxford) |
-| 2 | Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio | $765.00 | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio) |
-| 3 | Churchill Boot - 4497 - Commando - Badalassi Tabacco Carlo Wax | $765.00 | [View](https://divisionroadinc.com/products/trickers-churchill-boot-4497-commando-badalassi-tabacco-carlo-wax) |
-| 4 | Stow Boot - 4497 - Dainite - Badalassi Cognac Carlo Wax | $765.00 | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-dainite-badalassi-cognac-carlo-wax) |
-| 5 | Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton | $795.00 | [View](https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton) |
+| 1 | Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio | $765.00 | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio) |
+| 2 | Churchill Boot - 4497 - Commando - Badalassi Tabacco Carlo Wax | $765.00 | [View](https://divisionroadinc.com/products/trickers-churchill-boot-4497-commando-badalassi-tabacco-carlo-wax) |
+| 3 | Stow Boot - 4497 - Dainite - Badalassi Cognac Carlo Wax | $765.00 | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-dainite-badalassi-cognac-carlo-wax) |
+| 4 | Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton | $795.00 | [View](https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton) |
+| 5 | Hunter Moc - Vibram ASP Neo Lug - Heinen Black | $1225.00 | [View](https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-black) |
 
 ## Brooklyn Clothing (Top 5)
 

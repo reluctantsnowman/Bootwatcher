@@ -1,11 +1,6 @@
 {
   "division_road": [
     {
-      "name": "Division Road Garment Bag - 11oz Black Oxford",
-      "price": "$40.00",
-      "url": "https://divisionroadinc.com/products/division-provisions-division-road-garment-bag-11oz-black-oxford"
-    },
-    {
       "name": "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio",
       "price": "$765.00",
       "url": "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio"
@@ -24,6 +19,11 @@
       "name": "Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton",
       "price": "$795.00",
       "url": "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton"
+    },
+    {
+      "name": "Hunter Moc - Vibram ASP Neo Lug - Heinen Black",
+      "price": "$1225.00",
+      "url": "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-black"
     }
   ],
   "brooklyn_clothing": [
