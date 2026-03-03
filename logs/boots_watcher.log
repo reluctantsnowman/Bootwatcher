@@ -30,3 +30,18 @@
 [2026-03-03 20:50:59 UTC] Posted NEW boots to Discord.
 [2026-03-03 20:50:59 UTC] State saved.
 [2026-03-03 20:50:59 UTC] Boots watcher completed.
+[2026-03-03 20:54:41 UTC] Boots watcher started.
+[2026-03-03 20:54:42 UTC] https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending status 200
+[2026-03-03 20:54:42 UTC] https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending -> returning 5 filtered boots
+[2026-03-03 20:54:42 UTC] https://brooklynclothing.com/collections/boots?sort_by=created-descending status 200
+[2026-03-03 20:54:43 UTC] https://brooklynclothing.com/collections/boots?sort_by=created-descending -> returning 1 filtered boots
+[2026-03-03 20:54:43 UTC] https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending status 200
+[2026-03-03 20:54:43 UTC] https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending -> returning 0 filtered boots
+[2026-03-03 20:54:44 UTC] https://ironheartgermany.com/collections/boots?sort_by=created-descending status 200
+[2026-03-03 20:54:44 UTC] https://ironheartgermany.com/collections/boots?sort_by=created-descending -> returning 5 filtered boots
+[2026-03-03 20:54:45 UTC] https://ironheart.co.uk/collections/wesco?sort_by=created-descending status 200
+[2026-03-03 20:54:45 UTC] https://ironheart.co.uk/collections/wesco?sort_by=created-descending -> returning 5 filtered boots
+[2026-03-03 20:54:45 UTC] Discord error: 400
+[2026-03-03 20:54:45 UTC] State saved.
+[2026-03-03 20:54:45 UTC] README updated.
+[2026-03-03 20:54:45 UTC] Boots watcher completed.
