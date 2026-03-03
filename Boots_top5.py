@@ -3,7 +3,7 @@ import json
 import re
 import requests
 from datetime import datetime
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
 # ==================================================
 # CONFIG
@@ -31,7 +31,8 @@ SITES = {
     },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
-        "collection": "/collections/boots"
+        # Use the user-provided in-stock + size filter and newest-first sort.
+        "collection": "/collections/boots?sort_by=created-descending&filter.v.availability=1&filter.v.option.size=10+1%2F2"
     },
     "iron_heart_uk": {
         "base": "https://ironheart.co.uk",
@@ -168,18 +169,14 @@ def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
     if raw == "":
         return ""
 
-    # Keep non-numeric strings (fail safe).
     try:
         amount = float(raw)
     except Exception:
         return f"${raw}"
 
-    # Default: treat as USD
     if site_name != "brooklyn_clothing":
         return f"${amount:.2f}"
 
-    # Brooklyn Clothing: attempt CAD -> USD conversion
-    # Uses exchangerate.host (no key) and fails safe if unavailable.
     try:
         fx = requests.get(
             "https://api.exchangerate.host/convert",
@@ -195,8 +192,6 @@ def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
     except Exception as e:
         log(f"{site_name}: CAD->USD conversion failed; using original currency amount. Error: {e}")
 
-    # If conversion fails, still show the numeric value (but as-is).
-    # We don't change state schema; we just emit a price string.
     return f"${amount:.2f}"
 
 def _cents_to_usd_string(cents_value) -> str:
@@ -211,6 +206,45 @@ def _cents_to_usd_string(cents_value) -> str:
     except Exception:
         return ""
     return ""
+
+# ==================================================
+# URL HELPERS
+# ==================================================
+
+def _build_collection_products_json_url(base: str, collection: str, limit: int = 50) -> str:
+    """
+    Build a Shopify collection products.json URL while preserving any query params
+    present on the collection URL (e.g., sort/filter params).
+
+    Examples:
+      collection="/collections/boots"
+        -> https://.../collections/boots/products.json?limit=50
+
+      collection="/collections/boots?sort_by=created-descending&filter.v.availability=1"
+        -> https://.../collections/boots/products.json?sort_by=created-descending&filter.v.availability=1&limit=50
+    """
+    collection = collection or ""
+    if "?" in collection:
+        path_part, query_part = collection.split("?", 1)
+    else:
+        path_part, query_part = collection, ""
+
+    path_part = (path_part or "").rstrip("/")
+    url = f"{base}{path_part}/products.json"
+
+    parsed = urlparse(url)
+    existing_qs = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    incoming_qs = dict(parse_qsl(query_part, keep_blank_values=True)) if query_part else {}
+
+    merged = {}
+    merged.update(existing_qs)
+    merged.update(incoming_qs)
+    merged["limit"] = str(int(limit))
+
+    new_query = urlencode(merged, doseq=True)
+    rebuilt = parsed._replace(query=new_query)
+
+    return urlunparse(rebuilt)
 
 # ==================================================
 # SHOPIFY SCRAPER (JSON + FALLBACK)
@@ -303,7 +337,6 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
             if isinstance(variants, list) and variants:
                 v0 = variants[0] if isinstance(variants[0], dict) else {}
                 cents = v0.get("price")
-                # .js endpoints commonly provide cents; treat as USD display by default
                 price = _cents_to_usd_string(cents)
 
         if not _is_footwear_product(str(title), str(product_type), str(tags_text)):
@@ -323,7 +356,7 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
     return boots
 
 def scrape_shopify_json(site_name: str, base: str, collection: str):
-    url = f"{base}{collection}/products.json?limit=50"
+    url = _build_collection_products_json_url(base, collection, limit=50)
 
     try:
         response = requests.get(url, headers=HEADERS, timeout=30)
