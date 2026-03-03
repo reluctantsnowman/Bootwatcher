@@ -1,7 +1,9 @@
 import os
 import json
+import re
 import requests
 from datetime import datetime
+from urllib.parse import urlparse
 
 # ==================================================
 # CONFIG
@@ -100,7 +102,6 @@ def _normalize_site_state(site_name: str, site_value):
             "url": url
         })
 
-    # Preserve prior behavior: keep whatever count exists, but schema is list of boots.
     return cleaned
 
 def load_previous_state():
@@ -144,8 +145,135 @@ def save_state(state: dict):
         log(f"Failed to save state: {e}")
 
 # ==================================================
-# SHOPIFY SCRAPER
+# SHOPIFY SCRAPER (JSON + FALLBACK)
 # ==================================================
+
+def _is_footwear_product(title: str, product_type: str = "", tags_text: str = "") -> bool:
+    title_lower = (title or "").lower()
+    product_type_lower = (product_type or "").lower()
+    tags_lower = (tags_text or "").lower()
+
+    return (
+        any(k in title_lower for k in FOOTWEAR_KEYWORDS) or
+        "boot" in product_type_lower or
+        "footwear" in product_type_lower or
+        "shoe" in product_type_lower or
+        "boot" in tags_lower
+    )
+
+def _extract_product_handles_from_collection_html(html: str):
+    """
+    Extract product handles from a collection HTML page by finding /products/<handle> links.
+    Preserves first-seen order and de-dupes.
+    """
+    # Capture href values that contain /products/<handle>
+    # Handles are typically lowercase with dashes; we allow broader chars up to delimiter.
+    matches = re.findall(r'href="([^"]*?/products/[^"?&#]+)"', html, flags=re.IGNORECASE)
+    seen = set()
+    handles = []
+    for href in matches:
+        # Normalize to path
+        parsed = urlparse(href)
+        path = parsed.path if parsed.path else href
+        if "/products/" not in path:
+            continue
+        handle = path.split("/products/", 1)[1].strip("/").split("/", 1)[0]
+        if not handle:
+            continue
+        if handle in seen:
+            continue
+        seen.add(handle)
+        handles.append(handle)
+    return handles
+
+def _fetch_product_js(base: str, handle: str):
+    """
+    Fetch Shopify product JSON via /products/<handle>.js (often enabled even when collection products.json is not).
+    Returns a dict or None.
+    """
+    url = f"{base}/products/{handle}.js"
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=30)
+        resp.raise_for_status()
+        return resp.json()
+    except Exception:
+        return None
+
+def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
+    """
+    Fallback strategy when /collections/.../products.json is unavailable (404, etc.):
+    1) Fetch the collection HTML
+    2) Extract product handles from /products/<handle> links
+    3) For each handle, try /products/<handle>.js to obtain title + price (+ tags/type if present)
+    4) Apply footwear filter and return up to 5 items
+    """
+    collection_url = f"{base}{collection}"
+    log(f"{site_name}: using HTML fallback for collection {collection_url}")
+
+    try:
+        resp = requests.get(collection_url, headers=HEADERS, timeout=30)
+        resp.raise_for_status()
+        html = resp.text or ""
+    except Exception as e:
+        log(f"{site_name} fallback HTML request failed: {e}")
+        return []
+
+    handles = _extract_product_handles_from_collection_html(html)
+    if not handles:
+        log(f"{site_name}: fallback found 0 product handles in HTML")
+        return []
+
+    boots = []
+    seen_urls = set()
+
+    # Only probe a limited number of products to remain CI-friendly and fast
+    for handle in handles[:30]:
+        product_url = f"{base}/products/{handle}"
+        if product_url in seen_urls:
+            continue
+
+        # Try to enrich using product .js endpoint
+        pdata = _fetch_product_js(base, handle)
+        title = handle
+        price = ""
+        product_type = ""
+        tags_text = ""
+
+        if isinstance(pdata, dict):
+            title = pdata.get("title") or title
+            product_type = pdata.get("type") or ""
+            tags_val = pdata.get("tags")
+            if isinstance(tags_val, list):
+                tags_text = " ".join(str(t) for t in tags_val)
+            elif isinstance(tags_val, str):
+                tags_text = tags_val
+
+            variants = pdata.get("variants", [])
+            if isinstance(variants, list) and variants:
+                # Shopify .js often returns price in cents
+                v0 = variants[0] if isinstance(variants[0], dict) else {}
+                cents = v0.get("price")
+                if isinstance(cents, int):
+                    price = f"${cents / 100:.2f}"
+                elif isinstance(cents, str) and cents.isdigit():
+                    price = f"${int(cents) / 100:.2f}"
+
+        # Apply footwear filter (best effort even if pdata missing)
+        if not _is_footwear_product(str(title), str(product_type), str(tags_text)):
+            continue
+
+        seen_urls.add(product_url)
+        boots.append({
+            "name": title,
+            "price": price,
+            "url": product_url
+        })
+
+        if len(boots) == 5:
+            break
+
+    log(f"{site_name}: fallback returning {len(boots)} boots")
+    return boots
 
 def scrape_shopify_json(site_name: str, base: str, collection: str):
     url = f"{base}{collection}/products.json?limit=50"
@@ -153,6 +281,13 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
     try:
         response = requests.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        status = getattr(getattr(e, "response", None), "status_code", None)
+        if status == 404:
+            log(f"{site_name} request failed: {e} (will try HTML fallback)")
+            return scrape_shopify_html_fallback(site_name, base, collection)
+        log(f"{site_name} request failed: {e}")
+        return []
     except Exception as e:
         log(f"{site_name} request failed: {e}")
         return []
@@ -173,17 +308,7 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         product_type = product.get("product_type", "").lower()
         tags = " ".join(product.get("tags", [])).lower()
 
-        title_lower = str(title).lower()
-
-        is_footwear = (
-            any(k in title_lower for k in FOOTWEAR_KEYWORDS) or
-            "boot" in product_type or
-            "footwear" in product_type or
-            "shoe" in product_type or
-            "boot" in tags
-        )
-
-        if not is_footwear:
+        if not _is_footwear_product(str(title), str(product_type), str(tags)):
             continue
 
         if not handle:
