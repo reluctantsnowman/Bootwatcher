@@ -1,7 +1,6 @@
 import os
 import json
 import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
 
 # ==================================================
@@ -15,20 +14,36 @@ README_FILE = "README.md"
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SAVE_STATE = os.getenv("SAVE_STATE") == "1"
 
-DIVISION_ROAD_URL = "https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending"
-BROOKLYN_URL = "https://brooklynclothing.com/collections/boots?sort_by=created-descending"
-NICKS_URL = "https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending"
-IRON_HEART_GERMANY_URL = "https://ironheartgermany.com/collections/boots?sort_by=created-descending"
-IRON_HEART_UK_URL = "https://ironheart.co.uk/collections/wesco?sort_by=created-descending"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+SITES = {
+    "division_road": {
+        "base": "https://divisionroadinc.com",
+        "collection": "/collections/footwear/boots"
+    },
+    "brooklyn_clothing": {
+        "base": "https://brooklynclothing.com",
+        "collection": "/collections/boots"
+    },
+    "nicks_ready_to_ship": {
+        "base": "https://nicksboots.com",
+        "collection": "/collections/ready-to-ship-free-shipping"
+    },
+    "iron_heart_germany": {
+        "base": "https://ironheartgermany.com",
+        "collection": "/collections/boots"
+    },
+    "iron_heart_uk": {
+        "base": "https://ironheart.co.uk",
+        "collection": "/collections/wesco"
+    }
 }
 
-BOOT_KEYWORDS = [
-    "boot", "boots", "wesco", "viberg", "service", "engineer",
-    "oxford", "derby"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+FOOTWEAR_KEYWORDS = [
+    "boot", "boots", "engineer", "service",
+    "oxford", "derby", "wesco", "viberg"
 ]
 
 # ==================================================
@@ -56,16 +71,16 @@ def load_previous_state():
         with open(STATE_FILE, "r", encoding="utf-8") as f:
             content = f.read().strip()
             if not content:
-                log("State file is empty. Resetting state.")
+                log("State file empty. Resetting.")
                 return {}
             return json.loads(content)
     except Exception:
-        log("State file corrupted. Resetting state.")
+        log("State file corrupted. Resetting.")
         return {}
 
 def save_state(state: dict):
     if not SAVE_STATE:
-        log("SAVE_STATE disabled. Skipping state save.")
+        log("SAVE_STATE disabled.")
         return
 
     try:
@@ -78,79 +93,71 @@ def save_state(state: dict):
         log(f"Failed to save state: {e}")
 
 # ==================================================
-# SHOPIFY SCRAPER WITH FILTERING
+# SHOPIFY JSON SCRAPER (STRICT FOOTWEAR FILTER)
 # ==================================================
 
-def scrape_shopify_collection(base_url: str, base_domain: str):
+def scrape_shopify_json(site_name: str, base: str, collection: str):
+    url = f"{base}{collection}/products.json?limit=50"
+
     try:
-        response = requests.get(base_url, headers=HEADERS, timeout=30)
+        response = requests.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
-        log(f"{base_url} status {response.status_code}")
     except Exception as e:
-        log(f"Request failed for {base_url}: {e}")
+        log(f"{site_name} request failed: {e}")
         return []
 
-    soup = BeautifulSoup(response.text, "lxml")
+    try:
+        data = response.json()
+    except Exception:
+        log(f"{site_name} invalid JSON.")
+        return []
 
-    product_links = soup.select("a[href*='/products/']")
-    seen = set()
+    products = data.get("products", [])
     boots = []
+    seen = set()
 
-    for link in product_links:
-        url = link.get("href")
-        if not url or "/products/" not in url:
-            continue
-
-        if not url.startswith("http"):
-            url = base_domain + url
-
-        if url in seen:
-            continue
-
-        seen.add(url)
-
-        title = link.get_text(strip=True)
-        if not title:
-            continue
+    for product in products:
+        title = product.get("title", "")
+        handle = product.get("handle", "")
+        product_type = product.get("product_type", "").lower()
+        tags = " ".join(product.get("tags", [])).lower()
 
         title_lower = title.lower()
 
-        if not any(keyword in title_lower for keyword in BOOT_KEYWORDS):
+        # STRICT FOOTWEAR FILTER
+        is_footwear = (
+            any(k in title_lower for k in FOOTWEAR_KEYWORDS) or
+            "boot" in product_type or
+            "footwear" in product_type or
+            "shoe" in product_type or
+            "boot" in tags
+        )
+
+        if not is_footwear:
             continue
 
-        price_tag = link.find_next(string=lambda s: "$" in s if s else False)
-        price = price_tag.strip() if price_tag else ""
+        product_url = f"{base}/products/{handle}"
+
+        if product_url in seen:
+            continue
+        seen.add(product_url)
+
+        variants = product.get("variants", [])
+        price = ""
+        if variants:
+            price = f"${variants[0].get('price', '')}"
 
         boots.append({
             "name": title,
             "price": price,
-            "url": url
+            "url": product_url
         })
 
         if len(boots) == 5:
             break
 
-    log(f"{base_url} -> returning {len(boots)} filtered boots")
+    log(f"{site_name}: returning {len(boots)} filtered boots")
     return boots
-
-# ==================================================
-# SITE SCRAPERS
-# ==================================================
-
-def scrape_division_road():
-    return scrape_shopify_collection(DIVISION_ROAD_URL, "https://divisionroadinc.com")
-
-def scrape_brooklyn_clothing():
-    return scrape_shopify_collection(BROOKLYN_URL, "https://brooklynclothing.com")
-
-def scrape_nicks():
-    return scrape_shopify_collection(NICKS_URL, "https://nicksboots.com")
-
-def scrape_iron_heart_germany():
-    return scrape_shopify_collection(IRON_HEART_GERMANY_URL, "https://ironheartgermany.com")
-
-def scrape_iron_heart_uk():
-    return scrape_shopify_collection(IRON_HEART_UK_URL, "https://ironheart.co.uk")
 
 # ==================================================
 # NEW DETECTION
@@ -178,7 +185,11 @@ def post_to_discord(site_new_map: dict):
             lines.append(f"**{boot['name']}**\n{boot['price']}\n{boot['url']}\n")
 
     try:
-        response = requests.post(DISCORD_WEBHOOK_URL, json={"content": "\n".join(lines)}, timeout=15)
+        response = requests.post(
+            DISCORD_WEBHOOK_URL,
+            json={"content": "\n".join(lines)},
+            timeout=15
+        )
         if response.status_code in (200, 204):
             log("Posted NEW boots to Discord.")
         else:
@@ -211,7 +222,9 @@ def update_readme_summary(run_ts_utc: str, boots: list):
     ]
 
     for i, boot in enumerate(boots, start=1):
-        lines.append(f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |")
+        lines.append(
+            f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
+        )
 
     new_summary = "\n".join(lines)
 
@@ -234,16 +247,16 @@ def main():
     log("Boots watcher started.")
 
     state = load_previous_state()
+    site_results = {}
 
-    site_results = {
-        "division_road": scrape_division_road(),
-        "brooklyn_clothing": scrape_brooklyn_clothing(),
-        "nicks_ready_to_ship": scrape_nicks(),
-        "iron_heart_germany": scrape_iron_heart_germany(),
-        "iron_heart_uk": scrape_iron_heart_uk(),
-    }
-
-    site_results = {k: v for k, v in site_results.items() if v}
+    for site_name, config in SITES.items():
+        boots = scrape_shopify_json(
+            site_name,
+            config["base"],
+            config["collection"]
+        )
+        if boots:
+            site_results[site_name] = boots
 
     if not site_results:
         log("No sites scraped successfully. Exiting.")
