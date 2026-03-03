@@ -124,7 +124,6 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
 
         title_lower = title.lower()
 
-        # STRICT FOOTWEAR FILTER
         is_footwear = (
             any(k in title_lower for k in FOOTWEAR_KEYWORDS) or
             "boot" in product_type or
@@ -202,7 +201,11 @@ def post_to_discord(site_new_map: dict):
 # ==================================================
 
 def update_readme_summary(run_ts_utc: str, boots: list):
+    log(f"Working directory: {os.getcwd()}")
+    log(f"README exists: {os.path.exists(README_FILE)}")
+
     if not os.path.exists(README_FILE):
+        log("README file not found. Skipping update.")
         return
 
     with open(README_FILE, "r", encoding="utf-8") as f:
@@ -212,6 +215,7 @@ def update_readme_summary(run_ts_utc: str, boots: list):
     end_marker = "<!-- BOOTS_SUMMARY_END -->"
 
     if start_marker not in content or end_marker not in content:
+        log("README markers missing. Skipping update.")
         return
 
     lines = [
@@ -221,10 +225,13 @@ def update_readme_summary(run_ts_utc: str, boots: list):
         "|------|------|-------|------|",
     ]
 
-    for i, boot in enumerate(boots, start=1):
-        lines.append(
-            f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
-        )
+    if boots:
+        for i, boot in enumerate(boots, start=1):
+            lines.append(
+                f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
+            )
+    else:
+        lines.append("| - | No boots found | - | - |")
 
     new_summary = "\n".join(lines)
 
@@ -236,7 +243,7 @@ def update_readme_summary(run_ts_utc: str, boots: list):
     with open(README_FILE, "w", encoding="utf-8") as f:
         f.write(updated)
 
-    log("README updated.")
+    log("README updated successfully.")
 
 # ==================================================
 # MAIN
@@ -255,8 +262,10 @@ def main():
             config["base"],
             config["collection"]
         )
-        if boots:
-            site_results[site_name] = boots
+
+        log(f"{site_name} scraped {len(boots)} boots")
+
+        site_results[site_name] = boots
 
     if not site_results:
         log("No sites scraped successfully. Exiting.")
@@ -277,8 +286,11 @@ def main():
 
     save_state(state)
 
-    if "iron_heart_uk" in site_results:
-        update_readme_summary(run_ts_utc, site_results["iron_heart_uk"])
+    # ALWAYS attempt README update for iron_heart_uk
+    update_readme_summary(
+        run_ts_utc,
+        site_results.get("iron_heart_uk", [])
+    )
 
     log("Boots watcher completed.")
 
