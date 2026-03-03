@@ -422,3 +422,24 @@ GBP with USD conversion when available.
 [2026-03-03 17:07:16 UTC] Boots watcher started.
 [2026-03-03 17:07:16 UTC] State file is empty. Resetting state.
 [2026-03-03 17:07:21 UTC] No sites scraped successfully. Exiting.
+[2026-03-03 20:50:53 UTC] Boots watcher started.
+[2026-03-03 20:50:53 UTC] State file is empty. Resetting state.
+[2026-03-03 20:50:54 UTC] https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending status 200 length 633584
+[2026-03-03 20:50:54 UTC] https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending -> found 120 product containers
+[2026-03-03 20:50:54 UTC] https://divisionroadinc.com/collections/footwear/boots?sort_by=created-descending -> returning 5 boots
+[2026-03-03 20:50:55 UTC] https://brooklynclothing.com/collections/boots?sort_by=created-descending status 200 length 1656223
+[2026-03-03 20:50:55 UTC] https://brooklynclothing.com/collections/boots?sort_by=created-descending -> found 0 product containers
+[2026-03-03 20:50:55 UTC] https://brooklynclothing.com/collections/boots?sort_by=created-descending -> returning 0 boots
+[2026-03-03 20:50:56 UTC] https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending status 200 length 2041171
+[2026-03-03 20:50:56 UTC] https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending -> found 50 product containers
+[2026-03-03 20:50:56 UTC] https://nicksboots.com/collections/ready-to-ship-free-shipping?sort_by=created-descending -> returning 0 boots
+[2026-03-03 20:50:57 UTC] https://ironheartgermany.com/collections/boots?sort_by=created-descending status 200 length 654547
+[2026-03-03 20:50:57 UTC] https://ironheartgermany.com/collections/boots?sort_by=created-descending -> found 21 product containers
+[2026-03-03 20:50:57 UTC] https://ironheartgermany.com/collections/boots?sort_by=created-descending -> returning 0 boots
+[2026-03-03 20:50:58 UTC] https://ironheart.co.uk/collections/wesco?sort_by=created-descending status 200 length 795241
+[2026-03-03 20:50:58 UTC] https://ironheart.co.uk/collections/wesco?sort_by=created-descending -> found 0 product containers
+[2026-03-03 20:50:58 UTC] https://ironheart.co.uk/collections/wesco?sort_by=created-descending -> returning 0 boots
+[2026-03-03 20:50:58 UTC] division_road: 3 NEW item(s).
+[2026-03-03 20:50:59 UTC] Posted NEW boots to Discord.
+[2026-03-03 20:50:59 UTC] State saved.
+[2026-03-03 20:50:59 UTC] Boots watcher completed.
