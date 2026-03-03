@@ -48,6 +48,10 @@ FOOTWEAR_KEYWORDS = [
     "oxford", "derby", "wesco", "viberg"
 ]
 
+EXCLUDED_KEYWORDS = [
+    "bag", "bags"
+]
+
 # ==================================================
 # LOGGING
 # ==================================================
@@ -79,10 +83,6 @@ def _is_valid_boot_item(item) -> bool:
     return True
 
 def _normalize_site_state(site_name: str, site_value):
-    """
-    Valid site state: list of dicts with at least {"url": "..."}.
-    Returns a sanitized list (preserving existing schema) or [].
-    """
     if not isinstance(site_value, list):
         log(f"State schema invalid for {site_name}: expected list. Resetting site state.")
         return []
@@ -153,6 +153,9 @@ def _is_footwear_product(title: str, product_type: str = "", tags_text: str = ""
     product_type_lower = (product_type or "").lower()
     tags_lower = (tags_text or "").lower()
 
+    if any(k in title_lower for k in EXCLUDED_KEYWORDS):
+        return False
+
     return (
         any(k in title_lower for k in FOOTWEAR_KEYWORDS) or
         "boot" in product_type_lower or
@@ -162,17 +165,10 @@ def _is_footwear_product(title: str, product_type: str = "", tags_text: str = ""
     )
 
 def _extract_product_handles_from_collection_html(html: str):
-    """
-    Extract product handles from a collection HTML page by finding /products/<handle> links.
-    Preserves first-seen order and de-dupes.
-    """
-    # Capture href values that contain /products/<handle>
-    # Handles are typically lowercase with dashes; we allow broader chars up to delimiter.
     matches = re.findall(r'href="([^"]*?/products/[^"?&#]+)"', html, flags=re.IGNORECASE)
     seen = set()
     handles = []
     for href in matches:
-        # Normalize to path
         parsed = urlparse(href)
         path = parsed.path if parsed.path else href
         if "/products/" not in path:
@@ -187,10 +183,6 @@ def _extract_product_handles_from_collection_html(html: str):
     return handles
 
 def _fetch_product_js(base: str, handle: str):
-    """
-    Fetch Shopify product JSON via /products/<handle>.js (often enabled even when collection products.json is not).
-    Returns a dict or None.
-    """
     url = f"{base}/products/{handle}.js"
     try:
         resp = requests.get(url, headers=HEADERS, timeout=30)
@@ -200,13 +192,6 @@ def _fetch_product_js(base: str, handle: str):
         return None
 
 def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
-    """
-    Fallback strategy when /collections/.../products.json is unavailable (404, etc.):
-    1) Fetch the collection HTML
-    2) Extract product handles from /products/<handle> links
-    3) For each handle, try /products/<handle>.js to obtain title + price (+ tags/type if present)
-    4) Apply footwear filter and return up to 5 items
-    """
     collection_url = f"{base}{collection}"
     log(f"{site_name}: using HTML fallback for collection {collection_url}")
 
@@ -226,13 +211,11 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
     boots = []
     seen_urls = set()
 
-    # Only probe a limited number of products to remain CI-friendly and fast
     for handle in handles[:30]:
         product_url = f"{base}/products/{handle}"
         if product_url in seen_urls:
             continue
 
-        # Try to enrich using product .js endpoint
         pdata = _fetch_product_js(base, handle)
         title = handle
         price = ""
@@ -250,7 +233,6 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
 
             variants = pdata.get("variants", [])
             if isinstance(variants, list) and variants:
-                # Shopify .js often returns price in cents
                 v0 = variants[0] if isinstance(variants[0], dict) else {}
                 cents = v0.get("price")
                 if isinstance(cents, int):
@@ -258,7 +240,6 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
                 elif isinstance(cents, str) and cents.isdigit():
                     price = f"${int(cents) / 100:.2f}"
 
-        # Apply footwear filter (best effort even if pdata missing)
         if not _is_footwear_product(str(title), str(product_type), str(tags_text)):
             continue
 
@@ -353,11 +334,6 @@ def _previous_seen_urls(site_name: str, state: dict):
     return urls
 
 def detect_new_top3(site_name: str, current: list, state: dict):
-    """
-    Detect meaningful change using stable identifiers (URL).
-    - Not position-based: ordering shifts do not alert.
-    - Only alerts if a URL in current top 3 was not seen previously for that site.
-    """
     seen_urls = _previous_seen_urls(site_name, state)
 
     new_items = []
@@ -375,13 +351,6 @@ def detect_new_top3(site_name: str, current: list, state: dict):
 # ==================================================
 
 def post_to_discord(site_new_map: dict) -> bool:
-    """
-    Idempotency strategy:
-    - Message content is aggregated across sites.
-    - Caller controls state persistence; if posting fails when there are new items,
-      state is NOT saved, so reruns will retry rather than silently skipping.
-    - Webhook failure never crashes the run.
-    """
     if not DISCORD_WEBHOOK_URL:
         log("No Discord webhook set.")
         return False
@@ -495,12 +464,8 @@ def main():
         if not posted_ok:
             log("Discord post failed; will not save state to avoid losing retry capability.")
 
-    # Update README regardless of Discord posting outcome (non-critical, should not crash).
     update_readme_summary(run_ts_utc, site_results)
 
-    # Only persist state if the run is considered successful:
-    # - scraping ran (any_site_success)
-    # - and if there were new items, Discord posting succeeded
     if posted_ok:
         for site_name, boots in site_results.items():
             state[site_name] = boots
