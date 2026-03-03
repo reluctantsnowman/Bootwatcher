@@ -21,7 +21,10 @@ NICKS_URL = "https://nicksboots.com/collections/ready-to-ship-free-shipping?sort
 IRON_HEART_GERMANY_URL = "https://ironheartgermany.com/collections/boots?sort_by=created-descending"
 IRON_HEART_UK_URL = "https://ironheart.co.uk/collections/wesco?sort_by=created-descending"
 
-HEADERS = {"User-Agent": "Mozilla/5.0"}
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 
 # ==================================================
 # LOGGING
@@ -37,7 +40,7 @@ def log(message: str):
         f.write(line + "\n")
 
 # ==================================================
-# STATE HANDLING (FIXED + SAFE)
+# STATE HANDLING (SAFE)
 # ==================================================
 
 def load_previous_state():
@@ -63,7 +66,6 @@ def load_previous_state():
         log(f"Unexpected error loading state: {e}")
         return {}
 
-
 def save_state(state: dict):
     if not SAVE_STATE:
         log("SAVE_STATE disabled. Skipping state save.")
@@ -75,32 +77,57 @@ def save_state(state: dict):
         with open(temp_file, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2)
 
-        os.replace(temp_file, STATE_FILE)  # atomic write
+        os.replace(temp_file, STATE_FILE)
         log("State saved.")
 
     except Exception as e:
         log(f"Failed to save state: {e}")
 
 # ==================================================
-# GENERIC SHOPIFY SCRAPER
+# ROBUST SHOPIFY SCRAPER
 # ==================================================
 
 def scrape_shopify_collection(base_url: str, base_domain: str):
     try:
         response = requests.get(base_url, headers=HEADERS, timeout=30)
         response.raise_for_status()
+        log(f"{base_url} status {response.status_code} length {len(response.text)}")
     except Exception as e:
         log(f"Request failed for {base_url}: {e}")
         return []
 
     soup = BeautifulSoup(response.text, "lxml")
-    products = soup.select(".product-item, .grid-product")
+
+    # Expanded selector coverage for Shopify 2.0 themes
+    products = soup.select(
+        ".product-item, "
+        ".grid-product, "
+        ".card, "
+        ".card-wrapper, "
+        ".grid__item, "
+        "[data-product-handle]"
+    )
+
+    log(f"{base_url} -> found {len(products)} product containers")
 
     boots = []
 
-    for product in products[:5]:
-        title_tag = product.select_one(".product-item__title, .grid-product__title")
-        price_tag = product.select_one(".price-item, .grid-product__price")
+    for product in products:
+        title_tag = (
+            product.select_one(".product-item__title") or
+            product.select_one(".grid-product__title") or
+            product.select_one(".card__heading") or
+            product.select_one("h2") or
+            product.select_one("h3")
+        )
+
+        price_tag = (
+            product.select_one(".price-item") or
+            product.select_one(".grid-product__price") or
+            product.select_one(".price") or
+            product.select_one("[class*='price']")
+        )
+
         link_tag = product.select_one("a")
 
         if not title_tag or not link_tag:
@@ -110,7 +137,10 @@ def scrape_shopify_collection(base_url: str, base_domain: str):
         price = price_tag.get_text(strip=True) if price_tag else ""
         url = link_tag.get("href")
 
-        if url and not url.startswith("http"):
+        if not url:
+            continue
+
+        if not url.startswith("http"):
             url = base_domain + url
 
         boots.append({
@@ -119,6 +149,10 @@ def scrape_shopify_collection(base_url: str, base_domain: str):
             "url": url
         })
 
+        if len(boots) == 5:
+            break
+
+    log(f"{base_url} -> returning {len(boots)} boots")
     return boots
 
 # ==================================================
