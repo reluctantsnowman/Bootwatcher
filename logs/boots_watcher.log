@@ -96,3 +96,15 @@
 [2026-03-03 23:03:07 UTC] README updated with all sites.
 [2026-03-03 23:03:07 UTC] State saved.
 [2026-03-03 23:03:07 UTC] Boots watcher completed.
+[2026-03-03 23:13:04 UTC] Boots watcher started.
+[2026-03-03 23:13:04 UTC] division_road request failed: 404 Client Error: Not Found for url: https://divisionroadinc.com/collections/footwear/boots/products.json?limit=50 (will try HTML fallback)
+[2026-03-03 23:13:04 UTC] division_road: using HTML fallback for collection https://divisionroadinc.com/collections/footwear/boots
+[2026-03-03 23:13:07 UTC] division_road: fallback returning 5 boots
+[2026-03-03 23:13:07 UTC] brooklyn_clothing: returning 5 boots
+[2026-03-03 23:13:07 UTC] nicks_ready_to_ship: returning 5 boots
+[2026-03-03 23:13:08 UTC] iron_heart_germany: returning 5 boots
+[2026-03-03 23:13:08 UTC] iron_heart_uk: returning 5 boots
+[2026-03-03 23:13:09 UTC] Posted NEW boots to Discord.
+[2026-03-03 23:13:09 UTC] README updated with all sites.
+[2026-03-03 23:13:09 UTC] State saved.
+[2026-03-03 23:13:09 UTC] Boots watcher completed.
