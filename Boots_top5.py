@@ -62,6 +62,47 @@ def log(message: str):
 # STATE HANDLING
 # ==================================================
 
+def _is_valid_boot_item(item) -> bool:
+    if not isinstance(item, dict):
+        return False
+    url = item.get("url")
+    name = item.get("name")
+    price = item.get("price")
+    if not isinstance(url, str) or not url.strip():
+        return False
+    if name is not None and not isinstance(name, str):
+        return False
+    if price is not None and not isinstance(price, str):
+        return False
+    return True
+
+def _normalize_site_state(site_name: str, site_value):
+    """
+    Valid site state: list of dicts with at least {"url": "..."}.
+    Returns a sanitized list (preserving existing schema) or [].
+    """
+    if not isinstance(site_value, list):
+        log(f"State schema invalid for {site_name}: expected list. Resetting site state.")
+        return []
+
+    cleaned = []
+    seen_urls = set()
+    for item in site_value:
+        if not _is_valid_boot_item(item):
+            continue
+        url = item["url"].strip()
+        if url in seen_urls:
+            continue
+        seen_urls.add(url)
+        cleaned.append({
+            "name": item.get("name", ""),
+            "price": item.get("price", ""),
+            "url": url
+        })
+
+    # Preserve prior behavior: keep whatever count exists, but schema is list of boots.
+    return cleaned
+
 def load_previous_state():
     if not os.path.exists(STATE_FILE):
         log("State file does not exist. Starting fresh.")
@@ -73,10 +114,20 @@ def load_previous_state():
             if not content:
                 log("State file empty. Resetting.")
                 return {}
-            return json.loads(content)
+            data = json.loads(content)
     except Exception:
         log("State file corrupted. Resetting.")
         return {}
+
+    if not isinstance(data, dict):
+        log("State schema invalid: expected object at root. Resetting.")
+        return {}
+
+    normalized = {}
+    for site_name, site_value in data.items():
+        normalized[site_name] = _normalize_site_state(str(site_name), site_value)
+
+    return normalized
 
 def save_state(state: dict):
     if not SAVE_STATE:
@@ -122,7 +173,7 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         product_type = product.get("product_type", "").lower()
         tags = " ".join(product.get("tags", [])).lower()
 
-        title_lower = title.lower()
+        title_lower = str(title).lower()
 
         is_footwear = (
             any(k in title_lower for k in FOOTWEAR_KEYWORDS) or
@@ -135,6 +186,9 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         if not is_footwear:
             continue
 
+        if not handle:
+            continue
+
         product_url = f"{base}/products/{handle}"
 
         if product_url in seen:
@@ -143,8 +197,9 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
 
         variants = product.get("variants", [])
         price = ""
-        if variants:
-            price = f"${variants[0].get('price', '')}"
+        if variants and isinstance(variants, list):
+            price_val = variants[0].get("price", "")
+            price = f"${price_val}" if price_val != "" else ""
 
         boots.append({
             "name": title,
@@ -162,26 +217,56 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
 # NEW DETECTION
 # ==================================================
 
+def _previous_seen_urls(site_name: str, state: dict):
+    prev = state.get(site_name, [])
+    if not isinstance(prev, list):
+        return set()
+    urls = set()
+    for item in prev:
+        if _is_valid_boot_item(item):
+            urls.add(item["url"].strip())
+    return urls
+
 def detect_new_top3(site_name: str, current: list, state: dict):
-    previous = state.get(site_name, [])
-    previous_urls = {boot["url"] for boot in previous[:3]}
-    return [boot for boot in current[:3] if boot["url"] not in previous_urls]
+    """
+    Detect meaningful change using stable identifiers (URL).
+    - Not position-based: ordering shifts do not alert.
+    - Only alerts if a URL in current top 3 was not seen previously for that site.
+    """
+    seen_urls = _previous_seen_urls(site_name, state)
+
+    new_items = []
+    for boot in (current[:3] if isinstance(current, list) else []):
+        if not _is_valid_boot_item(boot):
+            continue
+        url = boot["url"].strip()
+        if url and url not in seen_urls:
+            new_items.append(boot)
+
+    return new_items
 
 # ==================================================
 # DISCORD
 # ==================================================
 
-def post_to_discord(site_new_map: dict):
+def post_to_discord(site_new_map: dict) -> bool:
+    """
+    Idempotency strategy:
+    - Message content is aggregated across sites.
+    - Caller controls state persistence; if posting fails when there are new items,
+      state is NOT saved, so reruns will retry rather than silently skipping.
+    - Webhook failure never crashes the run.
+    """
     if not DISCORD_WEBHOOK_URL:
         log("No Discord webhook set.")
-        return
+        return False
 
     lines = ["**🆕 NEW Boots Detected (Top 3) 🆕**\n"]
 
     for site, boots in site_new_map.items():
         lines.append(f"\n__{site.replace('_',' ').upper()}__\n")
         for boot in boots:
-            lines.append(f"**{boot['name']}**\n{boot['price']}\n{boot['url']}\n")
+            lines.append(f"**{boot.get('name','')}**\n{boot.get('price','')}\n{boot.get('url','')}\n")
 
     try:
         response = requests.post(
@@ -191,10 +276,12 @@ def post_to_discord(site_new_map: dict):
         )
         if response.status_code in (200, 204):
             log("Posted NEW boots to Discord.")
-        else:
-            log(f"Discord error: {response.status_code}")
+            return True
+        log(f"Discord error: {response.status_code}")
+        return False
     except Exception as e:
         log(f"Discord post failed: {e}")
+        return False
 
 # ==================================================
 # README UPDATE (ALL SITES)
@@ -227,7 +314,7 @@ def update_readme_summary(run_ts_utc: str, site_results: dict):
         if boots:
             for i, boot in enumerate(boots, start=1):
                 lines.append(
-                    f"| {i} | {boot['name']} | {boot['price']} | [View]({boot['url']}) |"
+                    f"| {i} | {boot.get('name','')} | {boot.get('price','')} | [View]({boot.get('url','')}) |"
                 )
         else:
             lines.append("| - | No boots found | - | - |")
@@ -254,6 +341,7 @@ def main():
 
     state = load_previous_state()
     site_results = {}
+    any_site_success = False
 
     for site_name, config in SITES.items():
         boots = scrape_shopify_json(
@@ -262,8 +350,10 @@ def main():
             config["collection"]
         )
         site_results[site_name] = boots
+        if boots is not None:
+            any_site_success = True
 
-    if not site_results:
+    if not any_site_success:
         log("No sites scraped successfully. Exiting.")
         return
 
@@ -274,15 +364,24 @@ def main():
         if new_items:
             site_new_map[site_name] = new_items
 
+    posted_ok = True
     if site_new_map:
-        post_to_discord(site_new_map)
+        posted_ok = post_to_discord(site_new_map)
+        if not posted_ok:
+            log("Discord post failed; will not save state to avoid losing retry capability.")
 
-    for site_name, boots in site_results.items():
-        state[site_name] = boots
-
-    save_state(state)
-
+    # Update README regardless of Discord posting outcome (non-critical, should not crash).
     update_readme_summary(run_ts_utc, site_results)
+
+    # Only persist state if the run is considered successful:
+    # - scraping ran (any_site_success)
+    # - and if there were new items, Discord posting succeeded
+    if posted_ok:
+        for site_name, boots in site_results.items():
+            state[site_name] = boots
+        save_state(state)
+    else:
+        log("State not saved due to unsuccessful alert delivery.")
 
     log("Boots watcher completed.")
 
