@@ -160,3 +160,14 @@
 [2026-03-04 11:08:33 EST] README updated.
 [2026-03-04 11:08:33 EST] State saved.
 [2026-03-04 11:08:33 EST] Boots watcher completed.
+[2026-03-04 11:12:22 EST] Boots watcher started.
+[2026-03-04 11:12:22 EST] division_road request failed: 404 Client Error: Not Found for url: https://divisionroadinc.com/collections/footwear/boots/products.json?limit=50
+[2026-03-04 11:12:22 EST] division_road: scrape failed; preserving previous state.
+[2026-03-04 11:12:23 EST] brooklyn_clothing: returning 5 boots
+[2026-03-04 11:12:24 EST] nicks_ready_to_ship: returning 0 boots
+[2026-03-04 11:12:24 EST] iron_heart_germany: returning 5 boots
+[2026-03-04 11:12:24 EST] iron_heart_uk: returning 5 boots
+[2026-03-04 11:12:25 EST] Posted NEW boots to Discord.
+[2026-03-04 11:12:25 EST] README updated.
+[2026-03-04 11:12:25 EST] State saved.
+[2026-03-04 11:12:25 EST] Boots watcher completed.

@@ -28,29 +28,29 @@
   ],
   "brooklyn_clothing": [
     {
-      "name": "Brooklyn x Wesco Custom Hendrik Charcoal Roughout",
-      "price": "$10.50",
-      "url": "https://brooklynclothing.com/products/customhendrikcharcoal"
-    },
-    {
-      "name": "Brooklyn Clothing X White's Boots MP-Sherman Horween Brown Shell Cordovan",
-      "price": "$17.95",
-      "url": "https://brooklynclothing.com/products/mp-sherman-shell-cordovan-brown"
-    },
-    {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
-      "price": "$14.25",
+      "price": "$1425.00",
       "url": "https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black"
     },
     {
       "name": "LK-017 M-43 Service Shoes Horween CXL Natural  R/O",
-      "price": "$12.15",
+      "price": "$1215.00",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural"
     },
     {
-      "name": "Brooklyn x Wesco Custom Hendrik British Tan Domane Roughout",
-      "price": "$7.46",
-      "url": "https://brooklynclothing.com/products/brooklyn-x-wesco-custom-hendrik-roughout-british-tan-domane"
+      "name": "LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black",
+      "price": "$1520.00",
+      "url": "https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black"
+    },
+    {
+      "name": "Service Boot Core 1035 Horween Chromexcel Natural",
+      "price": "$1450.00",
+      "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural"
+    },
+    {
+      "name": "Roper Boot Wash Brown Waxed Flesh",
+      "price": "$1695.00",
+      "url": "https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown"
     }
   ],
   "iron_heart_germany": [
@@ -82,11 +82,6 @@
   ],
   "iron_heart_uk": [
     {
-      "name": "Wesco\u00ae - 10\" Horween Horsehide  Engineer Boot - Black. The \"Mister Lou\"",
-      "price": "$825.00",
-      "url": "https://ironheart.co.uk/products/wesco-mrlou-blkh"
-    },
-    {
       "name": "Wesco\u00ae - 10\" Horsehide  Engineer Boot - Brown. The \"Mister Lou\"",
       "price": "$825.00",
       "url": "https://ironheart.co.uk/products/wesco-mrlou-brn"
@@ -105,33 +100,12 @@
       "name": "Iron Heart Int'l x Wesco\u00ae 7\" Toe Cap Boot - The \"Guildsman\" - British Tan Domain",
       "price": "$742.00",
       "url": "https://ironheart.co.uk/products/ihwe-glmn-tan"
+    },
+    {
+      "name": "Iron Heart Int'l x Wesco\u00ae 7\" Toe Cap Boot - The \"Guildsman\" - Natural Horsehide",
+      "price": "$870.00",
+      "url": "https://ironheart.co.uk/products/ihwe-glmn-nat"
     }
   ],
-  "nicks_ready_to_ship": [
-    {
-      "name": "BuilderPro\u00ae - Classic Arch 10.5E - Ready to Ship!",
-      "price": "$629.00",
-      "url": "https://nicksboots.com/products/builderpro\u00ae-classic-arch-10-5e-ready-to-ship"
-    },
-    {
-      "name": "Nicks X Rose Anvil ND1 6.5 B - Ready To Ship!",
-      "price": "$649.00",
-      "url": "https://nicksboots.com/products/nd1-6-5-b-ready-to-ship"
-    },
-    {
-      "name": "Chukka 9 D - Ready To Ship!",
-      "price": "$510.00",
-      "url": "https://nicksboots.com/products/chukka-9-d-ready-to-ship"
-    },
-    {
-      "name": "Robert 7.5 F - Ready To Ship!",
-      "price": "$629.00",
-      "url": "https://nicksboots.com/products/robert-7-5-f-ready-to-ship"
-    },
-    {
-      "name": "Lace to Toe 12 F - Ready To Ship!",
-      "price": "$669.00",
-      "url": "https://nicksboots.com/products/ltt-mto-12-f-ready-to-ship"
-    }
-  ]
+  "nicks_ready_to_ship": []
 }
