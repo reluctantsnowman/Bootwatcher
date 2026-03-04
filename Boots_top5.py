@@ -3,6 +3,7 @@ import json
 import re
 import requests
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
 # ==================================================
@@ -12,6 +13,7 @@ from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 # prior state with empty results from failures), while preserving the existing state schema,
 # keeping URL-based change detection, aggregating alerts, and saving state only after a
 # successful run (and successful alert delivery when applicable).
+# Additionally, log timestamps must be in US Eastern Time (EST/EDT).
 
 # ==================================================
 # CONFIG
@@ -23,6 +25,8 @@ README_FILE = "README.md"
 
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SAVE_STATE = os.getenv("SAVE_STATE") == "1"
+
+EASTERN_TZ = ZoneInfo("America/New_York")
 
 SITES = {
     "division_road": {
@@ -39,16 +43,10 @@ SITES = {
     },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
-        # User-provided: newest-first + in-stock only + size 10.5
         "collection": "/collections/boots?sort_by=created-descending&filter.v.availability=1&filter.v.option.size=10+1%2F2"
     },
     "iron_heart_uk": {
         "base": "https://ironheart.co.uk",
-        # Better Iron Heart setup:
-        # - Wesco collection
-        # - in-stock only
-        # - newest-first
-        # - size 10.5
         "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
     }
 }
@@ -62,26 +60,22 @@ FOOTWEAR_KEYWORDS = [
     "oxford", "derby", "wesco", "viberg"
 ]
 
-# Global exclusions (applies to all sites)
 EXCLUDED_KEYWORDS = [
     "bag", "bags"
 ]
 
-# Site-specific exclusions (do not change state schema; this is runtime filtering only)
 SITE_EXCLUDED_KEYWORDS = {
-    # Iron Heart UK Wesco collection includes non-boot items like boot dressings, laces, kilties.
-    # Exclude those to focus alerts on actual footwear/collab drops.
     "iron_heart_uk": ["dressing", "dressings", "lace", "laces", "kiltie", "kilties"],
-    # You can add more site-specific exclusions here if needed, without changing state schema.
 }
 
 # ==================================================
-# LOGGING
+# LOGGING (EST/EDT)
 # ==================================================
 
 def log(message: str):
     os.makedirs("logs", exist_ok=True)
-    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    now_est = datetime.now(EASTERN_TZ)
+    timestamp = now_est.strftime("%Y-%m-%d %H:%M:%S %Z")
     line = f"[{timestamp}] {message}"
     print(line)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
@@ -172,14 +166,6 @@ def save_state(state: dict):
 # ==================================================
 
 def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
-    """
-    Shopify products.json typically returns variant.price as a string like "765.00"
-    in the shop's presentment currency. For Brooklyn Clothing this appears to be CAD.
-
-    Goal:
-    - For Brooklyn Clothing only: convert CAD -> USD when an FX rate is available.
-    - Fail safe: if conversion cannot be performed, still return the original price.
-    """
     if price_value is None:
         return ""
 
@@ -234,10 +220,6 @@ def _cents_to_usd_string(cents_value) -> str:
 # ==================================================
 
 def _build_collection_products_json_url(base: str, collection: str, limit: int = 50) -> str:
-    """
-    Build a Shopify collection products.json URL while preserving any query params
-    present on the collection URL (e.g., sort/filter params).
-    """
     collection = collection or ""
     if "?" in collection:
         path_part, query_part = collection.split("?", 1)
@@ -274,16 +256,13 @@ def _is_footwear_product(site_name: str, title: str, product_type: str = "", tag
     product_type_lower = (product_type or "").lower()
     tags_lower = (tags_text or "").lower()
 
-    # Global exclusions
     if any(k in title_lower for k in EXCLUDED_KEYWORDS):
         return False
 
-    # Site-specific exclusions
     site_ex = _site_exclusions(site_name)
     if site_ex and any(k in title_lower for k in site_ex):
         return False
 
-    # Avoid obvious non-footwear categories when product_type indicates accessories/care.
     if "accessor" in product_type_lower or "care" in product_type_lower:
         return False
 
@@ -295,109 +274,12 @@ def _is_footwear_product(site_name: str, title: str, product_type: str = "", tag
         "boot" in tags_lower
     )
 
-def _extract_product_handles_from_collection_html(html: str):
-    matches = re.findall(r'href="([^"]*?/products/[^"?&#]+)"', html, flags=re.IGNORECASE)
-    seen = set()
-    handles = []
-    for href in matches:
-        parsed = urlparse(href)
-        path = parsed.path if parsed.path else href
-        if "/products/" not in path:
-            continue
-        handle = path.split("/products/", 1)[1].strip("/").split("/", 1)[0]
-        if not handle:
-            continue
-        if handle in seen:
-            continue
-        seen.add(handle)
-        handles.append(handle)
-    return handles
-
-def _fetch_product_js(base: str, handle: str):
-    url = f"{base}/products/{handle}.js"
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=30)
-        resp.raise_for_status()
-        return resp.json()
-    except Exception:
-        return None
-
-def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
-    collection_url = f"{base}{collection}"
-    log(f"{site_name}: using HTML fallback for collection {collection_url}")
-
-    try:
-        resp = requests.get(collection_url, headers=HEADERS, timeout=30)
-        resp.raise_for_status()
-        html = resp.text or ""
-    except Exception as e:
-        log(f"{site_name} fallback HTML request failed: {e}")
-        return None
-
-    handles = _extract_product_handles_from_collection_html(html)
-    if not handles:
-        log(f"{site_name}: fallback found 0 product handles in HTML")
-        # This is still a successful fetch/parse; just no products found.
-        return []
-
-    boots = []
-    seen_urls = set()
-
-    for handle in handles[:30]:
-        product_url = f"{base}/products/{handle}"
-        if product_url in seen_urls:
-            continue
-
-        pdata = _fetch_product_js(base, handle)
-        title = handle
-        price = ""
-        product_type = ""
-        tags_text = ""
-
-        if isinstance(pdata, dict):
-            title = pdata.get("title") or title
-            product_type = pdata.get("type") or ""
-            tags_val = pdata.get("tags")
-            if isinstance(tags_val, list):
-                tags_text = " ".join(str(t) for t in tags_val)
-            elif isinstance(tags_val, str):
-                tags_text = tags_val
-
-            variants = pdata.get("variants", [])
-            if isinstance(variants, list) and variants:
-                v0 = variants[0] if isinstance(variants[0], dict) else {}
-                cents = v0.get("price")
-                price = _cents_to_usd_string(cents)
-
-        if not _is_footwear_product(site_name, str(title), str(product_type), str(tags_text)):
-            continue
-
-        seen_urls.add(product_url)
-        boots.append({
-            "name": title,
-            "price": price,
-            "url": product_url
-        })
-
-        if len(boots) == 5:
-            break
-
-    log(f"{site_name}: fallback returning {len(boots)} boots")
-    return boots
-
 def scrape_shopify_json(site_name: str, base: str, collection: str):
     url = _build_collection_products_json_url(base, collection, limit=50)
 
     try:
         response = requests.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
-    except requests.exceptions.HTTPError as e:
-        status = getattr(getattr(e, "response", None), "status_code", None)
-        if status == 404:
-            log(f"{site_name} request failed: {e} (will try HTML fallback)")
-            return scrape_shopify_html_fallback(site_name, base, collection)
-        log(f"{site_name} request failed: {e}")
-        return None
     except Exception as e:
         log(f"{site_name} request failed: {e}")
         return None
@@ -410,7 +292,7 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
 
     products = data.get("products", [])
     if not isinstance(products, list):
-        log(f"{site_name} JSON schema unexpected: products is not a list.")
+        log(f"{site_name} JSON schema unexpected.")
         return None
 
     boots = []
@@ -424,19 +306,15 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         handle = product.get("handle", "")
         product_type = product.get("product_type", "")
         tags_val = product.get("tags", [])
-        if isinstance(tags_val, list):
-            tags = " ".join(str(t) for t in tags_val)
-        else:
-            tags = str(tags_val)
+        tags = " ".join(tags_val) if isinstance(tags_val, list) else str(tags_val)
 
-        if not _is_footwear_product(site_name, str(title), str(product_type), str(tags)):
+        if not _is_footwear_product(site_name, title, product_type, tags):
             continue
 
         if not handle:
             continue
 
         product_url = f"{base}/products/{handle}"
-
         if product_url in seen:
             continue
         seen.add(product_url)
@@ -468,21 +346,12 @@ def _previous_seen_urls(site_name: str, state: dict):
     prev = state.get(site_name, [])
     if not isinstance(prev, list):
         return set()
-    urls = set()
-    for item in prev:
-        if _is_valid_boot_item(item):
-            urls.add(item["url"].strip())
-    return urls
+    return {item["url"].strip() for item in prev if _is_valid_boot_item(item)}
 
 def detect_new_top3(site_name: str, current: list, state: dict):
-    """
-    Detect meaningful change using stable identifiers (URL).
-    - Not position-based: ordering shifts do not alert.
-    - Only alerts if a URL in current top 3 was not seen previously for that site.
-    """
     seen_urls = _previous_seen_urls(site_name, state)
-
     new_items = []
+
     for boot in (current[:3] if isinstance(current, list) else []):
         if not _is_valid_boot_item(boot):
             continue
@@ -497,13 +366,6 @@ def detect_new_top3(site_name: str, current: list, state: dict):
 # ==================================================
 
 def post_to_discord(site_new_map: dict) -> bool:
-    """
-    Idempotency strategy:
-    - Message content is aggregated across sites.
-    - Caller controls state persistence; if posting fails when there are new items,
-      state is NOT saved, so reruns will retry rather than silently skipping.
-    - Webhook failure never crashes the run.
-    """
     if not DISCORD_WEBHOOK_URL:
         log("No Discord webhook set.")
         return False
@@ -531,10 +393,10 @@ def post_to_discord(site_new_map: dict) -> bool:
         return False
 
 # ==================================================
-# README UPDATE (ALL SITES)
+# README UPDATE
 # ==================================================
 
-def update_readme_summary(run_ts_utc: str, site_results: dict):
+def update_readme_summary(run_ts_est: str, site_results: dict):
     if not os.path.exists(README_FILE):
         log("README not found. Skipping.")
         return
@@ -549,9 +411,7 @@ def update_readme_summary(run_ts_utc: str, site_results: dict):
         log("Markers missing in README. Skipping.")
         return
 
-    lines = [
-        f"**Last Run (UTC):** `{run_ts_utc}`\n"
-    ]
+    lines = [f"**Last Run (Eastern):** `{run_ts_est}`\n"]
 
     for site_name, boots in site_results.items():
         lines.append(f"\n## {site_name.replace('_',' ').title()} (Top 5)\n")
@@ -570,25 +430,24 @@ def update_readme_summary(run_ts_utc: str, site_results: dict):
 
     before = content.split(start_marker)[0]
     after = content.split(end_marker)[1]
-
     updated = before + start_marker + "\n" + new_summary + "\n" + end_marker + after
 
     with open(README_FILE, "w", encoding="utf-8") as f:
         f.write(updated)
 
-    log("README updated with all sites.")
+    log("README updated.")
 
 # ==================================================
 # MAIN
 # ==================================================
 
 def main():
-    run_ts_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    now_est = datetime.now(EASTERN_TZ)
+    run_ts_est = now_est.strftime("%Y-%m-%d %H:%M:%S %Z")
     log("Boots watcher started.")
 
     state = load_previous_state()
     site_results = {}
-    site_success = {}
     any_site_success = False
 
     for site_name, config in SITES.items():
@@ -599,13 +458,9 @@ def main():
         )
 
         if boots is None:
-            # Failed scrape: do not overwrite prior state for this site.
-            site_success[site_name] = False
-            log(f"{site_name}: scrape failed; preserving previous state for this site.")
+            log(f"{site_name}: scrape failed; preserving previous state.")
             continue
 
-        # Successful scrape (even if boots == [] because none matched filters).
-        site_success[site_name] = True
         any_site_success = True
         site_results[site_name] = boots
 
@@ -623,24 +478,18 @@ def main():
     if site_new_map:
         posted_ok = post_to_discord(site_new_map)
         if not posted_ok:
-            log("Discord post failed; will not save state to avoid losing retry capability.")
+            log("Discord post failed; state will not be saved.")
 
-    # README should reflect only successfully scraped results (not stale/unknown).
-    update_readme_summary(run_ts_utc, site_results)
+    update_readme_summary(run_ts_est, site_results)
 
-    # Only persist state if the run is considered successful:
-    # - at least one site succeeded (any_site_success)
-    # - and if there were new items, Discord posting succeeded
     if posted_ok:
         for site_name, boots in site_results.items():
-            # Update per-entity state only for successful sites.
             state[site_name] = boots
         save_state(state)
     else:
-        log("State not saved due to unsuccessful alert delivery.")
+        log("State not saved due to alert failure.")
 
     log("Boots watcher completed.")
-
 
 if __name__ == "__main__":
     main()
