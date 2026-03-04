@@ -5,16 +5,15 @@ import requests
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
+from bs4 import BeautifulSoup
 
 # ==================================================
 # GOAL (PRECISE)
 # ==================================================
-# Ensure per-site state is only updated when that site's scrape succeeds (do not overwrite
-# prior state with empty results from failures), while preserving the existing state schema,
-# keeping URL-based change detection, aggregating alerts, and saving state only after a
-# successful run (and successful alert delivery when applicable).
-# Additionally, log timestamps must be in US Eastern Time (EST/EDT).
-# Nick's Boots collection now uses pagination to ensure items beyond the first Shopify page are detected.
+# Ensure per-site state is only updated when that site's scrape succeeds while preserving
+# state schema, URL-based change detection, alert aggregation, and safe state persistence.
+# Additionally, Division Road must fall back to HTML scraping if Shopify JSON is blocked.
+# All log timestamps must be US Eastern Time.
 
 # ==================================================
 # CONFIG
@@ -52,21 +51,17 @@ SITES = {
     }
 }
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0"
-}
+HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 FOOTWEAR_KEYWORDS = [
     "boot", "boots", "engineer", "service",
     "oxford", "derby", "wesco", "viberg"
 ]
 
-EXCLUDED_KEYWORDS = [
-    "bag", "bags"
-]
+EXCLUDED_KEYWORDS = ["bag", "bags"]
 
 SITE_EXCLUDED_KEYWORDS = {
-    "iron_heart_uk": ["dressing", "dressings", "lace", "laces", "kiltie", "kilties"],
+    "iron_heart_uk": ["dressing", "dressings", "lace", "laces", "kiltie", "kilties"]
 }
 
 TARGET_SIZE_PATTERNS = [
@@ -85,8 +80,8 @@ CAD_TO_USD_RATE = None
 def log(message: str):
     os.makedirs("logs", exist_ok=True)
     now_est = datetime.now(EASTERN_TZ)
-    timestamp = now_est.strftime("%Y-%m-%d %H:%M:%S %Z")
-    line = f"[{timestamp}] {message}"
+    ts = now_est.strftime("%Y-%m-%d %H:%M:%S %Z")
+    line = f"[{ts}] {message}"
     print(line)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(line + "\n")
@@ -95,15 +90,6 @@ def log(message: str):
 # STATE
 # ==================================================
 
-def _is_valid_boot_item(item) -> bool:
-    if not isinstance(item, dict):
-        return False
-    url = item.get("url")
-    if not isinstance(url, str) or not url.strip():
-        return False
-    return True
-
-
 def load_previous_state():
     if not os.path.exists(STATE_FILE):
         log("State file does not exist. Starting fresh.")
@@ -111,36 +97,30 @@ def load_previous_state():
 
     try:
         with open(STATE_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
+            return json.load(f)
     except Exception:
         log("State file corrupted. Resetting.")
         return {}
 
-    if not isinstance(data, dict):
-        return {}
-
-    return data
-
-
-def save_state(state: dict):
+def save_state(state):
     if not SAVE_STATE:
         log("SAVE_STATE disabled.")
         return
 
     try:
-        temp_file = STATE_FILE + ".tmp"
-        with open(temp_file, "w", encoding="utf-8") as f:
+        temp = STATE_FILE + ".tmp"
+        with open(temp, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2)
-        os.replace(temp_file, STATE_FILE)
+        os.replace(temp, STATE_FILE)
         log("State saved.")
     except Exception as e:
         log(f"Failed to save state: {e}")
 
 # ==================================================
-# SIZE
+# SIZE MATCHING
 # ==================================================
 
-def _variant_matches_target_size(variant: dict) -> bool:
+def _variant_matches_target_size(variant):
     text = " ".join([
         str(variant.get("title", "")),
         str(variant.get("option1", "")),
@@ -148,8 +128,8 @@ def _variant_matches_target_size(variant: dict) -> bool:
         str(variant.get("option3", ""))
     ]).lower()
 
-    for pattern in TARGET_SIZE_PATTERNS:
-        if re.search(pattern, text):
+    for p in TARGET_SIZE_PATTERNS:
+        if re.search(p, text):
             return True
 
     return False
@@ -161,18 +141,12 @@ def _variant_matches_target_size(variant: dict) -> bool:
 def get_cad_to_usd_rate():
     global CAD_TO_USD_RATE
 
-    if CAD_TO_USD_RATE is not None:
+    if CAD_TO_USD_RATE:
         return CAD_TO_USD_RATE
 
     try:
-        r = requests.get(
-            "https://open.er-api.com/v6/latest/CAD",
-            headers=HEADERS,
-            timeout=15
-        )
-        r.raise_for_status()
-        data = r.json()
-        CAD_TO_USD_RATE = data.get("rates", {}).get("USD")
+        r = requests.get("https://open.er-api.com/v6/latest/CAD", timeout=15)
+        CAD_TO_USD_RATE = r.json()["rates"]["USD"]
     except Exception:
         CAD_TO_USD_RATE = None
 
@@ -182,7 +156,8 @@ def get_cad_to_usd_rate():
 # PRICE
 # ==================================================
 
-def _shopify_price_to_usd_string(price_value, site_name: str):
+def _shopify_price_to_usd_string(price_value, site_name):
+
     try:
         amount = float(str(price_value))
     except Exception:
@@ -196,36 +171,7 @@ def _shopify_price_to_usd_string(price_value, site_name: str):
     return f"${amount:.2f}"
 
 # ==================================================
-# URL
-# ==================================================
-
-def _build_collection_products_json_url(base, collection, limit=250, page=1):
-
-    if "?" in collection:
-        path_part, query_part = collection.split("?", 1)
-    else:
-        path_part, query_part = collection, ""
-
-    url = f"{base}{path_part.rstrip('/')}/products.json"
-
-    parsed = urlparse(url)
-
-    existing = dict(parse_qsl(parsed.query))
-    incoming = dict(parse_qsl(query_part)) if query_part else {}
-
-    merged = {}
-    merged.update(existing)
-    merged.update(incoming)
-
-    merged["limit"] = str(limit)
-    merged["page"] = str(page)
-
-    new_query = urlencode(merged)
-
-    return urlunparse(parsed._replace(query=new_query))
-
-# ==================================================
-# FILTER
+# PRODUCT FILTER
 # ==================================================
 
 def _is_footwear_product(site_name, title, product_type="", tags_text=""):
@@ -238,11 +184,11 @@ def _is_footwear_product(site_name, title, product_type="", tags_text=""):
 
     tags_text = (tags_text or "").lower()
 
-    if any(x in title for x in EXCLUDED_KEYWORDS):
+    if any(k in title for k in EXCLUDED_KEYWORDS):
         return False
 
     site_ex = SITE_EXCLUDED_KEYWORDS.get(site_name, [])
-    if any(x in title for x in site_ex):
+    if any(k in title for k in site_ex):
         return False
 
     return (
@@ -251,8 +197,82 @@ def _is_footwear_product(site_name, title, product_type="", tags_text=""):
         or "footwear" in product_type
         or "boot" in tags_text
     )
+
 # ==================================================
-# SCRAPER
+# URL BUILDER
+# ==================================================
+
+def _build_collection_products_json_url(base, collection, limit=250, page=1):
+
+    if "?" in collection:
+        path, query = collection.split("?", 1)
+    else:
+        path, query = collection, ""
+
+    url = f"{base}{path.rstrip('/')}/products.json"
+
+    parsed = urlparse(url)
+    merged = dict(parse_qsl(parsed.query))
+    merged.update(dict(parse_qsl(query)))
+    merged["limit"] = str(limit)
+    merged["page"] = str(page)
+
+    return urlunparse(parsed._replace(query=urlencode(merged)))
+
+# ==================================================
+# DIVISION ROAD HTML FALLBACK
+# ==================================================
+
+def scrape_division_road_html(base, collection):
+
+    url = base + collection
+
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=30)
+        r.raise_for_status()
+    except Exception as e:
+        log(f"division_road HTML request failed: {e}")
+        return None
+
+    soup = BeautifulSoup(r.text, "lxml")
+
+    boots = []
+    seen = set()
+
+    cards = soup.select("a.product-card")
+
+    for c in cards:
+
+        name = c.get_text(strip=True)
+        link = c.get("href")
+
+        if not link:
+            continue
+
+        full_url = base + link
+
+        if full_url in seen:
+            continue
+
+        if not any(k in name.lower() for k in FOOTWEAR_KEYWORDS):
+            continue
+
+        seen.add(full_url)
+
+        boots.append({
+            "name": name,
+            "price": "",
+            "url": full_url
+        })
+
+        if len(boots) == 5:
+            break
+
+    log(f"division_road HTML fallback returning {len(boots)} boots")
+    return boots
+
+# ==================================================
+# SHOPIFY SCRAPER
 # ==================================================
 
 def scrape_shopify_json(site_name, base, collection):
@@ -270,11 +290,16 @@ def scrape_shopify_json(site_name, base, collection):
         try:
             r = requests.get(url, headers=HEADERS, timeout=30)
             r.raise_for_status()
-            data = r.json()
         except Exception as e:
+
+            if site_name == "division_road":
+                log("division_road JSON blocked; using HTML fallback.")
+                return scrape_division_road_html(base, collection)
+
             log(f"{site_name} request failed: {e}")
             return None
 
+        data = r.json()
         products = data.get("products", [])
 
         if not products:
@@ -285,43 +310,36 @@ def scrape_shopify_json(site_name, base, collection):
             title = product.get("title", "")
             handle = product.get("handle", "")
             product_type = product.get("product_type", "")
-            tags = product.get("tags", "")
+            tags = product.get("tags", [])
 
             if not _is_footwear_product(site_name, title, product_type, tags):
                 continue
 
-            product_url = f"{base}/products/{handle}"
+            url = f"{base}/products/{handle}"
 
-            if product_url in seen:
+            if url in seen:
                 continue
 
             variants = product.get("variants", [])
 
-            qualifying_variant = None
+            qualifying = None
 
             for v in variants:
-
-                if not v.get("available"):
-                    continue
-
-                if _variant_matches_target_size(v):
-                    qualifying_variant = v
+                if v.get("available") and _variant_matches_target_size(v):
+                    qualifying = v
                     break
 
-            if not qualifying_variant:
+            if not qualifying:
                 continue
 
-            seen.add(product_url)
-
-            price = _shopify_price_to_usd_string(
-                qualifying_variant.get("price"),
-                site_name
-            )
+            seen.add(url)
 
             boots.append({
                 "name": title,
-                "price": price,
-                "url": product_url
+                "price": _shopify_price_to_usd_string(
+                    qualifying.get("price"), site_name
+                ),
+                "url": url
             })
 
             if len(boots) == 5:
@@ -339,7 +357,7 @@ def scrape_shopify_json(site_name, base, collection):
 
 def detect_new_top3(site_name, current, state):
 
-    seen = {b["url"] for b in state.get(site_name, []) if _is_valid_boot_item(b)}
+    seen = {b["url"] for b in state.get(site_name, [])}
 
     new = []
 
@@ -365,10 +383,8 @@ def post_to_discord(site_new_map):
 
         lines.append(f"\n__{site.replace('_',' ').upper()}__\n")
 
-        for boot in boots:
-            lines.append(
-                f"**{boot['name']}**\n{boot['price']}\n{boot['url']}\n"
-            )
+        for b in boots:
+            lines.append(f"**{b['name']}**\n{b['price']}\n{b['url']}\n")
 
     try:
 
@@ -390,47 +406,6 @@ def post_to_discord(site_new_map):
         return False
 
 # ==================================================
-# README
-# ==================================================
-
-def update_readme_summary(run_ts_est, site_results):
-
-    if not os.path.exists(README_FILE):
-        return
-
-    with open(README_FILE, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    start = "<!-- BOOTS_SUMMARY_START -->"
-    end = "<!-- BOOTS_SUMMARY_END -->"
-
-    if start not in content or end not in content:
-        return
-
-    lines = [f"**Last Run (Eastern):** `{run_ts_est}`\n"]
-
-    for site, boots in site_results.items():
-
-        lines.append(f"\n## {site.replace('_',' ').title()} (Top 5)\n")
-        lines.append("| Rank | Name | Price | Link |")
-        lines.append("|------|------|-------|------|")
-
-        if boots:
-            for i, b in enumerate(boots, start=1):
-                lines.append(
-                    f"| {i} | {b['name']} | {b['price']} | [View]({b['url']}) |"
-                )
-        else:
-            lines.append("| - | No boots found | - | - |")
-
-    summary = "\n".join(lines)
-
-    updated = content.split(start)[0] + start + "\n" + summary + "\n" + end + content.split(end)[1]
-
-    with open(README_FILE, "w", encoding="utf-8") as f:
-        f.write(updated)
-
-# ==================================================
 # MAIN
 # ==================================================
 
@@ -444,7 +419,7 @@ def main():
     state = load_previous_state()
 
     site_results = {}
-    any_site_success = False
+    any_success = False
 
     for site_name, config in SITES.items():
 
@@ -458,33 +433,30 @@ def main():
             log(f"{site_name}: scrape failed; preserving previous state.")
             continue
 
-        any_site_success = True
+        any_success = True
         site_results[site_name] = boots
 
-    if not any_site_success:
-        log("No sites scraped successfully. Exiting.")
+    if not any_success:
+        log("No sites scraped successfully.")
         return
 
     site_new_map = {}
 
-    for site_name, boots in site_results.items():
+    for site, boots in site_results.items():
 
-        new_items = detect_new_top3(site_name, boots, state)
+        new_items = detect_new_top3(site, boots, state)
 
         if new_items:
-            site_new_map[site_name] = new_items
+            site_new_map[site] = new_items
 
     posted_ok = True
 
     if site_new_map:
         posted_ok = post_to_discord(site_new_map)
 
-    update_readme_summary(run_ts_est, site_results)
-
     if posted_ok:
-        for site_name, boots in site_results.items():
-            state[site_name] = boots
-
+        for site, boots in site_results.items():
+            state[site] = boots
         save_state(state)
 
     log("Boots watcher completed.")
