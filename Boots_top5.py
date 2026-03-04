@@ -39,7 +39,7 @@ SITES = {
     },
     "nicks_ready_to_ship": {
         "base": "https://nicksboots.com",
-        "collection": "/collections/ready-to-ship-free-shipping"
+        "collection": "/collections/in-stock-boots?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null"
     },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
@@ -182,23 +182,29 @@ def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
     except Exception:
         return f"${raw}"
 
-    if site_name != "brooklyn_clothing":
-        return f"${amount:.2f}"
+    # Brooklyn Clothing prices are returned in CAD cents
+    if site_name == "brooklyn_clothing":
+        try:
+            cad = amount / 100.0
 
-    try:
-        fx = requests.get(
-            "https://api.exchangerate.host/convert",
-            params={"from": "CAD", "to": "USD", "amount": amount},
-            headers=HEADERS,
-            timeout=15
-        )
-        fx.raise_for_status()
-        data = fx.json() if isinstance(fx, requests.Response) else {}
-        result = data.get("result")
-        if isinstance(result, (int, float)):
-            return f"${float(result):.2f}"
-    except Exception as e:
-        log(f"{site_name}: CAD->USD conversion failed; using original currency amount. Error: {e}")
+            fx = requests.get(
+                "https://api.exchangerate.host/convert",
+                params={"from": "CAD", "to": "USD", "amount": cad},
+                headers=HEADERS,
+                timeout=15
+            )
+            fx.raise_for_status()
+            data = fx.json()
+            result = data.get("result")
+
+            if isinstance(result, (int, float)):
+                return f"${float(result):.2f}"
+
+            return f"${cad:.2f}"
+
+        except Exception as e:
+            log(f"{site_name}: CAD->USD conversion failed; using CAD value. Error: {e}")
+            return f"${cad:.2f}"
 
     return f"${amount:.2f}"
 
@@ -244,7 +250,7 @@ def _build_collection_products_json_url(base: str, collection: str, limit: int =
     return urlunparse(rebuilt)
 
 # ==================================================
-# SHOPIFY SCRAPER (JSON + FALLBACK)
+# SHOPIFY SCRAPER
 # ==================================================
 
 def _site_exclusions(site_name: str):
@@ -299,8 +305,6 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
     seen = set()
 
     for product in products:
-        if not isinstance(product, dict):
-            continue
 
         title = product.get("title", "")
         handle = product.get("handle", "")
@@ -315,15 +319,17 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
             continue
 
         product_url = f"{base}/products/{handle}"
+
         if product_url in seen:
             continue
         seen.add(product_url)
 
         variants = product.get("variants", [])
         price = ""
-        if variants and isinstance(variants, list):
-            v0 = variants[0] if isinstance(variants[0], dict) else {}
-            price_val = v0.get("price", "")
+
+        if variants:
+            v0 = variants[0]
+            price_val = v0.get("price")
             price = _shopify_price_to_usd_string(price_val, site_name)
 
         boots.append({
