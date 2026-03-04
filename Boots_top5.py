@@ -230,9 +230,13 @@ def _build_collection_products_json_url(base, collection, limit=250, page=1):
 
 def _is_footwear_product(site_name, title, product_type="", tags_text=""):
 
-    title = title.lower()
-    product_type = product_type.lower()
-    tags_text = tags_text.lower()
+    title = (title or "").lower()
+    product_type = (product_type or "").lower()
+
+    if isinstance(tags_text, list):
+        tags_text = " ".join(tags_text)
+
+    tags_text = (tags_text or "").lower()
 
     if any(x in title for x in EXCLUDED_KEYWORDS):
         return False
@@ -247,7 +251,6 @@ def _is_footwear_product(site_name, title, product_type="", tags_text=""):
         or "footwear" in product_type
         or "boot" in tags_text
     )
-
 # ==================================================
 # SCRAPER
 # ==================================================
