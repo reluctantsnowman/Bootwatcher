@@ -68,6 +68,13 @@ SITE_EXCLUDED_KEYWORDS = {
     "iron_heart_uk": ["dressing", "dressings", "lace", "laces", "kiltie", "kilties"],
 }
 
+TARGET_SIZE_PATTERNS = [
+    r"\b10\.5\b",
+    r"\b10½\b",
+    r"\b11\b",
+    r"\b11d\b"
+]
+
 # ==================================================
 # LOGGING (EST/EDT)
 # ==================================================
@@ -162,6 +169,27 @@ def save_state(state: dict):
         log(f"Failed to save state: {e}")
 
 # ==================================================
+# SIZE MATCHING
+# ==================================================
+
+def _variant_matches_target_size(variant: dict) -> bool:
+    if not isinstance(variant, dict):
+        return False
+
+    text = " ".join([
+        str(variant.get("title", "")),
+        str(variant.get("option1", "")),
+        str(variant.get("option2", "")),
+        str(variant.get("option3", ""))
+    ]).lower()
+
+    for pattern in TARGET_SIZE_PATTERNS:
+        if re.search(pattern, text):
+            return True
+
+    return False
+
+# ==================================================
 # PRICE HELPERS
 # ==================================================
 
@@ -182,14 +210,14 @@ def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
     except Exception:
         return f"${raw}"
 
-    # Brooklyn Clothing prices are returned in CAD cents
+    # Brooklyn prices are CAD → convert to USD
     if site_name == "brooklyn_clothing":
         try:
-            cad = amount / 100.0
+            cad_amount = amount
 
             fx = requests.get(
                 "https://api.exchangerate.host/convert",
-                params={"from": "CAD", "to": "USD", "amount": cad},
+                params={"from": "CAD", "to": "USD", "amount": cad_amount},
                 headers=HEADERS,
                 timeout=15
             )
@@ -200,26 +228,13 @@ def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
             if isinstance(result, (int, float)):
                 return f"${float(result):.2f}"
 
-            return f"${cad:.2f}"
+            return f"${cad_amount:.2f}"
 
         except Exception as e:
             log(f"{site_name}: CAD->USD conversion failed; using CAD value. Error: {e}")
-            return f"${cad:.2f}"
+            return f"${cad_amount:.2f}"
 
     return f"${amount:.2f}"
-
-def _cents_to_usd_string(cents_value) -> str:
-    if cents_value is None:
-        return ""
-    try:
-        if isinstance(cents_value, int):
-            return f"${cents_value / 100:.2f}"
-        s = str(cents_value).strip()
-        if s.isdigit():
-            return f"${int(s) / 100:.2f}"
-    except Exception:
-        return ""
-    return ""
 
 # ==================================================
 # URL HELPERS
@@ -325,12 +340,24 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         seen.add(product_url)
 
         variants = product.get("variants", [])
-        price = ""
+        qualifying_variant = None
 
-        if variants:
-            v0 = variants[0]
-            price_val = v0.get("price")
-            price = _shopify_price_to_usd_string(price_val, site_name)
+        for v in variants:
+            if not isinstance(v, dict):
+                continue
+
+            if not v.get("available"):
+                continue
+
+            if _variant_matches_target_size(v):
+                qualifying_variant = v
+                break
+
+        if not qualifying_variant:
+            continue
+
+        price_val = qualifying_variant.get("price")
+        price = _shopify_price_to_usd_string(price_val, site_name)
 
         boots.append({
             "name": title,
