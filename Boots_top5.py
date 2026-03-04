@@ -6,6 +6,14 @@ from datetime import datetime
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
 # ==================================================
+# GOAL (PRECISE)
+# ==================================================
+# Ensure per-site state is only updated when that site's scrape succeeds (do not overwrite
+# prior state with empty results from failures), while preserving the existing state schema,
+# keeping URL-based change detection, aggregating alerts, and saving state only after a
+# successful run (and successful alert delivery when applicable).
+
+# ==================================================
 # CONFIG
 # ==================================================
 
@@ -324,11 +332,12 @@ def scrape_shopify_html_fallback(site_name: str, base: str, collection: str):
         html = resp.text or ""
     except Exception as e:
         log(f"{site_name} fallback HTML request failed: {e}")
-        return []
+        return None
 
     handles = _extract_product_handles_from_collection_html(html)
     if not handles:
         log(f"{site_name}: fallback found 0 product handles in HTML")
+        # This is still a successful fetch/parse; just no products found.
         return []
 
     boots = []
@@ -388,26 +397,37 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
             log(f"{site_name} request failed: {e} (will try HTML fallback)")
             return scrape_shopify_html_fallback(site_name, base, collection)
         log(f"{site_name} request failed: {e}")
-        return []
+        return None
     except Exception as e:
         log(f"{site_name} request failed: {e}")
-        return []
+        return None
 
     try:
         data = response.json()
     except Exception:
         log(f"{site_name} invalid JSON.")
-        return []
+        return None
 
     products = data.get("products", [])
+    if not isinstance(products, list):
+        log(f"{site_name} JSON schema unexpected: products is not a list.")
+        return None
+
     boots = []
     seen = set()
 
     for product in products:
+        if not isinstance(product, dict):
+            continue
+
         title = product.get("title", "")
         handle = product.get("handle", "")
         product_type = product.get("product_type", "")
-        tags = " ".join(product.get("tags", []))
+        tags_val = product.get("tags", [])
+        if isinstance(tags_val, list):
+            tags = " ".join(str(t) for t in tags_val)
+        else:
+            tags = str(tags_val)
 
         if not _is_footwear_product(site_name, str(title), str(product_type), str(tags)):
             continue
@@ -424,7 +444,8 @@ def scrape_shopify_json(site_name: str, base: str, collection: str):
         variants = product.get("variants", [])
         price = ""
         if variants and isinstance(variants, list):
-            price_val = variants[0].get("price", "")
+            v0 = variants[0] if isinstance(variants[0], dict) else {}
+            price_val = v0.get("price", "")
             price = _shopify_price_to_usd_string(price_val, site_name)
 
         boots.append({
@@ -567,6 +588,7 @@ def main():
 
     state = load_previous_state()
     site_results = {}
+    site_success = {}
     any_site_success = False
 
     for site_name, config in SITES.items():
@@ -575,16 +597,23 @@ def main():
             config["base"],
             config["collection"]
         )
+
+        if boots is None:
+            # Failed scrape: do not overwrite prior state for this site.
+            site_success[site_name] = False
+            log(f"{site_name}: scrape failed; preserving previous state for this site.")
+            continue
+
+        # Successful scrape (even if boots == [] because none matched filters).
+        site_success[site_name] = True
+        any_site_success = True
         site_results[site_name] = boots
-        if boots is not None:
-            any_site_success = True
 
     if not any_site_success:
         log("No sites scraped successfully. Exiting.")
         return
 
     site_new_map = {}
-
     for site_name, boots in site_results.items():
         new_items = detect_new_top3(site_name, boots, state)
         if new_items:
@@ -596,13 +625,15 @@ def main():
         if not posted_ok:
             log("Discord post failed; will not save state to avoid losing retry capability.")
 
+    # README should reflect only successfully scraped results (not stale/unknown).
     update_readme_summary(run_ts_utc, site_results)
 
     # Only persist state if the run is considered successful:
-    # - scraping ran (any_site_success)
+    # - at least one site succeeded (any_site_success)
     # - and if there were new items, Discord posting succeeded
     if posted_ok:
         for site_name, boots in site_results.items():
+            # Update per-entity state only for successful sites.
             state[site_name] = boots
         save_state(state)
     else:
