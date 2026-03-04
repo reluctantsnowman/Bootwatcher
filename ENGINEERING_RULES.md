@@ -268,3 +268,14 @@ The system must:
 * Aggregate alerts into a single message
 * Fail safely on webhook errors
 * Maintain CI compatibility
+
+* AI Implementation Contract
+
+When modifying code in this repository:
+
+1. Return FULL FILE ONLY
+2. Do not output fragments
+3. Do not change file names
+4. Do not change state schema
+5. Do not introduce dependencies
+6. Preserve CI compatibility
