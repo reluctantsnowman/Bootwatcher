@@ -7,18 +7,18 @@ Tracks top 5 boots and posts to Discord twice daily.
 ## Live Summary
 
 <!-- BOOTS_SUMMARY_START -->
-**Last Run (Eastern):** `2026-03-04 11:00:24 EST`
+**Last Run (Eastern):** `2026-03-04 11:08:31 EST`
 
 
 ## Brooklyn Clothing (Top 5)
 
 | Rank | Name | Price | Link |
 |------|------|-------|------|
-| 1 | Brooklyn x Wesco Custom Hendrik Charcoal Roughout | $1050.00 | [View](https://brooklynclothing.com/products/customhendrikcharcoal) |
-| 2 | Brooklyn Clothing X White's Boots MP-Sherman Horween Brown Shell Cordovan | $1795.00 | [View](https://brooklynclothing.com/products/mp-sherman-shell-cordovan-brown) |
-| 3 | Service Boot 2040 Horween Chromexcel Black Teacore | $1425.00 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 4 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $1215.00 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 5 | Brooklyn x Wesco Custom Hendrik British Tan Domane Roughout | $746.25 | [View](https://brooklynclothing.com/products/brooklyn-x-wesco-custom-hendrik-roughout-british-tan-domane) |
+| 1 | Brooklyn x Wesco Custom Hendrik Charcoal Roughout | $10.50 | [View](https://brooklynclothing.com/products/customhendrikcharcoal) |
+| 2 | Brooklyn Clothing X White's Boots MP-Sherman Horween Brown Shell Cordovan | $17.95 | [View](https://brooklynclothing.com/products/mp-sherman-shell-cordovan-brown) |
+| 3 | Service Boot 2040 Horween Chromexcel Black Teacore | $14.25 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 4 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $12.15 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 5 | Brooklyn x Wesco Custom Hendrik British Tan Domane Roughout | $7.46 | [View](https://brooklynclothing.com/products/brooklyn-x-wesco-custom-hendrik-roughout-british-tan-domane) |
 
 ## Nicks Ready To Ship (Top 5)
 
