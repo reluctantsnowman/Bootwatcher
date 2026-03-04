@@ -75,6 +75,9 @@ TARGET_SIZE_PATTERNS = [
     r"\b11d\b"
 ]
 
+# FX rate cache (clean improvement: fetch once per run)
+CAD_TO_USD_RATE = None
+
 # ==================================================
 # LOGGING (EST/EDT)
 # ==================================================
@@ -190,6 +193,32 @@ def _variant_matches_target_size(variant: dict) -> bool:
     return False
 
 # ==================================================
+# FX RATE
+# ==================================================
+
+def get_cad_to_usd_rate():
+    global CAD_TO_USD_RATE
+
+    if CAD_TO_USD_RATE is not None:
+        return CAD_TO_USD_RATE
+
+    try:
+        r = requests.get(
+            "https://open.er-api.com/v6/latest/CAD",
+            headers=HEADERS,
+            timeout=15
+        )
+        r.raise_for_status()
+        data = r.json()
+        CAD_TO_USD_RATE = data.get("rates", {}).get("USD")
+        log(f"FX rate loaded CAD→USD: {CAD_TO_USD_RATE}")
+    except Exception as e:
+        log(f"FX rate fetch failed: {e}")
+        CAD_TO_USD_RATE = None
+
+    return CAD_TO_USD_RATE
+
+# ==================================================
 # PRICE HELPERS
 # ==================================================
 
@@ -198,41 +227,16 @@ def _shopify_price_to_usd_string(price_value, site_name: str) -> str:
         return ""
 
     try:
-        raw = str(price_value).strip()
+        amount = float(str(price_value).strip())
     except Exception:
         return ""
 
-    if raw == "":
-        return ""
-
-    try:
-        amount = float(raw)
-    except Exception:
-        return f"${raw}"
-
-    # Brooklyn prices are CAD → convert to USD
     if site_name == "brooklyn_clothing":
-        try:
-            cad_amount = amount
-
-            fx = requests.get(
-                "https://api.exchangerate.host/convert",
-                params={"from": "CAD", "to": "USD", "amount": cad_amount},
-                headers=HEADERS,
-                timeout=15
-            )
-            fx.raise_for_status()
-            data = fx.json()
-            result = data.get("result")
-
-            if isinstance(result, (int, float)):
-                return f"${float(result):.2f}"
-
-            return f"${cad_amount:.2f}"
-
-        except Exception as e:
-            log(f"{site_name}: CAD->USD conversion failed; using CAD value. Error: {e}")
-            return f"${cad_amount:.2f}"
+        rate = get_cad_to_usd_rate()
+        if isinstance(rate, (int, float)):
+            usd = amount * rate
+            return f"${usd:.2f}"
+        return f"${amount:.2f}"
 
     return f"${amount:.2f}"
 
