@@ -7,7 +7,7 @@ Tracks top 5 boots and posts to Discord twice daily.
 ## Live Summary
 
 <!-- BOOTS_SUMMARY_START -->
-**Last Run (Eastern):** `2026-03-04 10:19:36 EST`
+**Last Run (Eastern):** `2026-03-04 11:00:24 EST`
 
 
 ## Brooklyn Clothing (Top 5)
