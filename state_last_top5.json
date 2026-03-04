@@ -1,31 +1,5 @@
 {
-  "division_road": [
-    {
-      "name": "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio",
-      "price": "$765.00",
-      "url": "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio"
-    },
-    {
-      "name": "Churchill Boot - 4497 - Commando - Badalassi Tabacco Carlo Wax",
-      "price": "$765.00",
-      "url": "https://divisionroadinc.com/products/trickers-churchill-boot-4497-commando-badalassi-tabacco-carlo-wax"
-    },
-    {
-      "name": "Stow Boot - 4497 - Dainite - Badalassi Cognac Carlo Wax",
-      "price": "$765.00",
-      "url": "https://divisionroadinc.com/products/trickers-stow-boot-4497-dainite-badalassi-cognac-carlo-wax"
-    },
-    {
-      "name": "Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton",
-      "price": "$795.00",
-      "url": "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton"
-    },
-    {
-      "name": "Hunter Moc - Vibram ASP Neo Lug - Heinen Black",
-      "price": "$1225.00",
-      "url": "https://divisionroadinc.com/products/arch-support-project-hunter-moc-vibram-asp-neo-lug-heinen-black"
-    }
-  ],
+  "division_road": [],
   "brooklyn_clothing": [
     {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
