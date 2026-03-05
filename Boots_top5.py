@@ -123,16 +123,15 @@ def save_state(state):
 # ==================================================
 
 def _variant_matches_target_size(variant):
-    text = " ".join([
-        str(variant.get("title", "")),
-        str(variant.get("option1", "")),
-        str(variant.get("option2", "")),
-        str(variant.get("option3", ""))
-    ]).lower()
 
-    for p in TARGET_SIZE_PATTERNS:
-        if re.search(p, text):
-            return True
+    size = str(variant.get("option1","")).lower()
+    width = str(variant.get("option2","")).lower()
+
+    if size in ["10.5","10½","10 1/2","11"]:
+        return True
+
+    if size == "10.5" and width == "d":
+        return True
 
     return False
 
