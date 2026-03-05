@@ -223,6 +223,10 @@ def _build_collection_products_json_url(base, collection, limit=250, page=1):
 # DIVISION ROAD HTML FALLBACK
 # ==================================================
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "text/html"
+}
 def scrape_division_road_html(base, collection):
 
     url = base + collection
