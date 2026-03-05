@@ -209,3 +209,12 @@
 [2026-03-05 00:34:35 EST] iron_heart_uk: returning 5 boots
 [2026-03-05 00:34:35 EST] State saved.
 [2026-03-05 00:34:35 EST] Boots watcher completed.
+[2026-03-05 13:59:58 EST] Boots watcher started.
+[2026-03-05 13:59:59 EST] division_road JSON blocked; using HTML fallback.
+[2026-03-05 13:59:59 EST] division_road HTML fallback returning 0 boots
+[2026-03-05 14:00:00 EST] brooklyn_clothing: returning 5 boots
+[2026-03-05 14:00:01 EST] nicks_ready_to_ship: returning 0 boots
+[2026-03-05 14:00:02 EST] iron_heart_germany: returning 5 boots
+[2026-03-05 14:00:02 EST] iron_heart_uk: returning 5 boots
+[2026-03-05 14:00:02 EST] State saved.
+[2026-03-05 14:00:02 EST] Boots watcher completed.
