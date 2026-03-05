@@ -51,7 +51,10 @@ SITES = {
     }
 }
 
-HEADERS = {"User-Agent": "Mozilla/5.0"}
+HEADERS = {
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "text/html"
+}
 
 FOOTWEAR_KEYWORDS = [
     "boot", "boots", "engineer", "service",
@@ -223,10 +226,6 @@ def _build_collection_products_json_url(base, collection, limit=250, page=1):
 # DIVISION ROAD HTML FALLBACK
 # ==================================================
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept": "text/html"
-}
 def scrape_division_road_html(base, collection):
 
     url = base + collection
@@ -250,10 +249,7 @@ def scrape_division_road_html(base, collection):
         name = c.get_text(strip=True)
         link = c.get("href")
 
-        if not link:
-            continue
-
-        if not name:
+        if not link or not name:
             continue
 
         full_url = base + link
@@ -375,6 +371,39 @@ def detect_new_top3(site_name, current, state):
     return new
 
 # ==================================================
+# README UPDATE
+# ==================================================
+
+def update_readme(site_results, run_ts):
+
+    lines = []
+    lines.append("# Boots Watcher\n")
+    lines.append(f"Last updated: {run_ts}\n")
+
+    for site, boots in site_results.items():
+
+        lines.append(f"\n## {site.replace('_',' ').title()} (Top 5)\n")
+        lines.append("| Rank | Name | Price | Link |\n")
+        lines.append("|---|---|---|---|\n")
+
+        for i, b in enumerate(boots, start=1):
+
+            name = b.get("name","")
+            price = b.get("price","")
+            url = b.get("url","")
+
+            lines.append(
+                f"| {i} | {name} | {price} | [View]({url}) |\n"
+            )
+
+    try:
+        with open(README_FILE, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+        log("README updated.")
+    except Exception as e:
+        log(f"README update failed: {e}")
+
+# ==================================================
 # DISCORD
 # ==================================================
 
@@ -446,6 +475,8 @@ def main():
     if not any_success:
         log("No sites scraped successfully.")
         return
+
+    update_readme(site_results, run_ts_est)
 
     site_new_map = {}
 
