@@ -258,3 +258,14 @@
 [2026-03-05 18:52:05 EST] README updated.
 [2026-03-05 18:52:05 EST] State saved.
 [2026-03-05 18:52:05 EST] Boots watcher completed.
+[2026-03-05 18:54:44 EST] Boots watcher started.
+[2026-03-05 18:54:44 EST] division_road JSON blocked; using HTML fallback.
+[2026-03-05 18:54:45 EST] division_road HTML fallback returning 5 boots
+[2026-03-05 18:54:45 EST] brooklyn_clothing: returning 0 boots
+[2026-03-05 18:54:46 EST] nicks_ready_to_ship: returning 0 boots
+[2026-03-05 18:54:47 EST] iron_heart_germany: returning 0 boots
+[2026-03-05 18:54:47 EST] iron_heart_uk: returning 5 boots
+[2026-03-05 18:54:47 EST] README updated.
+[2026-03-05 18:54:48 EST] Posted NEW boots to Discord.
+[2026-03-05 18:54:48 EST] State saved.
+[2026-03-05 18:54:48 EST] Boots watcher completed.
