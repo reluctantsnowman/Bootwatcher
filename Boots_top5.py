@@ -38,8 +38,7 @@ SITES = {
         "collection": "/collections/boots"
     },
     "nicks_ready_to_ship": {
-        "base": "https://nicksboots.com",
-        "collection": "/collections/in-stock-boots?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null"
+        "base": "https://nicksboots.com/collections/in-stock-boots?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null"
     },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
