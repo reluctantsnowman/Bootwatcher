@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-05 18:49:45 EST
+Last updated: 2026-03-05 18:52:01 EST
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -26,17 +26,12 @@ Last updated: 2026-03-05 18:49:45 EST
 ## Iron Heart Germany (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | WE-SPBE1091WLL705-NAT - WESCO Two-tone Custom Morrison  - Natural Horsehide | $1299.00 | [View](https://ironheartgermany.com/products/wesco-we-spbe1091wll705-nat-custom-morrison-natural-horsehide) |
-| 2 | WE-BK906P4014NAT-BLK - Wesco Custom Warren Roughout - Black | $799.00 | [View](https://ironheartgermany.com/products/wesco-we-bk906p4014nat-blk-wesco-custom-warren-roughout-black) |
-| 3 | WE-BRITTAN7710705 - Wesco Custom Boss - Roughout British Tan | $949.00 | [View](https://ironheartgermany.com/products/wesco-we-brittan7710705-wesco-custom-boss-roughout-british-tan) |
-| 4 | WE-BKBE1084014-NAT - Lace-To-Toe Custom JOBMASTER - Black/Natural | $899.00 | [View](https://ironheartgermany.com/products/wesco-we-bkbe1084014-nat-lace-to-toe-custom-jobmaster-black-natural) |
-| 5 | WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black | $989.00 | [View](https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black) |
+| 1 | WE-BK906P4014NAT-BLK - Wesco Custom Warren Roughout - Black | $799.00 | [View](https://ironheartgermany.com/products/wesco-we-bk906p4014nat-blk-wesco-custom-warren-roughout-black) |
+| 2 | WE-BRITTAN7710705 - Wesco Custom Boss - Roughout British Tan | $949.00 | [View](https://ironheartgermany.com/products/wesco-we-brittan7710705-wesco-custom-boss-roughout-british-tan) |
+| 3 | WE-BKBE1084014-NAT - Lace-To-Toe Custom JOBMASTER - Black/Natural | $899.00 | [View](https://ironheartgermany.com/products/wesco-we-bkbe1084014-nat-lace-to-toe-custom-jobmaster-black-natural) |
+| 4 | WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black | $989.00 | [View](https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black) |
+| 5 | WE-CXL7710705-BLK - Custom Boss Engineer Chromexcel - Black | $849.00 | [View](https://ironheartgermany.com/products/wesco-we-cxl7710705-blk-custom-boss-engineer-chromexcel-black) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Wesco® - 10" Horsehide  Engineer Boot - Brown. The "Mister Lou" | $825.00 | [View](https://ironheart.co.uk/products/wesco-mrlou-brn) |
-| 2 | Wesco® - 10" Horsehide  Engineer Boot - Natural. The "Mister Lou" | $825.00 | [View](https://ironheart.co.uk/products/wesco-mrlou-nath) |
-| 3 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - Black Tie Domain | $742.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-blk) |
-| 4 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - British Tan Domain | $742.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-tan) |
-| 5 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - Natural Horsehide | $870.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-nat) |

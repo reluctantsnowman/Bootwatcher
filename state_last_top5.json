@@ -55,11 +55,6 @@
   ],
   "iron_heart_germany": [
     {
-      "name": "WE-SPBE1091WLL705-NAT - WESCO Two-tone Custom Morrison  - Natural Horsehide",
-      "price": "$1299.00",
-      "url": "https://ironheartgermany.com/products/wesco-we-spbe1091wll705-nat-custom-morrison-natural-horsehide"
-    },
-    {
       "name": "WE-BK906P4014NAT-BLK - Wesco Custom Warren Roughout - Black",
       "price": "$799.00",
       "url": "https://ironheartgermany.com/products/wesco-we-bk906p4014nat-blk-wesco-custom-warren-roughout-black"
@@ -78,34 +73,13 @@
       "name": "WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black",
       "price": "$989.00",
       "url": "https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black"
+    },
+    {
+      "name": "WE-CXL7710705-BLK - Custom Boss Engineer Chromexcel - Black",
+      "price": "$849.00",
+      "url": "https://ironheartgermany.com/products/wesco-we-cxl7710705-blk-custom-boss-engineer-chromexcel-black"
     }
   ],
-  "iron_heart_uk": [
-    {
-      "name": "Wesco\u00ae - 10\" Horsehide  Engineer Boot - Brown. The \"Mister Lou\"",
-      "price": "$825.00",
-      "url": "https://ironheart.co.uk/products/wesco-mrlou-brn"
-    },
-    {
-      "name": "Wesco\u00ae - 10\" Horsehide  Engineer Boot - Natural. The \"Mister Lou\"",
-      "price": "$825.00",
-      "url": "https://ironheart.co.uk/products/wesco-mrlou-nath"
-    },
-    {
-      "name": "Iron Heart Int'l x Wesco\u00ae 7\" Toe Cap Boot - The \"Guildsman\" - Black Tie Domain",
-      "price": "$742.00",
-      "url": "https://ironheart.co.uk/products/ihwe-glmn-blk"
-    },
-    {
-      "name": "Iron Heart Int'l x Wesco\u00ae 7\" Toe Cap Boot - The \"Guildsman\" - British Tan Domain",
-      "price": "$742.00",
-      "url": "https://ironheart.co.uk/products/ihwe-glmn-tan"
-    },
-    {
-      "name": "Iron Heart Int'l x Wesco\u00ae 7\" Toe Cap Boot - The \"Guildsman\" - Natural Horsehide",
-      "price": "$870.00",
-      "url": "https://ironheart.co.uk/products/ihwe-glmn-nat"
-    }
-  ],
+  "iron_heart_uk": [],
   "nicks_ready_to_ship": []
 }
