@@ -239,7 +239,7 @@ def scrape_division_road_html(base, collection):
     boots = []
     seen = set()
 
-    cards = soup.select("a.product-card")
+    cards = soup.select('a[href*="/products/"]')
 
     for c in cards:
 
@@ -247,6 +247,9 @@ def scrape_division_road_html(base, collection):
         link = c.get("href")
 
         if not link:
+            continue
+
+        if not name:
             continue
 
         full_url = base + link
