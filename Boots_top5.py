@@ -38,7 +38,8 @@ SITES = {
         "collection": "/collections/boots"
     },
     "nicks_ready_to_ship": {
-        "base": "https://nicksboots.com/collections/in-stock-boots?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null"
+        "base": "https://nicksboots.com",
+        "collection": "/collections/in-stock-boots?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null"
     },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
@@ -49,7 +50,6 @@ SITES = {
         "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
     }
 }
-
 HEADERS = {
     "User-Agent": "Mozilla/5.0",
     "Accept": "text/html"
