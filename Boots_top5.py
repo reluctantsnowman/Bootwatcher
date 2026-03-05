@@ -124,16 +124,18 @@ def save_state(state):
 
 def _variant_matches_target_size(variant):
 
-    size = str(variant.get("option1","")).lower()
-    width = str(variant.get("option2","")).lower()
+    title = str(variant.get("title","")).lower()
 
-    if size in ["10.5","10½","10 1/2","11"]:
-        return True
+    title = title.replace("½","0.5")
+    title = title.replace("1/2","0.5")
+    title = title.replace("-"," ")
 
-    if size == "10.5" and width == "d":
-        return True
+    parts = title.split()
 
-    return False
+    size_match = any(p.startswith("10.5") or p.startswith("11") for p in parts)
+    width_match = "d" in parts
+
+    return size_match and width_match
 
 # ==================================================
 # FX
