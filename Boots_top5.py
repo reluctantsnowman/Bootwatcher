@@ -118,19 +118,23 @@ def save_state(state):
 
 def _variant_matches_target_size(variant):
 
-    parts = [
+    size_fields = [
         str(variant.get("title", "")),
         str(variant.get("option1", "")),
         str(variant.get("option2", "")),
         str(variant.get("option3", ""))
     ]
 
-    text = " ".join(parts).lower()
+    text = " ".join(size_fields).lower()
 
     text = text.replace("½", "0.5")
     text = text.replace("1/2", "0.5")
 
-    return bool(re.search(r"\b(10\.5|11)\s*d?\b", text))
+    size_match = ("10.5" in text) or re.search(r"\b11\b", text)
+
+    width_match = (" d" in text) or text.endswith("d") or ("width d" in text)
+
+    return size_match and width_match
 
 # ==================================================
 # FX
