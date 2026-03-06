@@ -107,5 +107,31 @@
       "url": "https://ironheart.co.uk/products/ihwe-glmn-nat"
     }
   ],
-  "nicks_ready_to_ship": []
+  "nicks_ready_to_ship": [
+    {
+      "name": "Gamebreaker 10.5 EE - Seconds!",
+      "price": "$600.00",
+      "url": "https://nicksboots.com/products/gamebreaker-10-5-ee-ready-to-ship"
+    },
+    {
+      "name": "Spokane Comstock 11 EE - Ready To Ship!",
+      "price": "$544.00",
+      "url": "https://nicksboots.com/products/mto-11-ee-ready-to-ship"
+    },
+    {
+      "name": "Ivan 11.5 E -Ready To Ship!",
+      "price": "$554.00",
+      "url": "https://nicksboots.com/products/ivan-11-5-e-ready-to-ship"
+    },
+    {
+      "name": "Bromley 10.5 E - Ready To Ship!",
+      "price": "$700.00",
+      "url": "https://nicksboots.com/products/bromley-10-5-e-ready-to-ship"
+    },
+    {
+      "name": "WaterWork\u00ae 11.5 B - Ready To Ship!",
+      "price": "$520.00",
+      "url": "https://nicksboots.com/products/waterwork\u00ae-11-5-b-ready-to-ship"
+    }
+  ]
 }

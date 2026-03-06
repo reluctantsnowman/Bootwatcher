@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-05 19:10:43 EST
+Last updated: 2026-03-05 19:17:50 EST
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -22,6 +22,11 @@ Last updated: 2026-03-05 19:10:43 EST
 ## Nicks Ready To Ship (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
+| 1 | Gamebreaker 10.5 EE - Seconds! | $600.00 | [View](https://nicksboots.com/products/gamebreaker-10-5-ee-ready-to-ship) |
+| 2 | Spokane Comstock 11 EE - Ready To Ship! | $544.00 | [View](https://nicksboots.com/products/mto-11-ee-ready-to-ship) |
+| 3 | Ivan 11.5 E -Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-11-5-e-ready-to-ship) |
+| 4 | Bromley 10.5 E - Ready To Ship! | $700.00 | [View](https://nicksboots.com/products/bromley-10-5-e-ready-to-ship) |
+| 5 | WaterWork® 11.5 B - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/waterwork®-11-5-b-ready-to-ship) |
 
 ## Iron Heart Germany (Top 5)
 | Rank | Name | Price | Link |
