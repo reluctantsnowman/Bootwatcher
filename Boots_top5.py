@@ -118,12 +118,19 @@ def save_state(state):
 
 def _variant_matches_target_size(variant):
 
-    title = str(variant.get("title", "")).lower()
+    parts = [
+        str(variant.get("title", "")),
+        str(variant.get("option1", "")),
+        str(variant.get("option2", "")),
+        str(variant.get("option3", ""))
+    ]
 
-    title = title.replace("½", "0.5")
-    title = title.replace("1/2", "0.5")
+    text = " ".join(parts).lower()
 
-    return bool(re.search(r"\b(10\.5|11)\s*d?\b", title))
+    text = text.replace("½", "0.5")
+    text = text.replace("1/2", "0.5")
+
+    return bool(re.search(r"\b(10\.5|11)\s*d?\b", text))
 
 # ==================================================
 # FX
