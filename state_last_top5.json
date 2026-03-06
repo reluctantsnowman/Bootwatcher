@@ -160,5 +160,75 @@
       "price": "$774.95",
       "url": "https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide"
     }
-  ]
+  ],
+  "standard_and_strange": [
+    {
+      "name": "Combat Boots - Black Ops Shinki Shell Cordovan",
+      "price": "$1650.00",
+      "url": "https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan"
+    },
+    {
+      "name": "Monkey Boots - Black Ops Shinki Shell Cordovan",
+      "price": "$1650.00",
+      "url": "https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan"
+    },
+    {
+      "name": "Montgomery Boots - Havana Horween Leather SHF",
+      "price": "$1055.00",
+      "url": "https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf"
+    },
+    {
+      "name": "Montgomery Boots - Black Horween Leather SHF",
+      "price": "$1055.00",
+      "url": "https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf"
+    },
+    {
+      "name": "Coupen Mid-Cut Boots - Gray Guidi Calf",
+      "price": "$820.00",
+      "url": "https://standardandstrange.com/products/coupen-mid-cut-boots-gray-guidi-calf"
+    }
+  ],
+  "franklin_and_poe": [
+    {
+      "name": "John Lofgren Wabash Engineer Boots - Horween CXL Burgundy",
+      "price": "$1155.00",
+      "url": "https://franklinandpoe.com/products/john-lofgren-wabash-engineer-boots-horween-cxl-burgundy"
+    },
+    {
+      "name": "Alden 86065H Plain Toe Boot - Earth Chamois Reverse",
+      "price": "$764.00",
+      "url": "https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse"
+    },
+    {
+      "name": "Wesco Boots Mister Lou - Tobacco",
+      "price": "$769.00",
+      "url": "https://franklinandpoe.com/products/wesco-boots-mister-lou-tobacco"
+    },
+    {
+      "name": "John Lofgren Wabash Engineer Boots - Limited Edition Shinki Hikaku Horsebutt Black",
+      "price": "$1375.00",
+      "url": "https://franklinandpoe.com/products/copy-of-pre-order-fw25-john-lofgren-wabash-engineer-boots-limited-edition-shinki-hikaku-horsebutt-black"
+    },
+    {
+      "name": "(Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout",
+      "price": "$900.00",
+      "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout"
+    }
+  ],
+  "east_west_apparel": [],
+  "blue_owl": [],
+  "withered_fig": [],
+  "miloh_shop": [
+    {
+      "name": "Tricker's - Black Box Calf Bourton Derby Shoe",
+      "price": "$695.00",
+      "url": "https://milohshop.com/products/trickers-bourton-black-box-calf-derby-brogue"
+    },
+    {
+      "name": "Viberg - Black Calf Derby Shoe 2030 Last",
+      "price": "$950.00",
+      "url": "https://milohshop.com/products/viberg-black-calf-derby-shoe-2030-last"
+    }
+  ],
+  "okayama_denim": []
 }

@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-06 11:42:14 EST
+Last updated: 2026-03-06 11:46:49 EST
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -18,6 +18,55 @@ Last updated: 2026-03-06 11:42:14 EST
 | 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1112.52 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
 | 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1061.29 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
 | 5 | Roper Boot Wash Brown Waxed Flesh | $1240.61 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
+
+## Bakers Exclusive (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Stitchdown Cruiser - Navy Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-navy-horsehide) |
+| 2 | Brown Bison MP | $1034.95 | [View](https://bakershoe.com/products/brown-bison-mp) |
+| 3 | Jobmaster - Teak Leather | $799.95 | [View](https://bakershoe.com/products/jobmaster-teak-leather) |
+| 4 | Baker's British Tan Bounty Hunter | $749.95 | [View](https://bakershoe.com/products/bakers-stock-bounty-hunter-by-whites-boots) |
+| 5 | Stitchdown Cruiser - Brown Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide) |
+
+## Standard And Strange (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Combat Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan) |
+| 2 | Monkey Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan) |
+| 3 | Montgomery Boots - Havana Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf) |
+| 4 | Montgomery Boots - Black Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf) |
+| 5 | Coupen Mid-Cut Boots - Gray Guidi Calf | $820.00 | [View](https://standardandstrange.com/products/coupen-mid-cut-boots-gray-guidi-calf) |
+
+## Franklin And Poe (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | John Lofgren Wabash Engineer Boots - Horween CXL Burgundy | $1155.00 | [View](https://franklinandpoe.com/products/john-lofgren-wabash-engineer-boots-horween-cxl-burgundy) |
+| 2 | Alden 86065H Plain Toe Boot - Earth Chamois Reverse | $764.00 | [View](https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse) |
+| 3 | Wesco Boots Mister Lou - Tobacco | $769.00 | [View](https://franklinandpoe.com/products/wesco-boots-mister-lou-tobacco) |
+| 4 | John Lofgren Wabash Engineer Boots - Limited Edition Shinki Hikaku Horsebutt Black | $1375.00 | [View](https://franklinandpoe.com/products/copy-of-pre-order-fw25-john-lofgren-wabash-engineer-boots-limited-edition-shinki-hikaku-horsebutt-black) |
+| 5 | (Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
+
+## East West Apparel (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+
+## Blue Owl (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+
+## Withered Fig (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+
+## Miloh Shop (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Tricker's - Black Box Calf Bourton Derby Shoe | $695.00 | [View](https://milohshop.com/products/trickers-bourton-black-box-calf-derby-brogue) |
+| 2 | Viberg - Black Calf Derby Shoe 2030 Last | $950.00 | [View](https://milohshop.com/products/viberg-black-calf-derby-shoe-2030-last) |
+
+## Okayama Denim (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
 
 ## Nicks Ready To Ship (Top 5)
 | Rank | Name | Price | Link |
@@ -45,12 +94,3 @@ Last updated: 2026-03-06 11:42:14 EST
 | 3 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - Black Tie Domain | $742.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-blk) |
 | 4 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - British Tan Domain | $742.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-tan) |
 | 5 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - Natural Horsehide | $870.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-nat) |
-
-## Bakers Exclusive (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | Stitchdown Cruiser - Navy Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-navy-horsehide) |
-| 2 | Brown Bison MP | $1034.95 | [View](https://bakershoe.com/products/brown-bison-mp) |
-| 3 | Jobmaster - Teak Leather | $799.95 | [View](https://bakershoe.com/products/jobmaster-teak-leather) |
-| 4 | Baker's British Tan Bounty Hunter | $749.95 | [View](https://bakershoe.com/products/bakers-stock-bounty-hunter-by-whites-boots) |
-| 5 | Stitchdown Cruiser - Brown Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide) |
