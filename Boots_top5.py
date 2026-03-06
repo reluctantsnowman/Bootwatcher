@@ -77,6 +77,10 @@ SITES = {
         "base": "https://milohshop.com",
         "collection": "/collections/boots?sort_by=created-descending"
     },
+    "lost_and_found": {
+    "base": "https://shoplostfound.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
     "okayama_denim": {
         "base": "https://www.okayamadenim.com",
         "collection": "/collections/boots?sort_by=created-descending"
