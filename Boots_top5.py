@@ -132,6 +132,13 @@ def _variant_matches_target_size(variant):
 
     return bool(re.search(r"\b(10\.5|11)\b", text))
 
+def _nicks_product_title_matches_target_size(product_title):
+
+    t = (product_title or "").lower()
+    t = t.replace("½", "0.5").replace("1/2", "0.5")
+
+    return bool(re.search(r"\b(10\.5|11)\b", t))
+
 # ==================================================
 # FX
 # ==================================================
@@ -326,6 +333,13 @@ def scrape_shopify_json(site_name, base, collection):
                 if v.get("available") and _variant_matches_target_size(v):
                     qualifying = v
                     break
+
+            if not qualifying and site_name == "nicks_ready_to_ship":
+                if _nicks_product_title_matches_target_size(title):
+                    for v in variants:
+                        if v.get("available"):
+                            qualifying = v
+                            break
 
             if not qualifying:
                 continue
