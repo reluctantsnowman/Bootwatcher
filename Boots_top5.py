@@ -50,6 +50,7 @@ SITES = {
         "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
     }
 }
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0",
     "Accept": "text/html"
@@ -65,13 +66,6 @@ EXCLUDED_KEYWORDS = ["bag", "bags"]
 SITE_EXCLUDED_KEYWORDS = {
     "iron_heart_uk": ["dressing", "dressings", "lace", "laces", "kiltie", "kilties"]
 }
-
-TARGET_SIZE_PATTERNS = [
-    r"\b10\.5\b",
-    r"\b10½\b",
-    r"\b11\b",
-    r"\b11d\b"
-]
 
 CAD_TO_USD_RATE = None
 
@@ -124,18 +118,12 @@ def save_state(state):
 
 def _variant_matches_target_size(variant):
 
-    title = str(variant.get("title","")).lower()
+    title = str(variant.get("title", "")).lower()
 
-    title = title.replace("½","0.5")
-    title = title.replace("1/2","0.5")
-    title = title.replace("-"," ")
+    title = title.replace("½", "0.5")
+    title = title.replace("1/2", "0.5")
 
-    parts = title.split()
-
-    size_match = any(p.startswith("10.5") or p.startswith("11") for p in parts)
-    width_match = "d" in parts
-
-    return size_match and width_match
+    return bool(re.search(r"\b(10\.5|11)\s*d?\b", title))
 
 # ==================================================
 # FX
@@ -257,7 +245,7 @@ def scrape_division_road_html(base, collection):
         if full_url in seen:
             continue
 
-        if not any(k in name.lower() for k in FOOTWEAR_KEYWORDS):
+        if not _is_footwear_product("division_road", name):
             continue
 
         seen.add(full_url)
