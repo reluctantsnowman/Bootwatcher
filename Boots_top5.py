@@ -37,20 +37,8 @@ SITES = {
         "base": "https://divisionroad.eu",
         "collection": "/collections/footwear/boots"
     },
-    "brooklyn_clothing": {
-        "base": "https://brooklynclothing.com",
-        "collection": "/collections/boots"
-    },
-    "bakers_exclusive": {
-        "base": "https://bakershoe.com",
-        "collection": "/collections/bakers-exclusive?sort_by=created-descending"
-    },
     "standard_and_strange": {
         "base": "https://standardandstrange.com",
-        "collection": "/collections/boots?sort_by=created-descending"
-    },
-    "self_edge": {
-        "base": "https://www.selfedge.com",
         "collection": "/collections/boots?sort_by=created-descending"
     },
     "rivet_and_hide": {
@@ -61,9 +49,9 @@ SITES = {
         "base": "https://franklinandpoe.com",
         "collection": "/collections/boots?sort_by=created-descending"
     },
-    "east_west_apparel": {
-        "base": "https://eastwestapparel.co.uk",
-        "collection": "/collections/boots?sort_by=created-descending"
+    "bakers_exclusive": {
+        "base": "https://bakershoe.com",
+        "collection": "/collections/bakers-exclusive?sort_by=created-descending"
     },
     "blue_owl": {
         "base": "https://www.blueowl.us",
@@ -73,53 +61,86 @@ SITES = {
         "base": "https://www.witheredfig.com",
         "collection": "/collections/boots?sort_by=created-descending"
     },
+    "lost_and_found": {
+        "base": "https://shoplostfound.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "brooklyn_clothing": {
+        "base": "https://brooklynclothing.com",
+        "collection": "/collections/boots"
+    },
+    "haven": {
+        "base": "https://havenshop.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
     "miloh_shop": {
         "base": "https://milohshop.com",
         "collection": "/collections/boots?sort_by=created-descending"
     },
-    "lost_and_found": {
-    "base": "https://shoplostfound.com",
-    "collection": "/collections/boots?sort_by=created-descending"
-    },
     "okayama_denim": {
         "base": "https://www.okayamadenim.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "snake_oil_provisions": {
+        "base": "https://snakeoilprovisions.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "mildblend": {
+        "base": "https://mildblend.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "corlection": {
+        "base": "https://corlection.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "up_there_store": {
+        "base": "https://uptherestore.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "redcast_heritage": {
+        "base": "https://redcastheritage.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "east_west_apparel": {
+        "base": "https://eastwestapparel.co.uk",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "self_edge": {
+        "base": "https://www.selfedge.com",
         "collection": "/collections/boots?sort_by=created-descending"
     },
     "nicks_ready_to_ship": {
         "base": "https://nicksboots.com",
         "collection": "/collections/in-stock-boots?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null"
     },
+    "iron_heart_uk": {
+        "base": "https://ironheart.co.uk",
+        "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
+    },
     "iron_heart_germany": {
         "base": "https://ironheartgermany.com",
         "collection": "/collections/boots?sort_by=created-descending&filter.v.availability=1&filter.v.option.size=10+1%2F2"
     },
-    "haven": {
-    "base": "https://havenshop.com",
-    "collection": "/collections/boots?sort_by=created-descending"
+
+    # ---------------------------
+    # Additional Shopify retailers
+    # ---------------------------
+
+    "stag_provisions": {
+        "base": "https://stagprovisions.com",
+        "collection": "/collections/boots?sort_by=created-descending"
     },
-    "redcast_heritage": {
-    "base": "https://redcastheritage.com",
-    "collection": "/collections/boots?sort_by=created-descending"
+    "brick_and_mortar": {
+        "base": "https://brickmortarseattle.com",
+        "collection": "/collections/boots?sort_by=created-descending"
     },
-    "mildblend": {
-    "base": "https://mildblend.com",
-    "collection": "/collections/boots?sort_by=created-descending"
+    "ealdwine": {
+        "base": "https://ealdwineraleigh.com",
+        "collection": "/collections/boots?sort_by=created-descending"
     },
-    "snake_oil_provisions": {
-    "base": "https://snakeoilprovisions.com",
-    "collection": "/collections/boots?sort_by=created-descending"
-    },
-    "corlection": {
-    "base": "https://corlection.com",
-    "collection": "/collections/boots?sort_by=created-descending"
-    },
-    "up_there_store": {
-    "base": "https://uptherestore.com",
-    "collection": "/collections/boots?sort_by=created-descending"
-    },
-    "iron_heart_uk": {
-        "base": "https://ironheart.co.uk",
-        "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
+    "leffot": {
+        "base": "https://leffot.com",
+        "collection": "/collections/boots?sort_by=created-descending"
     }
 }
 
