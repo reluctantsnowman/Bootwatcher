@@ -422,20 +422,40 @@ def post_to_discord(site_new_map):
         log("No Discord webhook set.")
         return False
 
-    lines = ["**🆕 NEW Boots Detected (Top 3) 🆕**\n"]
+    embeds = []
 
     for site, boots in site_new_map.items():
 
-        lines.append(f"\n__{site.replace('_',' ').upper()}__\n")
+        site_title = site.replace("_", " ").title()
 
-        for b in boots:
-            lines.append(f"**{b['name']}**\n{b['price']}\n{b['url']}\n")
+        lines = []
+
+        for i, b in enumerate(boots, start=1):
+
+            name = b["name"]
+            price = b["price"]
+            url = b["url"]
+
+            lines.append(f"{i}️⃣ [{name}]({url}) — {price}")
+
+        embed = {
+            "title": site_title,
+            "description": "\n".join(lines),
+            "color": 16753920  # boot leather orange
+        }
+
+        embeds.append(embed)
+
+    payload = {
+        "content": "👢 **Boot Watcher — New Drops Detected**",
+        "embeds": embeds
+    }
 
     try:
 
         r = requests.post(
             DISCORD_WEBHOOK_URL,
-            json={"content": "\n".join(lines)},
+            json=payload,
             timeout=15
         )
 
@@ -449,7 +469,6 @@ def post_to_discord(site_new_map):
     except Exception as e:
         log(f"Discord post failed: {e}")
         return False
-
 # ==================================================
 # MAIN
 # ==================================================
