@@ -137,7 +137,7 @@ def _nicks_product_title_matches_target_size(product_title):
     t = (product_title or "").lower()
     t = t.replace("½", "0.5").replace("1/2", "0.5")
 
-    return bool(re.search(r"\b(10\.5|11)\b", t))
+    return bool(re.search(r"\b(10\.5|11)\s*d\b", t))
 
 # ==================================================
 # FX
