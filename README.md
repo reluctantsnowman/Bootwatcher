@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-05 19:17:50 EST
+Last updated: 2026-03-05 19:25:04 EST
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -22,11 +22,11 @@ Last updated: 2026-03-05 19:17:50 EST
 ## Nicks Ready To Ship (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Gamebreaker 10.5 EE - Seconds! | $600.00 | [View](https://nicksboots.com/products/gamebreaker-10-5-ee-ready-to-ship) |
-| 2 | Spokane Comstock 11 EE - Ready To Ship! | $544.00 | [View](https://nicksboots.com/products/mto-11-ee-ready-to-ship) |
-| 3 | Ivan 11.5 E -Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-11-5-e-ready-to-ship) |
-| 4 | Bromley 10.5 E - Ready To Ship! | $700.00 | [View](https://nicksboots.com/products/bromley-10-5-e-ready-to-ship) |
-| 5 | WaterWork® 11.5 B - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/waterwork®-11-5-b-ready-to-ship) |
+| 1 | Wellington 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/wellington-10-5-d-ready-to-ship-1) |
+| 2 | Falcon 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/falcon-11-d-ready-to-ship-2) |
+| 3 | Urban Drifter 11 D - Ready To Ship! | $614.00 | [View](https://nicksboots.com/products/urban-drifter-11-d-ready-to-ship) |
+| 4 | Ridgeline Hiking Boot 10.5 D - Ready To Ship! | $594.00 | [View](https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship) |
+| 5 | Chukka 10.5 D - Ready To Ship! | $515.24 | [View](https://nicksboots.com/products/chukka-10-5-d-ready-to-ship) |
 
 ## Iron Heart Germany (Top 5)
 | Rank | Name | Price | Link |
