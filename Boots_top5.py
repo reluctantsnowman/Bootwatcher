@@ -93,6 +93,30 @@ SITES = {
         "base": "https://ironheartgermany.com",
         "collection": "/collections/boots?sort_by=created-descending&filter.v.availability=1&filter.v.option.size=10+1%2F2"
     },
+    "haven": {
+    "base": "https://havenshop.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "redcast_heritage": {
+    "base": "https://redcastheritage.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "mildblend": {
+    "base": "https://mildblend.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "snake_oil_provisions": {
+    "base": "https://snakeoilprovisions.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "corlection": {
+    "base": "https://corlection.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "up_there_store": {
+    "base": "https://uptherestore.com",
+    "collection": "/collections/boots?sort_by=created-descending"
+    },
     "iron_heart_uk": {
         "base": "https://ironheart.co.uk",
         "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
