@@ -50,8 +50,8 @@ SITES = {
         "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
     },
     "bakers_exclusive": {
-    "base": "https://bakershoe.com",
-    "collection": "/collections/bakers-exclusive?sort_by=created-descending"
+        "base": "https://bakershoe.com",
+        "collection": "/collections/bakers-exclusive?sort_by=created-descending"
     }
 }
 
