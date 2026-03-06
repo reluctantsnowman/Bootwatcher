@@ -33,9 +33,53 @@ SITES = {
         "base": "https://divisionroadinc.com",
         "collection": "/collections/footwear/boots"
     },
+    "division_road_eu": {
+        "base": "https://divisionroad.eu",
+        "collection": "/collections/footwear/boots"
+    },
     "brooklyn_clothing": {
         "base": "https://brooklynclothing.com",
         "collection": "/collections/boots"
+    },
+    "bakers_exclusive": {
+        "base": "https://bakershoe.com",
+        "collection": "/collections/bakers-exclusive?sort_by=created-descending"
+    },
+    "standard_and_strange": {
+        "base": "https://standardandstrange.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "self_edge": {
+        "base": "https://www.selfedge.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "rivet_and_hide": {
+        "base": "https://rivetandhide.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "franklin_and_poe": {
+        "base": "https://franklinandpoe.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "east_west_apparel": {
+        "base": "https://eastwestapparel.co.uk",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "blue_owl": {
+        "base": "https://www.blueowl.us",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "withered_fig": {
+        "base": "https://www.witheredfig.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "miloh_shop": {
+        "base": "https://milohshop.com",
+        "collection": "/collections/boots?sort_by=created-descending"
+    },
+    "okayama_denim": {
+        "base": "https://www.okayamadenim.com",
+        "collection": "/collections/boots?sort_by=created-descending"
     },
     "nicks_ready_to_ship": {
         "base": "https://nicksboots.com",
@@ -48,10 +92,6 @@ SITES = {
     "iron_heart_uk": {
         "base": "https://ironheart.co.uk",
         "collection": "/collections/wesco?filter.v.availability=1&sort_by=created-descending&filter.v.option.size=10+1%2F2"
-    },
-    "bakers_exclusive": {
-        "base": "https://bakershoe.com",
-        "collection": "/collections/bakers-exclusive?sort_by=created-descending"
     }
 }
 
