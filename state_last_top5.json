@@ -133,5 +133,32 @@
       "price": "$515.24",
       "url": "https://nicksboots.com/products/chukka-10-5-d-ready-to-ship"
     }
+  ],
+  "bakers_exclusive": [
+    {
+      "name": "Stitchdown Cruiser - Navy Horsehide",
+      "price": "$774.95",
+      "url": "https://bakershoe.com/products/stitchdown-cruiser-navy-horsehide"
+    },
+    {
+      "name": "Brown Bison MP",
+      "price": "$1034.95",
+      "url": "https://bakershoe.com/products/brown-bison-mp"
+    },
+    {
+      "name": "Jobmaster - Teak Leather",
+      "price": "$799.95",
+      "url": "https://bakershoe.com/products/jobmaster-teak-leather"
+    },
+    {
+      "name": "Baker's British Tan Bounty Hunter",
+      "price": "$749.95",
+      "url": "https://bakershoe.com/products/bakers-stock-bounty-hunter-by-whites-boots"
+    },
+    {
+      "name": "Stitchdown Cruiser - Brown Horsehide",
+      "price": "$774.95",
+      "url": "https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide"
+    }
   ]
 }

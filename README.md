@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-06 10:55:16 EST
+Last updated: 2026-03-06 11:42:14 EST
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -45,3 +45,12 @@ Last updated: 2026-03-06 10:55:16 EST
 | 3 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - Black Tie Domain | $742.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-blk) |
 | 4 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - British Tan Domain | $742.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-tan) |
 | 5 | Iron Heart Int'l x Wesco® 7" Toe Cap Boot - The "Guildsman" - Natural Horsehide | $870.00 | [View](https://ironheart.co.uk/products/ihwe-glmn-nat) |
+
+## Bakers Exclusive (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Stitchdown Cruiser - Navy Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-navy-horsehide) |
+| 2 | Brown Bison MP | $1034.95 | [View](https://bakershoe.com/products/brown-bison-mp) |
+| 3 | Jobmaster - Teak Leather | $799.95 | [View](https://bakershoe.com/products/jobmaster-teak-leather) |
+| 4 | Baker's British Tan Bounty Hunter | $749.95 | [View](https://bakershoe.com/products/bakers-stock-bounty-hunter-by-whites-boots) |
+| 5 | Stitchdown Cruiser - Brown Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide) |
