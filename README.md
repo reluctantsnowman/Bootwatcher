@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-07 00:08:24 EST
+Last updated: 2026-03-07 09:51:04 EST
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
