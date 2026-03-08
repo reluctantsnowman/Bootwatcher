@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-08 00:16:04 EST
+Last updated: 2026-03-08 10:52:31 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -117,8 +117,8 @@ Last updated: 2026-03-08 00:16:04 EST
 | 1 | Americana 10.5 D - Ready To Ship! | $674.00 | [View](https://nicksboots.com/products/americana-10-5-d-ready-to-ship) |
 | 2 | Hot Shot® Moderate Arch -NFPA - 10.5 D - Ready To Ship! | $624.00 | [View](https://nicksboots.com/products/hot-shot®-moderate-arch-nfpa-11-5-e-ready-to-ship-copy) |
 | 3 | Falcon 10.5 D - Ready To Ship! | $550.00 | [View](https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-1) |
-| 4 | Wellington 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/wellington-10-5-d-ready-to-ship-1) |
-| 5 | Falcon 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/falcon-11-d-ready-to-ship-2) |
+| 4 | Falcon 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/falcon-11-d-ready-to-ship-2) |
+| 5 | Urban Drifter 11 D - Ready To Ship! | $614.00 | [View](https://nicksboots.com/products/urban-drifter-11-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
