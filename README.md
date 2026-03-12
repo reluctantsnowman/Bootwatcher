@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-11 12:35:48 EDT
+Last updated: 2026-03-12 01:39:06 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -57,11 +57,11 @@ Last updated: 2026-03-11 12:35:48 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1049.53 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $894.87 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1119.50 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1067.95 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Roper Boot Wash Brown Waxed Flesh | $1248.39 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1048.59 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $894.06 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1118.49 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1066.98 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Roper Boot Wash Brown Waxed Flesh | $1247.27 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
