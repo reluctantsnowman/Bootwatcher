@@ -200,11 +200,6 @@
       "url": "https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse"
     },
     {
-      "name": "John Lofgren Wabash Engineer Boots - Limited Edition Shinki Hikaku Horsebutt Black",
-      "price": "$1375.00",
-      "url": "https://franklinandpoe.com/products/copy-of-pre-order-fw25-john-lofgren-wabash-engineer-boots-limited-edition-shinki-hikaku-horsebutt-black"
-    },
-    {
       "name": "(Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout",
       "price": "$900.00",
       "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout"
@@ -213,6 +208,11 @@
       "name": "(Pre-Order SS26) John Lofgren El Capitan Boots - Horween CXL Black",
       "price": "$900.00",
       "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-el-capitan-boots-horween-cxl-black"
+    },
+    {
+      "name": "(Pre-Order SS26) John Lofgren Donkey Puncher Boots - Horween Waxed Flesh Dark Brown",
+      "price": "$1055.00",
+      "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-donkey-puncher-boots-horween-waxed-flesh-dark-brown"
     }
   ],
   "east_west_apparel": [],

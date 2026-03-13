@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-13 01:35:39 EDT
+Last updated: 2026-03-13 11:59:46 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -24,9 +24,9 @@ Last updated: 2026-03-13 01:35:39 EDT
 |---|---|---|---|
 | 1 | John Lofgren Wabash Engineer Boots - Horween CXL Burgundy | $1155.00 | [View](https://franklinandpoe.com/products/john-lofgren-wabash-engineer-boots-horween-cxl-burgundy) |
 | 2 | Alden 86065H Plain Toe Boot - Earth Chamois Reverse | $764.00 | [View](https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse) |
-| 3 | John Lofgren Wabash Engineer Boots - Limited Edition Shinki Hikaku Horsebutt Black | $1375.00 | [View](https://franklinandpoe.com/products/copy-of-pre-order-fw25-john-lofgren-wabash-engineer-boots-limited-edition-shinki-hikaku-horsebutt-black) |
-| 4 | (Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
-| 5 | (Pre-Order SS26) John Lofgren El Capitan Boots - Horween CXL Black | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-el-capitan-boots-horween-cxl-black) |
+| 3 | (Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
+| 4 | (Pre-Order SS26) John Lofgren El Capitan Boots - Horween CXL Black | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-el-capitan-boots-horween-cxl-black) |
+| 5 | (Pre-Order SS26) John Lofgren Donkey Puncher Boots - Horween Waxed Flesh Dark Brown | $1055.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-donkey-puncher-boots-horween-waxed-flesh-dark-brown) |
 
 ## Bakers Exclusive (Top 5)
 | Rank | Name | Price | Link |
