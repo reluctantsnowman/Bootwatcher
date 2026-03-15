@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-15 01:57:22 EDT
+Last updated: 2026-03-15 10:59:40 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -133,7 +133,7 @@ Last updated: 2026-03-15 01:57:22 EDT
 | Rank | Name | Price | Link |
 |---|---|---|---|
 | 1 | WE-SPBE1091WLL705-NAT - WESCO Two-tone Custom Morrison  - Natural Horsehide | $1299.00 | [View](https://ironheartgermany.com/products/wesco-we-spbe1091wll705-nat-custom-morrison-natural-horsehide) |
-| 2 | WE-BK906P4014NAT-BLK - Wesco Custom Warren Roughout - Black | $799.00 | [View](https://ironheartgermany.com/products/wesco-we-bk906p4014nat-blk-wesco-custom-warren-roughout-black) |
+| 2 | WE-BK906P4014NAT-BLK - Wesco Custom Warren Roughout - Black | $679.00 | [View](https://ironheartgermany.com/products/wesco-we-bk906p4014nat-blk-wesco-custom-warren-roughout-black) |
 | 3 | WE-BRITTAN7710705 - Wesco Custom Boss - Roughout British Tan | $949.00 | [View](https://ironheartgermany.com/products/wesco-we-brittan7710705-wesco-custom-boss-roughout-british-tan) |
 | 4 | WE-BKBE1084014-NAT - Lace-To-Toe Custom JOBMASTER - Black/Natural | $899.00 | [View](https://ironheartgermany.com/products/wesco-we-bkbe1084014-nat-lace-to-toe-custom-jobmaster-black-natural) |
 | 5 | WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black | $989.00 | [View](https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black) |
