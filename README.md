@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-16 02:55:09 EDT
+Last updated: 2026-03-16 13:39:02 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -116,9 +116,9 @@ Last updated: 2026-03-16 02:55:09 EDT
 |---|---|---|---|
 | 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 3 | Americana 10.5 D - Ready To Ship! | $674.00 | [View](https://nicksboots.com/products/americana-10-5-d-ready-to-ship) |
-| 4 | Falcon 10.5 D - Ready To Ship! | $550.00 | [View](https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-1) |
-| 5 | Urban Drifter 11 D - Ready To Ship! | $614.00 | [View](https://nicksboots.com/products/urban-drifter-11-d-ready-to-ship) |
+| 3 | Packer 10.5 D - Seconds! | $616.00 | [View](https://nicksboots.com/products/packer-10-5-d-seconds) |
+| 4 | Americana 10.5 D - Ready To Ship! | $674.00 | [View](https://nicksboots.com/products/americana-10-5-d-ready-to-ship) |
+| 5 | Falcon 10.5 D - Ready To Ship! | $550.00 | [View](https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-1) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
