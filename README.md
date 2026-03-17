@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-16 13:39:02 EDT
+Last updated: 2026-03-17 01:46:26 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -57,11 +57,11 @@ Last updated: 2026-03-16 13:39:02 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1038.85 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $885.76 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1108.11 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1057.08 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Roper Boot Wash Brown Waxed Flesh | $1235.69 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1041.18 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $887.74 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1110.59 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1059.44 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Roper Boot Wash Brown Waxed Flesh | $1238.45 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
@@ -116,9 +116,9 @@ Last updated: 2026-03-16 13:39:02 EDT
 |---|---|---|---|
 | 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 3 | Packer 10.5 D - Seconds! | $616.00 | [View](https://nicksboots.com/products/packer-10-5-d-seconds) |
-| 4 | Americana 10.5 D - Ready To Ship! | $674.00 | [View](https://nicksboots.com/products/americana-10-5-d-ready-to-ship) |
-| 5 | Falcon 10.5 D - Ready To Ship! | $550.00 | [View](https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-1) |
+| 3 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 4 | Nicks x Rose Anvil Bloodcore ND1 10.5 D - Ready To Ship! | $649.95 | [View](https://nicksboots.com/products/nicks-x-rose-anvil-bloodcore-nd1-10-5-d-ready-to-ship) |
+| 5 | Moderate Arch Lace Up 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/moderate-arch-lace-up-11-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
