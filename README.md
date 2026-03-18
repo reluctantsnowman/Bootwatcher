@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-17 13:38:46 EDT
+Last updated: 2026-03-18 01:49:52 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -13,20 +13,20 @@ Last updated: 2026-03-17 13:38:46 EDT
 ## Standard And Strange (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Combat Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan) |
-| 2 | Monkey Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan) |
-| 3 | Montgomery Boots - Havana Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf) |
-| 4 | Montgomery Boots - Black Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf) |
-| 5 | Coupen Mid-Cut Boots - Gray Guidi Calf | $820.00 | [View](https://standardandstrange.com/products/coupen-mid-cut-boots-gray-guidi-calf) |
+| 1 | Donkey Puncher Boots - Natural CXL | $1055.00 | [View](https://standardandstrange.com/products/donkey-puncher-boots-natural-cxl-2) |
+| 2 | Combat Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan) |
+| 3 | Monkey Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan) |
+| 4 | Montgomery Boots - Havana Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf) |
+| 5 | Montgomery Boots - Black Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf) |
 
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | John Lofgren Wabash Engineer Boots - Horween CXL Burgundy | $1155.00 | [View](https://franklinandpoe.com/products/john-lofgren-wabash-engineer-boots-horween-cxl-burgundy) |
-| 2 | Alden 86065H Plain Toe Boot - Earth Chamois Reverse | $764.00 | [View](https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse) |
-| 3 | (Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
-| 4 | (Pre-Order SS26) John Lofgren El Capitan Boots - Horween CXL Black | $900.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-el-capitan-boots-horween-cxl-black) |
-| 5 | (Pre-Order SS26) John Lofgren Donkey Puncher Boots - Horween Waxed Flesh Dark Brown | $1055.00 | [View](https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-donkey-puncher-boots-horween-waxed-flesh-dark-brown) |
+| 1 | John Lofgren US Navy N-1 Field Shoes Boondockers - Natural Roughout Horween CXL | $900.00 | [View](https://franklinandpoe.com/products/john-lofgren-us-navy-n-1-field-shoes-boondockers-natural-roughout-horween-cxl) |
+| 2 | John Lofgren USN Low Quarter Shoes - French Calfskin Russet Brown | $760.00 | [View](https://franklinandpoe.com/products/john-lofgren-usn-low-quarter-shoes-french-calfskin-russet-brown) |
+| 3 | John Lofgren USN Low Quarter Shoes - French Calfskin Black | $760.00 | [View](https://franklinandpoe.com/products/john-lofgren-usn-low-quarter-shoes-french-calfskin-black) |
+| 4 | John Lofgren Wabash Engineer Boots - Horween CXL Burgundy | $1155.00 | [View](https://franklinandpoe.com/products/john-lofgren-wabash-engineer-boots-horween-cxl-burgundy) |
+| 5 | Alden 86065H Plain Toe Boot - Earth Chamois Reverse | $764.00 | [View](https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse) |
 
 ## Bakers Exclusive (Top 5)
 | Rank | Name | Price | Link |
@@ -57,11 +57,11 @@ Last updated: 2026-03-17 13:38:46 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1041.18 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $887.74 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1110.59 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1059.44 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Roper Boot Wash Brown Waxed Flesh | $1238.45 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1040.72 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $887.35 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1110.10 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1058.98 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Roper Boot Wash Brown Waxed Flesh | $1237.91 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
@@ -116,9 +116,9 @@ Last updated: 2026-03-17 13:38:46 EDT
 |---|---|---|---|
 | 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 3 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
-| 4 | Nicks x Rose Anvil Bloodcore ND1 10.5 D - Ready To Ship! | $649.95 | [View](https://nicksboots.com/products/nicks-x-rose-anvil-bloodcore-nd1-10-5-d-ready-to-ship) |
-| 5 | Moderate Arch Lace Up 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/moderate-arch-lace-up-11-d-ready-to-ship) |
+| 3 | Falcon 10.5 D - Ready To Ship! | $614.00 | [View](https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-2) |
+| 4 | Wickett & Craig Pullman 11 D - Ready To Ship! | $879.00 | [View](https://nicksboots.com/products/wickett-craig-pullman-11-d-ready-to-ship) |
+| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |

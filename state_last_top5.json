@@ -29,27 +29,27 @@
   "brooklyn_clothing": [
     {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
-      "price": "$1041.18",
+      "price": "$1040.72",
       "url": "https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black"
     },
     {
       "name": "LK-017 M-43 Service Shoes Horween CXL Natural  R/O",
-      "price": "$887.74",
+      "price": "$887.35",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural"
     },
     {
       "name": "LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black",
-      "price": "$1110.59",
+      "price": "$1110.10",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Natural",
-      "price": "$1059.44",
+      "price": "$1058.98",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural"
     },
     {
       "name": "Roper Boot Wash Brown Waxed Flesh",
-      "price": "$1238.45",
+      "price": "$1237.91",
       "url": "https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown"
     }
   ],
@@ -119,19 +119,19 @@
       "url": "https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship"
     },
     {
+      "name": "Falcon 10.5 D - Ready To Ship!",
+      "price": "$614.00",
+      "url": "https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-2"
+    },
+    {
+      "name": "Wickett & Craig Pullman 11 D - Ready To Ship!",
+      "price": "$879.00",
+      "url": "https://nicksboots.com/products/wickett-craig-pullman-11-d-ready-to-ship"
+    },
+    {
       "name": "Ivan 10.5 D - Ready To Ship!",
       "price": "$554.00",
       "url": "https://nicksboots.com/products/ivan-10-5-d-ready-to-ship"
-    },
-    {
-      "name": "Nicks x Rose Anvil Bloodcore ND1 10.5 D - Ready To Ship!",
-      "price": "$649.95",
-      "url": "https://nicksboots.com/products/nicks-x-rose-anvil-bloodcore-nd1-10-5-d-ready-to-ship"
-    },
-    {
-      "name": "Moderate Arch Lace Up 11 D - Ready To Ship!",
-      "price": "$629.00",
-      "url": "https://nicksboots.com/products/moderate-arch-lace-up-11-d-ready-to-ship"
     }
   ],
   "bakers_exclusive": [
@@ -163,6 +163,11 @@
   ],
   "standard_and_strange": [
     {
+      "name": "Donkey Puncher Boots - Natural CXL",
+      "price": "$1055.00",
+      "url": "https://standardandstrange.com/products/donkey-puncher-boots-natural-cxl-2"
+    },
+    {
       "name": "Combat Boots - Black Ops Shinki Shell Cordovan",
       "price": "$1650.00",
       "url": "https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan"
@@ -181,14 +186,24 @@
       "name": "Montgomery Boots - Black Horween Leather SHF",
       "price": "$1055.00",
       "url": "https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf"
-    },
-    {
-      "name": "Coupen Mid-Cut Boots - Gray Guidi Calf",
-      "price": "$820.00",
-      "url": "https://standardandstrange.com/products/coupen-mid-cut-boots-gray-guidi-calf"
     }
   ],
   "franklin_and_poe": [
+    {
+      "name": "John Lofgren US Navy N-1 Field Shoes Boondockers - Natural Roughout Horween CXL",
+      "price": "$900.00",
+      "url": "https://franklinandpoe.com/products/john-lofgren-us-navy-n-1-field-shoes-boondockers-natural-roughout-horween-cxl"
+    },
+    {
+      "name": "John Lofgren USN Low Quarter Shoes - French Calfskin Russet Brown",
+      "price": "$760.00",
+      "url": "https://franklinandpoe.com/products/john-lofgren-usn-low-quarter-shoes-french-calfskin-russet-brown"
+    },
+    {
+      "name": "John Lofgren USN Low Quarter Shoes - French Calfskin Black",
+      "price": "$760.00",
+      "url": "https://franklinandpoe.com/products/john-lofgren-usn-low-quarter-shoes-french-calfskin-black"
+    },
     {
       "name": "John Lofgren Wabash Engineer Boots - Horween CXL Burgundy",
       "price": "$1155.00",
@@ -198,21 +213,6 @@
       "name": "Alden 86065H Plain Toe Boot - Earth Chamois Reverse",
       "price": "$764.00",
       "url": "https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse"
-    },
-    {
-      "name": "(Pre-Order SS26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout",
-      "price": "$900.00",
-      "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout"
-    },
-    {
-      "name": "(Pre-Order SS26) John Lofgren El Capitan Boots - Horween CXL Black",
-      "price": "$900.00",
-      "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-el-capitan-boots-horween-cxl-black"
-    },
-    {
-      "name": "(Pre-Order SS26) John Lofgren Donkey Puncher Boots - Horween Waxed Flesh Dark Brown",
-      "price": "$1055.00",
-      "url": "https://franklinandpoe.com/products/pre-order-ss26-john-lofgren-donkey-puncher-boots-horween-waxed-flesh-dark-brown"
     }
   ],
   "east_west_apparel": [],
