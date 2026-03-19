@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-18 13:43:22 EDT
+Last updated: 2026-03-19 01:45:36 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -54,39 +54,11 @@ Last updated: 2026-03-18 13:43:22 EDT
 | 4 | John Lofgren Bootmaker Monkey Boots Shinki Hikaku Shell Cordovan Black Ops | $2250.00 | [View](https://shoplostfound.com/products/john-lofgren-bootmaker-monkey-boots-shinki-hikaku-shell-cordovan-black-ops) |
 | 5 | John Lofgren Bootmaker Combat Boots Shinki Hikaku Shell Cordovan Black Ops | $2250.00 | [View](https://shoplostfound.com/products/john-lofgren-bootmaker-combat-boots-shinki-hikaku-shell-cordovan-black-ops) |
 
-## Brooklyn Clothing (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1040.72 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $887.35 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1110.10 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1058.98 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Roper Boot Wash Brown Waxed Flesh | $1237.91 | [View](https://brooklynclothing.com/products/roper-waxed-flesh-wash-brown) |
-
-## Miloh Shop (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | Tricker's - Black Box Calf Bourton Derby Shoe | $695.00 | [View](https://milohshop.com/products/trickers-bourton-black-box-calf-derby-brogue) |
-| 2 | Viberg - Black Calf Derby Shoe 2030 Last | $950.00 | [View](https://milohshop.com/products/viberg-black-calf-derby-shoe-2030-last) |
-
 ## Okayama Denim (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
 
 ## Snake Oil Provisions (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-
-## Mildblend (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | Red Wing Blacksmith 3340 Briar Oil Slick | $329.00 | [View](https://mildblend.com/products/red-wing-blacksmith-3340-briar-oil-slick-1) |
-| 2 | Red Wing Iron Ranger 8083 6" Hawthorn Muleskinner | $349.99 | [View](https://mildblend.com/products/red-wing-iron-ranger-8083-6-hawthorn-muleskinner) |
-| 3 | Red Wing Blacksmith 3343D Copper Rough and Tough Boots | $329.00 | [View](https://mildblend.com/products/red-wing-blacksmith-3343d-copper-rough-and-tough-boots) |
-| 4 | Red Wing Iron Ranger 8085 Copper Rough and Tough | $349.00 | [View](https://mildblend.com/products/red-wing-iron-ranger-8085-copper-rough-and-tough-1) |
-| 5 | John Lofgren Black Donkey Puncher Boots in Horween CXL | $1055.00 | [View](https://mildblend.com/products/john-lofgren-black-donkey-puncher-boots-in-horween-cxl) |
-
-## Corlection (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
 
@@ -117,8 +89,8 @@ Last updated: 2026-03-18 13:43:22 EDT
 | 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
 | 3 | Falcon 10.5 D - Ready To Ship! | $614.00 | [View](https://nicksboots.com/products/falcon-10-5-d-ready-to-ship-2) |
-| 4 | Wickett & Craig Pullman 11 D - Ready To Ship! | $879.00 | [View](https://nicksboots.com/products/wickett-craig-pullman-11-d-ready-to-ship) |
-| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 4 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 5 | Moderate Arch Lace Up 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/moderate-arch-lace-up-11-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
