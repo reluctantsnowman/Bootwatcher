@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-21 10:55:34 EDT
+Last updated: 2026-03-22 01:40:35 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -116,9 +116,9 @@ Last updated: 2026-03-21 10:55:34 EDT
 |---|---|---|---|
 | 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 3 | Fry Sauce LaceUp 11 D - Ready To Ship! | $704.00 | [View](https://nicksboots.com/products/fry-sauce-laceup-11-d-ready-to-ship) |
-| 4 | Hot Shot® 67 Classic Arch - NFPA 10.5 D - Ready To Ship! | $624.00 | [View](https://nicksboots.com/products/hot-shot®-67-classic-arch-nfpa-10-5-d-ready-to-ship) |
-| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 3 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 4 | Moderate Arch Lace Up 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/moderate-arch-lace-up-11-d-ready-to-ship) |
+| 5 | Americana 10.5 D - Ready To Ship! | $674.00 | [View](https://nicksboots.com/products/americana-10-5-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
