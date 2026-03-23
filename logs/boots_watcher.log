@@ -1703,3 +1703,46 @@
 [2026-03-23 02:14:22 EDT] README updated.
 [2026-03-23 02:14:22 EDT] State saved.
 [2026-03-23 02:14:22 EDT] Boots watcher completed.
+[2026-03-23 13:09:44 EDT] Boots watcher started.
+[2026-03-23 13:09:44 EDT] division_road JSON blocked; using HTML fallback.
+[2026-03-23 13:09:45 EDT] division_road HTML fallback returning 5 boots
+[2026-03-23 13:09:45 EDT] division_road_eu request failed: HTTPSConnectionPool(host='divisionroad.eu', port=443): Max retries exceeded with url: /collections/footwear/boots/products.json?limit=250&page=1 (Caused by NameResolutionError("HTTPSConnection(host='divisionroad.eu', port=443): Failed to resolve 'divisionroad.eu' ([Errno -2] Name or service not known)"))
+[2026-03-23 13:09:45 EDT] division_road_eu: scrape failed; preserving previous state.
+[2026-03-23 13:09:45 EDT] standard_and_strange request failed: 503 Server Error: Service Unavailable for url: https://standardandstrange.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:45 EDT] standard_and_strange: scrape failed; preserving previous state.
+[2026-03-23 13:09:46 EDT] rivet_and_hide request failed: 404 Client Error: Not Found for url: https://rivetandhide.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:46 EDT] rivet_and_hide: scrape failed; preserving previous state.
+[2026-03-23 13:09:47 EDT] franklin_and_poe: returning 5 boots
+[2026-03-23 13:09:47 EDT] bakers_exclusive: returning 5 boots
+[2026-03-23 13:09:48 EDT] blue_owl: returning 0 boots
+[2026-03-23 13:09:48 EDT] withered_fig: returning 0 boots
+[2026-03-23 13:09:49 EDT] lost_and_found: returning 5 boots
+[2026-03-23 13:09:49 EDT] brooklyn_clothing request failed: 503 Server Error: Service Unavailable for url: https://brooklynclothing.com/collections/boots/products.json?limit=250&page=1
+[2026-03-23 13:09:49 EDT] brooklyn_clothing: scrape failed; preserving previous state.
+[2026-03-23 13:09:50 EDT] haven request failed: 404 Client Error: Not Found for url: https://havenshop.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:50 EDT] haven: scrape failed; preserving previous state.
+[2026-03-23 13:09:51 EDT] miloh_shop: returning 2 boots
+[2026-03-23 13:09:51 EDT] okayama_denim: returning 0 boots
+[2026-03-23 13:09:52 EDT] snake_oil_provisions: returning 0 boots
+[2026-03-23 13:09:52 EDT] mildblend request failed: 503 Server Error: Service Unavailable for url: https://mildblend.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:52 EDT] mildblend: scrape failed; preserving previous state.
+[2026-03-23 13:09:52 EDT] corlection: returning 0 boots
+[2026-03-23 13:09:53 EDT] up_there_store: returning 4 boots
+[2026-03-23 13:09:53 EDT] redcast_heritage: returning 5 boots
+[2026-03-23 13:09:54 EDT] east_west_apparel: returning 0 boots
+[2026-03-23 13:09:54 EDT] self_edge request failed: 404 Client Error: Not Found for url: https://www.selfedge.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:54 EDT] self_edge: scrape failed; preserving previous state.
+[2026-03-23 13:09:54 EDT] nicks_ready_to_ship request failed: 503 Server Error: Service Unavailable for url: https://nicksboots.com/collections/in-stock-boots/products.json?filter.p.m.custom.left_boot_length=10.5&filter.p.m.custom.left_boot_width=D&sort_by=null&limit=250&page=1
+[2026-03-23 13:09:54 EDT] nicks_ready_to_ship: scrape failed; preserving previous state.
+[2026-03-23 13:09:55 EDT] iron_heart_uk: returning 5 boots
+[2026-03-23 13:09:55 EDT] iron_heart_germany: returning 5 boots
+[2026-03-23 13:09:55 EDT] stag_provisions request failed: 503 Server Error: Service Unavailable for url: https://stagprovisions.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:55 EDT] stag_provisions: scrape failed; preserving previous state.
+[2026-03-23 13:09:55 EDT] brick_and_mortar: returning 0 boots
+[2026-03-23 13:09:56 EDT] ealdwine request failed: 404 Client Error: Not Found for url: https://www.ealdwineraleigh.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:56 EDT] ealdwine: scrape failed; preserving previous state.
+[2026-03-23 13:09:56 EDT] leffot request failed: 404 Client Error: Not Found for url: https://leffot.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 13:09:56 EDT] leffot: scrape failed; preserving previous state.
+[2026-03-23 13:09:56 EDT] README updated.
+[2026-03-23 13:09:56 EDT] State saved.
+[2026-03-23 13:09:56 EDT] Boots watcher completed.
