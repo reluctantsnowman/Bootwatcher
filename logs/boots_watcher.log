@@ -1665,3 +1665,41 @@
 [2026-03-22 10:56:43 EDT] README updated.
 [2026-03-22 10:56:43 EDT] State saved.
 [2026-03-22 10:56:43 EDT] Boots watcher completed.
+[2026-03-23 02:14:10 EDT] Boots watcher started.
+[2026-03-23 02:14:10 EDT] division_road JSON blocked; using HTML fallback.
+[2026-03-23 02:14:11 EDT] division_road HTML fallback returning 5 boots
+[2026-03-23 02:14:11 EDT] division_road_eu request failed: HTTPSConnectionPool(host='divisionroad.eu', port=443): Max retries exceeded with url: /collections/footwear/boots/products.json?limit=250&page=1 (Caused by NameResolutionError("HTTPSConnection(host='divisionroad.eu', port=443): Failed to resolve 'divisionroad.eu' ([Errno -2] Name or service not known)"))
+[2026-03-23 02:14:11 EDT] division_road_eu: scrape failed; preserving previous state.
+[2026-03-23 02:14:12 EDT] standard_and_strange: returning 5 boots
+[2026-03-23 02:14:13 EDT] rivet_and_hide request failed: 404 Client Error: Not Found for url: https://rivetandhide.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 02:14:13 EDT] rivet_and_hide: scrape failed; preserving previous state.
+[2026-03-23 02:14:13 EDT] franklin_and_poe: returning 5 boots
+[2026-03-23 02:14:13 EDT] bakers_exclusive: returning 5 boots
+[2026-03-23 02:14:14 EDT] blue_owl: returning 0 boots
+[2026-03-23 02:14:14 EDT] withered_fig: returning 0 boots
+[2026-03-23 02:14:14 EDT] lost_and_found: returning 5 boots
+[2026-03-23 02:14:15 EDT] brooklyn_clothing: returning 5 boots
+[2026-03-23 02:14:16 EDT] haven request failed: 404 Client Error: Not Found for url: https://havenshop.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 02:14:16 EDT] haven: scrape failed; preserving previous state.
+[2026-03-23 02:14:16 EDT] miloh_shop: returning 2 boots
+[2026-03-23 02:14:16 EDT] okayama_denim: returning 0 boots
+[2026-03-23 02:14:17 EDT] snake_oil_provisions: returning 0 boots
+[2026-03-23 02:14:17 EDT] mildblend: returning 5 boots
+[2026-03-23 02:14:17 EDT] corlection: returning 0 boots
+[2026-03-23 02:14:18 EDT] up_there_store: returning 4 boots
+[2026-03-23 02:14:18 EDT] redcast_heritage: returning 5 boots
+[2026-03-23 02:14:19 EDT] east_west_apparel: returning 0 boots
+[2026-03-23 02:14:19 EDT] self_edge request failed: 404 Client Error: Not Found for url: https://www.selfedge.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 02:14:19 EDT] self_edge: scrape failed; preserving previous state.
+[2026-03-23 02:14:20 EDT] nicks_ready_to_ship: returning 5 boots
+[2026-03-23 02:14:20 EDT] iron_heart_uk: returning 5 boots
+[2026-03-23 02:14:21 EDT] iron_heart_germany: returning 5 boots
+[2026-03-23 02:14:21 EDT] stag_provisions: returning 0 boots
+[2026-03-23 02:14:21 EDT] brick_and_mortar: returning 0 boots
+[2026-03-23 02:14:22 EDT] ealdwine request failed: 404 Client Error: Not Found for url: https://www.ealdwineraleigh.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 02:14:22 EDT] ealdwine: scrape failed; preserving previous state.
+[2026-03-23 02:14:22 EDT] leffot request failed: 404 Client Error: Not Found for url: https://leffot.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-23 02:14:22 EDT] leffot: scrape failed; preserving previous state.
+[2026-03-23 02:14:22 EDT] README updated.
+[2026-03-23 02:14:22 EDT] State saved.
+[2026-03-23 02:14:22 EDT] Boots watcher completed.
