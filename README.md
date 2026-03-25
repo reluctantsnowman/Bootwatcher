@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-25 01:47:41 EDT
+Last updated: 2026-03-25 13:38:34 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -22,11 +22,11 @@ Last updated: 2026-03-25 01:47:41 EDT
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | John Lofgren US Navy N-1 Field Shoes Boondockers - Natural Roughout Horween CXL | $900.00 | [View](https://franklinandpoe.com/products/john-lofgren-us-navy-n-1-field-shoes-boondockers-natural-roughout-horween-cxl) |
-| 2 | John Lofgren USN Low Quarter Shoes - French Calfskin Russet Brown | $760.00 | [View](https://franklinandpoe.com/products/john-lofgren-usn-low-quarter-shoes-french-calfskin-russet-brown) |
-| 3 | John Lofgren USN Low Quarter Shoes - French Calfskin Black | $760.00 | [View](https://franklinandpoe.com/products/john-lofgren-usn-low-quarter-shoes-french-calfskin-black) |
-| 4 | John Lofgren Wabash Engineer Boots - Horween CXL Burgundy | $1155.00 | [View](https://franklinandpoe.com/products/john-lofgren-wabash-engineer-boots-horween-cxl-burgundy) |
-| 5 | Alden 86065H Plain Toe Boot - Earth Chamois Reverse | $764.00 | [View](https://franklinandpoe.com/products/alden-86065h-plain-toe-boot-earth-chamois-reverse) |
+| 1 | (Pre-Order FW26) John Lofgren Fieldmaster - Havana Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-havana-horween-shf-horsehide) |
+| 2 | (Pre-Order FW26) John Lofgren Fieldmaster - Black Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-black-horween-shf-horsehide) |
+| 3 | (Pre-Order FW26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
+| 4 | (Pre-Order FW26) John Lofgren Bootmaker Railmaster Engineer Boot - Shinki Hikaku Horsebutt Black | $1500.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-railmaster-engineer-boot-shinki-hikaku-horsebutt-black) |
+| 5 | (Pre-Order FW26) John Lofgren Bootmaker Wayfarer Derby - Japanese Suede Saddle Brown | $760.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-wayfarer-derby-japanese-suede-saddle-brown) |
 
 ## Bakers Exclusive (Top 5)
 | Rank | Name | Price | Link |
