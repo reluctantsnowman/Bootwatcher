@@ -258,7 +258,33 @@
       "url": "https://shoplostfound.com/products/john-lofgren-bootmaker-combat-boots-shinki-hikaku-shell-cordovan-black-ops"
     }
   ],
-  "snake_oil_provisions": [],
+  "snake_oil_provisions": [
+    {
+      "name": "Santa Rosa Brand x Snake Oil Provisions Heartbreaker Boot Brown Snake",
+      "price": "$528.00",
+      "url": "https://snakeoilprovisions.com/products/sop-x-santa-rosa-brand-heartbreaker-boot-brown-snake"
+    },
+    {
+      "name": "Alden 405 Indy Boot Classic Brown",
+      "price": "$730.00",
+      "url": "https://snakeoilprovisions.com/products/copy-of-alden-405-indy-boot-classic-brown"
+    },
+    {
+      "name": "Alden 403 Indy Boot Brown Aniline Pull-Up",
+      "price": "$730.00",
+      "url": "https://snakeoilprovisions.com/products/alden-403-indy-boot-brown-aniline-pull-up"
+    },
+    {
+      "name": "Alden x Snake Oil Provisions Linden Indy Boot Natural Chromexcel",
+      "price": "$768.00",
+      "url": "https://snakeoilprovisions.com/products/alden-x-snake-oil-provisions-linden-indy-boot"
+    },
+    {
+      "name": "Alden 4011HC Indy Boot Snuff Suede",
+      "price": "$760.00",
+      "url": "https://snakeoilprovisions.com/products/4011hc-indy-boot-snuff-suede"
+    }
+  ],
   "mildblend": [
     {
       "name": "Red Wing Blacksmith 3340 Briar Oil Slick",

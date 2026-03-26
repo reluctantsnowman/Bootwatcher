@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-25 13:38:34 EDT
+Last updated: 2026-03-26 02:16:33 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -54,15 +54,6 @@ Last updated: 2026-03-25 13:38:34 EDT
 | 4 | John Lofgren Bootmaker Monkey Boots Shinki Hikaku Shell Cordovan Black Ops | $2250.00 | [View](https://shoplostfound.com/products/john-lofgren-bootmaker-monkey-boots-shinki-hikaku-shell-cordovan-black-ops) |
 | 5 | John Lofgren Bootmaker Combat Boots Shinki Hikaku Shell Cordovan Black Ops | $2250.00 | [View](https://shoplostfound.com/products/john-lofgren-bootmaker-combat-boots-shinki-hikaku-shell-cordovan-black-ops) |
 
-## Brooklyn Clothing (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1035.99 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $883.32 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1105.06 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1054.16 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1035.99 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
-
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
@@ -76,6 +67,11 @@ Last updated: 2026-03-25 13:38:34 EDT
 ## Snake Oil Provisions (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
+| 1 | Santa Rosa Brand x Snake Oil Provisions Heartbreaker Boot Brown Snake | $528.00 | [View](https://snakeoilprovisions.com/products/sop-x-santa-rosa-brand-heartbreaker-boot-brown-snake) |
+| 2 | Alden 405 Indy Boot Classic Brown | $730.00 | [View](https://snakeoilprovisions.com/products/copy-of-alden-405-indy-boot-classic-brown) |
+| 3 | Alden 403 Indy Boot Brown Aniline Pull-Up | $730.00 | [View](https://snakeoilprovisions.com/products/alden-403-indy-boot-brown-aniline-pull-up) |
+| 4 | Alden x Snake Oil Provisions Linden Indy Boot Natural Chromexcel | $768.00 | [View](https://snakeoilprovisions.com/products/alden-x-snake-oil-provisions-linden-indy-boot) |
+| 5 | Alden 4011HC Indy Boot Snuff Suede | $760.00 | [View](https://snakeoilprovisions.com/products/4011hc-indy-boot-snuff-suede) |
 
 ## Mildblend (Top 5)
 | Rank | Name | Price | Link |
@@ -85,10 +81,6 @@ Last updated: 2026-03-25 13:38:34 EDT
 | 3 | Red Wing Blacksmith 3343D Copper Rough and Tough Boots | $329.00 | [View](https://mildblend.com/products/red-wing-blacksmith-3343d-copper-rough-and-tough-boots) |
 | 4 | Red Wing Iron Ranger 8085 Copper Rough and Tough | $349.00 | [View](https://mildblend.com/products/red-wing-iron-ranger-8085-copper-rough-and-tough-1) |
 | 5 | John Lofgren Black Donkey Puncher Boots in Horween CXL | $1055.00 | [View](https://mildblend.com/products/john-lofgren-black-donkey-puncher-boots-in-horween-cxl) |
-
-## Corlection (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
 
 ## Up There Store (Top 5)
 | Rank | Name | Price | Link |
