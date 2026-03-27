@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-27 02:18:09 EDT
+Last updated: 2026-03-27 12:38:31 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -116,6 +116,15 @@ Last updated: 2026-03-27 02:18:09 EDT
 | Rank | Name | Price | Link |
 |---|---|---|---|
 
+## Nicks Ready To Ship (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
+| 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
+| 3 | Tankerpro 3.0 - 11 D - Ready To Ship! | $684.00 | [View](https://nicksboots.com/products/tankerpro-3-0-11-d-ready-to-ship) |
+| 4 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
+| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
@@ -135,5 +144,9 @@ Last updated: 2026-03-27 02:18:09 EDT
 | 5 | WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black | $989.00 | [View](https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black) |
 
 ## Stag Provisions (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+
+## Brick And Mortar (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
