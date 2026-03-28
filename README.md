@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-28 00:07:21 EDT
+Last updated: 2026-03-28 10:24:19 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -16,8 +16,8 @@ Last updated: 2026-03-28 00:07:21 EDT
 | 1 | [Pre-order for Early 2027] Railmaster Engineer Boots - Black Shinki Horsebutt | $750.00 | [View](https://standardandstrange.com/products/pre-order-for-early-2027-railmaster-engineer-boots-black-shinki-horsebutt) |
 | 2 | [Pre-order for Early Autumn 2026] Christmas 2026 Donkey Puncher Boots - Two-Tone Horween CXL | $530.00 | [View](https://standardandstrange.com/products/pre-order-for-early-autumn-2026-christmas-2026-donkey-puncher-boots-two-tone-horween-cxl) |
 | 3 | [Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl) |
-| 4 | [Pre-order for Early Winter 2026] Wabash Engineer Boots - Natural CXL Roughout | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-early-winter-2026-wabash-engineer-boots-natural-cxl-roughout) |
-| 5 | [Pre-order for Late Autumn 2026] Wabash Engineer Boots - Badalassi Grigio | $690.00 | [View](https://standardandstrange.com/products/pre-order-for-late-autumn-2026-wabash-engineer-boots-badalassi-grigio) |
+| 4 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Saddle Brown Suede | $380.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-saddle-brown-suede) |
+| 5 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Brown Shinki Horsehide | $395.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-brown-shinki-horsehide) |
 
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
