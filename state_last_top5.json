@@ -29,27 +29,27 @@
   "brooklyn_clothing": [
     {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
-      "price": "$1029.57",
+      "price": "$1027.04",
       "url": "https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black"
     },
     {
       "name": "LK-017 M-43 Service Shoes Horween CXL Natural  R/O",
-      "price": "$877.84",
+      "price": "$875.69",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural"
     },
     {
       "name": "LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black",
-      "price": "$1098.21",
+      "price": "$1095.51",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Natural",
-      "price": "$1047.63",
+      "price": "$1045.06",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Brown",
-      "price": "$1029.57",
+      "price": "$1027.04",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown"
     }
   ],
@@ -163,29 +163,29 @@
   ],
   "standard_and_strange": [
     {
-      "name": "Donkey Puncher Boots - Natural CXL",
-      "price": "$1055.00",
-      "url": "https://standardandstrange.com/products/donkey-puncher-boots-natural-cxl-2"
+      "name": "[Pre-order for Early 2027] Railmaster Engineer Boots - Black Shinki Horsebutt",
+      "price": "$750.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-early-2027-railmaster-engineer-boots-black-shinki-horsebutt"
     },
     {
-      "name": "Combat Boots - Black Ops Shinki Shell Cordovan",
-      "price": "$1650.00",
-      "url": "https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan"
+      "name": "[Pre-order for Early Autumn 2026] Christmas 2026 Donkey Puncher Boots - Two-Tone Horween CXL",
+      "price": "$530.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-early-autumn-2026-christmas-2026-donkey-puncher-boots-two-tone-horween-cxl"
     },
     {
-      "name": "Monkey Boots - Black Ops Shinki Shell Cordovan",
-      "price": "$1650.00",
-      "url": "https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan"
+      "name": "[Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL",
+      "price": "$580.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl"
     },
     {
-      "name": "Montgomery Boots - Havana Horween Leather SHF",
-      "price": "$1055.00",
-      "url": "https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf"
+      "name": "[Pre-order for Early Winter 2026] Wabash Engineer Boots - Natural CXL Roughout",
+      "price": "$580.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-early-winter-2026-wabash-engineer-boots-natural-cxl-roughout"
     },
     {
-      "name": "Montgomery Boots - Black Horween Leather SHF",
-      "price": "$1055.00",
-      "url": "https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf"
+      "name": "[Pre-order for Late Autumn 2026] Wabash Engineer Boots - Badalassi Grigio",
+      "price": "$690.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-late-autumn-2026-wabash-engineer-boots-badalassi-grigio"
     }
   ],
   "franklin_and_poe": [

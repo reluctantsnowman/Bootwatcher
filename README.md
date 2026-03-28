@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-27 12:38:31 EDT
+Last updated: 2026-03-28 00:07:21 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -13,11 +13,11 @@ Last updated: 2026-03-27 12:38:31 EDT
 ## Standard And Strange (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Donkey Puncher Boots - Natural CXL | $1055.00 | [View](https://standardandstrange.com/products/donkey-puncher-boots-natural-cxl-2) |
-| 2 | Combat Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan) |
-| 3 | Monkey Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan) |
-| 4 | Montgomery Boots - Havana Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf) |
-| 5 | Montgomery Boots - Black Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf) |
+| 1 | [Pre-order for Early 2027] Railmaster Engineer Boots - Black Shinki Horsebutt | $750.00 | [View](https://standardandstrange.com/products/pre-order-for-early-2027-railmaster-engineer-boots-black-shinki-horsebutt) |
+| 2 | [Pre-order for Early Autumn 2026] Christmas 2026 Donkey Puncher Boots - Two-Tone Horween CXL | $530.00 | [View](https://standardandstrange.com/products/pre-order-for-early-autumn-2026-christmas-2026-donkey-puncher-boots-two-tone-horween-cxl) |
+| 3 | [Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl) |
+| 4 | [Pre-order for Early Winter 2026] Wabash Engineer Boots - Natural CXL Roughout | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-early-winter-2026-wabash-engineer-boots-natural-cxl-roughout) |
+| 5 | [Pre-order for Late Autumn 2026] Wabash Engineer Boots - Badalassi Grigio | $690.00 | [View](https://standardandstrange.com/products/pre-order-for-late-autumn-2026-wabash-engineer-boots-badalassi-grigio) |
 
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
@@ -57,11 +57,11 @@ Last updated: 2026-03-27 12:38:31 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1029.57 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $877.84 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1098.21 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1047.63 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1029.57 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1027.04 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $875.69 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1095.51 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1045.06 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1027.04 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
