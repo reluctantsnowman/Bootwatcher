@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-28 10:24:19 EDT
+Last updated: 2026-03-29 00:26:37 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -18,15 +18,6 @@ Last updated: 2026-03-28 10:24:19 EDT
 | 3 | [Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl) |
 | 4 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Saddle Brown Suede | $380.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-saddle-brown-suede) |
 | 5 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Brown Shinki Horsehide | $395.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-brown-shinki-horsehide) |
-
-## Franklin And Poe (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | (Pre-Order FW26) John Lofgren Fieldmaster - Havana Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-havana-horween-shf-horsehide) |
-| 2 | (Pre-Order FW26) John Lofgren Fieldmaster - Black Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-black-horween-shf-horsehide) |
-| 3 | (Pre-Order FW26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
-| 4 | (Pre-Order FW26) John Lofgren Bootmaker Railmaster Engineer Boot - Shinki Hikaku Horsebutt Black | $1500.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-railmaster-engineer-boot-shinki-hikaku-horsebutt-black) |
-| 5 | (Pre-Order FW26) John Lofgren Bootmaker Wayfarer Derby - Japanese Suede Saddle Brown | $760.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-wayfarer-derby-japanese-suede-saddle-brown) |
 
 ## Bakers Exclusive (Top 5)
 | Rank | Name | Price | Link |
@@ -57,17 +48,11 @@ Last updated: 2026-03-28 10:24:19 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1027.04 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $875.69 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1095.51 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1045.06 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1027.04 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
-
-## Miloh Shop (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
-| 1 | Tricker's - Black Box Calf Bourton Derby Shoe | $695.00 | [View](https://milohshop.com/products/trickers-bourton-black-box-calf-derby-brogue) |
-| 2 | Viberg - Black Calf Derby Shoe 2030 Last | $950.00 | [View](https://milohshop.com/products/viberg-black-calf-derby-shoe-2030-last) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1027.39 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $875.98 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1095.88 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1045.41 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1027.39 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Okayama Denim (Top 5)
 | Rank | Name | Price | Link |
@@ -121,9 +106,9 @@ Last updated: 2026-03-28 10:24:19 EDT
 |---|---|---|---|
 | 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 3 | Tankerpro 3.0 - 11 D - Ready To Ship! | $684.00 | [View](https://nicksboots.com/products/tankerpro-3-0-11-d-ready-to-ship) |
-| 4 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
-| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 3 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
+| 4 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 5 | Moderate Arch Lace Up 11 D - Ready To Ship! | $629.00 | [View](https://nicksboots.com/products/moderate-arch-lace-up-11-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
@@ -142,10 +127,6 @@ Last updated: 2026-03-28 10:24:19 EDT
 | 3 | WE-BRITTAN7710705 - Wesco Custom Boss - Roughout British Tan | $949.00 | [View](https://ironheartgermany.com/products/wesco-we-brittan7710705-wesco-custom-boss-roughout-british-tan) |
 | 4 | WE-BKBE1084014-NAT - Lace-To-Toe Custom JOBMASTER - Black/Natural | $899.00 | [View](https://ironheartgermany.com/products/wesco-we-bkbe1084014-nat-lace-to-toe-custom-jobmaster-black-natural) |
 | 5 | WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black | $989.00 | [View](https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black) |
-
-## Stag Provisions (Top 5)
-| Rank | Name | Price | Link |
-|---|---|---|---|
 
 ## Brick And Mortar (Top 5)
 | Rank | Name | Price | Link |
