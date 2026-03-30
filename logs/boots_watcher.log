@@ -2215,3 +2215,49 @@
 [2026-03-29 10:26:36 EDT] Posted NEW boots to Discord.
 [2026-03-29 10:26:36 EDT] State saved.
 [2026-03-29 10:26:36 EDT] Boots watcher completed.
+[2026-03-30 00:34:28 EDT] Boots watcher started.
+[2026-03-30 00:34:28 EDT] division_road JSON blocked; using HTML fallback.
+[2026-03-30 00:34:30 EDT] division_road HTML fallback returning 5 boots
+[2026-03-30 00:34:30 EDT] division_road_eu request failed: HTTPSConnectionPool(host='divisionroad.eu', port=443): Max retries exceeded with url: /collections/footwear/boots/products.json?limit=250&page=1 (Caused by NameResolutionError("HTTPSConnection(host='divisionroad.eu', port=443): Failed to resolve 'divisionroad.eu' ([Errno -2] Name or service not known)"))
+[2026-03-30 00:34:30 EDT] division_road_eu: scrape failed; preserving previous state.
+[2026-03-30 00:34:30 EDT] standard_and_strange: returning 0 boots
+[2026-03-30 00:34:31 EDT] rivet_and_hide request failed: 404 Client Error: Not Found for url: https://rivetandhide.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:31 EDT] rivet_and_hide: scrape failed; preserving previous state.
+[2026-03-30 00:34:31 EDT] franklin_and_poe request failed: 503 Server Error: Service Unavailable for url: https://franklinandpoe.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:31 EDT] franklin_and_poe: scrape failed; preserving previous state.
+[2026-03-30 00:34:31 EDT] bakers_exclusive request failed: 503 Server Error: Service Unavailable for url: https://bakershoe.com/collections/bakers-exclusive/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:31 EDT] bakers_exclusive: scrape failed; preserving previous state.
+[2026-03-30 00:34:33 EDT] blue_owl: returning 0 boots
+[2026-03-30 00:34:33 EDT] withered_fig request failed: 503 Server Error: Service Unavailable for url: https://www.witheredfig.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:33 EDT] withered_fig: scrape failed; preserving previous state.
+[2026-03-30 00:34:33 EDT] lost_and_found request failed: 503 Server Error: Service Unavailable for url: https://shoplostfound.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:33 EDT] lost_and_found: scrape failed; preserving previous state.
+[2026-03-30 00:34:33 EDT] brooklyn_clothing request failed: 503 Server Error: Service Unavailable for url: https://brooklynclothing.com/collections/boots/products.json?limit=250&page=1
+[2026-03-30 00:34:33 EDT] brooklyn_clothing: scrape failed; preserving previous state.
+[2026-03-30 00:34:34 EDT] haven request failed: 404 Client Error: Not Found for url: https://havenshop.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:34 EDT] haven: scrape failed; preserving previous state.
+[2026-03-30 00:34:35 EDT] miloh_shop: returning 2 boots
+[2026-03-30 00:34:35 EDT] okayama_denim request failed: 503 Server Error: Service Unavailable for url: https://www.okayamadenim.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:35 EDT] okayama_denim: scrape failed; preserving previous state.
+[2026-03-30 00:34:35 EDT] snake_oil_provisions: returning 5 boots
+[2026-03-30 00:34:36 EDT] mildblend: returning 5 boots
+[2026-03-30 00:34:38 EDT] corlection: returning 0 boots
+[2026-03-30 00:34:38 EDT] up_there_store request failed: 503 Server Error: Service Unavailable for url: https://uptherestore.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:38 EDT] up_there_store: scrape failed; preserving previous state.
+[2026-03-30 00:34:38 EDT] redcast_heritage: returning 5 boots
+[2026-03-30 00:34:39 EDT] east_west_apparel: returning 0 boots
+[2026-03-30 00:34:39 EDT] self_edge request failed: 403 Client Error: Forbidden for url: https://www.selfedge.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:39 EDT] self_edge: scrape failed; preserving previous state.
+[2026-03-30 00:34:40 EDT] nicks_ready_to_ship: returning 5 boots
+[2026-03-30 00:34:40 EDT] iron_heart_uk: returning 5 boots
+[2026-03-30 00:34:41 EDT] iron_heart_germany: returning 5 boots
+[2026-03-30 00:34:41 EDT] stag_provisions request failed: 503 Server Error: Service Unavailable for url: https://stagprovisions.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:41 EDT] stag_provisions: scrape failed; preserving previous state.
+[2026-03-30 00:34:43 EDT] brick_and_mortar: returning 0 boots
+[2026-03-30 00:34:43 EDT] ealdwine request failed: 404 Client Error: Not Found for url: https://www.ealdwineraleigh.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:43 EDT] ealdwine: scrape failed; preserving previous state.
+[2026-03-30 00:34:44 EDT] leffot request failed: 404 Client Error: Not Found for url: https://leffot.com/collections/boots/products.json?sort_by=created-descending&limit=250&page=1
+[2026-03-30 00:34:44 EDT] leffot: scrape failed; preserving previous state.
+[2026-03-30 00:34:44 EDT] README updated.
+[2026-03-30 00:34:44 EDT] State saved.
+[2026-03-30 00:34:44 EDT] Boots watcher completed.
