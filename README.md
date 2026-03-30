@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-30 00:34:28 EDT
+Last updated: 2026-03-30 10:56:49 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -14,15 +14,54 @@ Last updated: 2026-03-30 00:34:28 EDT
 | Rank | Name | Price | Link |
 |---|---|---|---|
 
+## Franklin And Poe (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | (Pre-Order FW26) John Lofgren Fieldmaster - Havana Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-havana-horween-shf-horsehide) |
+| 2 | (Pre-Order FW26) John Lofgren Fieldmaster - Black Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-black-horween-shf-horsehide) |
+| 3 | (Pre-Order FW26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
+| 4 | (Pre-Order FW26) John Lofgren Bootmaker Railmaster Engineer Boot - Shinki Hikaku Horsebutt Black | $1500.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-railmaster-engineer-boot-shinki-hikaku-horsebutt-black) |
+| 5 | (Pre-Order FW26) John Lofgren Bootmaker Wayfarer Derby - Japanese Suede Saddle Brown | $760.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-wayfarer-derby-japanese-suede-saddle-brown) |
+
+## Bakers Exclusive (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Stitchdown Cruiser - Navy Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-navy-horsehide) |
+| 2 | Brown Bison MP | $1034.95 | [View](https://bakershoe.com/products/brown-bison-mp) |
+| 3 | Jobmaster - Teak Leather | $799.95 | [View](https://bakershoe.com/products/jobmaster-teak-leather) |
+| 4 | Baker's British Tan Bounty Hunter | $749.95 | [View](https://bakershoe.com/products/bakers-stock-bounty-hunter-by-whites-boots) |
+| 5 | Stitchdown Cruiser - Brown Horsehide | $774.95 | [View](https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide) |
+
 ## Blue Owl (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
+
+## Withered Fig (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+
+## Lost And Found (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+
+## Brooklyn Clothing (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1025.66 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $874.51 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1094.04 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1043.65 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1025.66 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
 | 1 | Tricker's - Black Box Calf Bourton Derby Shoe | $695.00 | [View](https://milohshop.com/products/trickers-bourton-black-box-calf-derby-brogue) |
 | 2 | Viberg - Black Calf Derby Shoe 2030 Last | $950.00 | [View](https://milohshop.com/products/viberg-black-calf-derby-shoe-2030-last) |
+
+## Okayama Denim (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
 
 ## Snake Oil Provisions (Top 5)
 | Rank | Name | Price | Link |
@@ -45,6 +84,14 @@ Last updated: 2026-03-30 00:34:28 EDT
 ## Corlection (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
+
+## Up There Store (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
+| 1 | Service Boot 310 - Bracken Latigo Waxed Flesh | $2000.00 | [View](https://uptherestore.com/products/viberg-service-boot-310-bracken-latigo-waxed-flesh) |
+| 2 | Strathcona by UP THERE - Snuff Waxy Commander | $1905.00 | [View](https://uptherestore.com/products/strathcona-by-up-there-snuff-waxy-commander) |
+| 3 | Pachena Bay - Alpine Calf Malt | $2175.00 | [View](https://uptherestore.com/products/viberg-pachena-bay-alpine-calf-malt) |
+| 4 | Hiker - Alpine Calf Black | $2175.00 | [View](https://uptherestore.com/products/viberg-hiker-alpine-calf-black) |
 
 ## Redcast Heritage (Top 5)
 | Rank | Name | Price | Link |
@@ -85,6 +132,10 @@ Last updated: 2026-03-30 00:34:28 EDT
 | 3 | WE-BRITTAN7710705 - Wesco Custom Boss - Roughout British Tan | $949.00 | [View](https://ironheartgermany.com/products/wesco-we-brittan7710705-wesco-custom-boss-roughout-british-tan) |
 | 4 | WE-BKBE1084014-NAT - Lace-To-Toe Custom JOBMASTER - Black/Natural | $899.00 | [View](https://ironheartgermany.com/products/wesco-we-bkbe1084014-nat-lace-to-toe-custom-jobmaster-black-natural) |
 | 5 | WE-207700H-BLK - Wesco Custom Jobmaster Horsehide - Black | $989.00 | [View](https://ironheartgermany.com/products/wesco-we-207700h-blk-wesco-custom-jobmaster-horsehide-black) |
+
+## Stag Provisions (Top 5)
+| Rank | Name | Price | Link |
+|---|---|---|---|
 
 ## Brick And Mortar (Top 5)
 | Rank | Name | Price | Link |
