@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-30 10:56:49 EDT
+Last updated: 2026-03-31 00:25:16 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -13,6 +13,11 @@ Last updated: 2026-03-30 10:56:49 EDT
 ## Standard And Strange (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
+| 1 | [Pre-order for Early 2027] Railmaster Engineer Boots - Black Shinki Horsebutt | $750.00 | [View](https://standardandstrange.com/products/pre-order-for-early-2027-railmaster-engineer-boots-black-shinki-horsebutt) |
+| 2 | [Pre-order for Early Autumn 2026] Christmas 2026 Donkey Puncher Boots - Two-Tone Horween CXL | $530.00 | [View](https://standardandstrange.com/products/pre-order-for-early-autumn-2026-christmas-2026-donkey-puncher-boots-two-tone-horween-cxl) |
+| 3 | [Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl) |
+| 4 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Saddle Brown Suede | $380.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-saddle-brown-suede) |
+| 5 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Brown Shinki Horsehide | $395.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-brown-shinki-horsehide) |
 
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
@@ -47,11 +52,11 @@ Last updated: 2026-03-30 10:56:49 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1025.66 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $874.51 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1094.04 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1043.65 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1025.66 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1023.67 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $872.82 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1091.92 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1041.63 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1023.67 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
@@ -112,8 +117,8 @@ Last updated: 2026-03-30 10:56:49 EDT
 | 1 | Ridgeline Hiking Boot 10.5 D - Ready To Ship! | $594.00 | [View](https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship) |
 | 2 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 3 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 4 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
-| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 4 | Safety BuilderPro HD 11 D - Ready To Ship! | $714.00 | [View](https://nicksboots.com/products/safety-builderpro-hd-11-d-ready-to-ship) |
+| 5 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |

@@ -29,27 +29,27 @@
   "brooklyn_clothing": [
     {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
-      "price": "$1025.66",
+      "price": "$1023.67",
       "url": "https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black"
     },
     {
       "name": "LK-017 M-43 Service Shoes Horween CXL Natural  R/O",
-      "price": "$874.51",
+      "price": "$872.82",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural"
     },
     {
       "name": "LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black",
-      "price": "$1094.04",
+      "price": "$1091.92",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Natural",
-      "price": "$1043.65",
+      "price": "$1041.63",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Brown",
-      "price": "$1025.66",
+      "price": "$1023.67",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown"
     }
   ],
@@ -124,14 +124,14 @@
       "url": "https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship"
     },
     {
+      "name": "Safety BuilderPro HD 11 D - Ready To Ship!",
+      "price": "$714.00",
+      "url": "https://nicksboots.com/products/safety-builderpro-hd-11-d-ready-to-ship"
+    },
+    {
       "name": "Safety BuilderPro\u00ae 11 D - Ready To Ship!",
       "price": "$639.00",
       "url": "https://nicksboots.com/products/safety-builderpro\u00ae-11-d-ready-to-ship"
-    },
-    {
-      "name": "Ivan 10.5 D - Ready To Ship!",
-      "price": "$554.00",
-      "url": "https://nicksboots.com/products/ivan-10-5-d-ready-to-ship"
     }
   ],
   "bakers_exclusive": [
@@ -161,7 +161,33 @@
       "url": "https://bakershoe.com/products/stitchdown-cruiser-brown-horween-horsehide"
     }
   ],
-  "standard_and_strange": [],
+  "standard_and_strange": [
+    {
+      "name": "[Pre-order for Early 2027] Railmaster Engineer Boots - Black Shinki Horsebutt",
+      "price": "$750.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-early-2027-railmaster-engineer-boots-black-shinki-horsebutt"
+    },
+    {
+      "name": "[Pre-order for Early Autumn 2026] Christmas 2026 Donkey Puncher Boots - Two-Tone Horween CXL",
+      "price": "$530.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-early-autumn-2026-christmas-2026-donkey-puncher-boots-two-tone-horween-cxl"
+    },
+    {
+      "name": "[Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL",
+      "price": "$580.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl"
+    },
+    {
+      "name": "[Pre-order for Winter 2026] Wayfarer Derby Shoes - Saddle Brown Suede",
+      "price": "$380.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-saddle-brown-suede"
+    },
+    {
+      "name": "[Pre-order for Winter 2026] Wayfarer Derby Shoes - Brown Shinki Horsehide",
+      "price": "$395.00",
+      "url": "https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-brown-shinki-horsehide"
+    }
+  ],
   "franklin_and_poe": [
     {
       "name": "(Pre-Order FW26) John Lofgren Fieldmaster - Havana Horween SHF Horsehide",
