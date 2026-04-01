@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-03-31 10:55:00 EDT
+Last updated: 2026-04-01 00:37:20 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -117,8 +117,8 @@ Last updated: 2026-03-31 10:55:00 EDT
 | 1 | Ridgeline Hiking Boot 10.5 D - Ready To Ship! | $594.00 | [View](https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship) |
 | 2 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 3 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 4 | Safety BuilderPro HD 11 D - Ready To Ship! | $714.00 | [View](https://nicksboots.com/products/safety-builderpro-hd-11-d-ready-to-ship) |
-| 5 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
+| 4 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
+| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
