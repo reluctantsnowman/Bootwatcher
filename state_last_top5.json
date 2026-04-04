@@ -1,6 +1,11 @@
 {
   "division_road": [
     {
+      "name": "Everyday Man Boot - HNW - Dr. Sole Urban Explorer - Horween Italian Brown Cypress",
+      "price": "",
+      "url": "https://divisionroadinc.com/products/nicks-handmade-boots-everyday-man-boot-hnw-dr-sole-urban-explorer-horween-italian-brown-cypress"
+    },
+    {
       "name": "Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio",
       "price": "",
       "url": "https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio"
@@ -19,37 +24,32 @@
       "name": "Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton",
       "price": "",
       "url": "https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton"
-    },
-    {
-      "name": "Super Monkey Boot - 5402 - Vibram Morflex - Tempesti Cuoio & Ambra Elbamatt",
-      "price": "",
-      "url": "https://divisionroadinc.com/products/trickers-super-monkey-boot-5402-vibram-morflex-tempesti-cuoio-ambra-elbamatt"
     }
   ],
   "brooklyn_clothing": [
     {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
-      "price": "$1023.93",
+      "price": "$1022.69",
       "url": "https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black"
     },
     {
       "name": "LK-017 M-43 Service Shoes Horween CXL Natural  R/O",
-      "price": "$873.04",
+      "price": "$871.98",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural"
     },
     {
       "name": "LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black",
-      "price": "$1092.20",
+      "price": "$1090.87",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Natural",
-      "price": "$1041.90",
+      "price": "$1040.63",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Brown",
-      "price": "$1023.93",
+      "price": "$1022.69",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown"
     }
   ],

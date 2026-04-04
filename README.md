@@ -1,14 +1,14 @@
 # Boots Watcher
-Last updated: 2026-04-03 10:36:43 EDT
+Last updated: 2026-04-04 00:05:16 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio |  | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio) |
-| 2 | Churchill Boot - 4497 - Commando - Badalassi Tabacco Carlo Wax |  | [View](https://divisionroadinc.com/products/trickers-churchill-boot-4497-commando-badalassi-tabacco-carlo-wax) |
-| 3 | Stow Boot - 4497 - Dainite - Badalassi Cognac Carlo Wax |  | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-dainite-badalassi-cognac-carlo-wax) |
-| 4 | Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton |  | [View](https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton) |
-| 5 | Super Monkey Boot - 5402 - Vibram Morflex - Tempesti Cuoio & Ambra Elbamatt |  | [View](https://divisionroadinc.com/products/trickers-super-monkey-boot-5402-vibram-morflex-tempesti-cuoio-ambra-elbamatt) |
+| 1 | Everyday Man Boot - HNW - Dr. Sole Urban Explorer - Horween Italian Brown Cypress |  | [View](https://divisionroadinc.com/products/nicks-handmade-boots-everyday-man-boot-hnw-dr-sole-urban-explorer-horween-italian-brown-cypress) |
+| 2 | Stow Boot - 4497 - Leather - Tempesti Ambra Elbamatt Liscio |  | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-leather-tempesti-ambra-elbamatt-liscio) |
+| 3 | Churchill Boot - 4497 - Commando - Badalassi Tabacco Carlo Wax |  | [View](https://divisionroadinc.com/products/trickers-churchill-boot-4497-commando-badalassi-tabacco-carlo-wax) |
+| 4 | Stow Boot - 4497 - Dainite - Badalassi Cognac Carlo Wax |  | [View](https://divisionroadinc.com/products/trickers-stow-boot-4497-dainite-badalassi-cognac-carlo-wax) |
+| 5 | Western Rockabilly Boot - 11067 - Dr. Sole Split Supergrip - Horween Cognac Shackleton |  | [View](https://divisionroadinc.com/products/nicks-handmade-boots-western-rockabilly-boot-11067-dr-sole-split-supergrip-horween-cognac-shackleton) |
 
 ## Standard And Strange (Top 5)
 | Rank | Name | Price | Link |
@@ -52,11 +52,11 @@ Last updated: 2026-04-03 10:36:43 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1023.93 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $873.04 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1092.20 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1041.90 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1023.93 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1022.69 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $871.98 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1090.87 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1040.63 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1022.69 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
