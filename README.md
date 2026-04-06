@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-04-06 00:33:21 EDT
+Last updated: 2026-04-06 10:40:12 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -13,11 +13,11 @@ Last updated: 2026-04-06 00:33:21 EDT
 ## Standard And Strange (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | [Pre-order for Early 2027] Railmaster Engineer Boots - Black Shinki Horsebutt | $750.00 | [View](https://standardandstrange.com/products/pre-order-for-early-2027-railmaster-engineer-boots-black-shinki-horsebutt) |
-| 2 | [Pre-order for Early Autumn 2026] Christmas 2026 Donkey Puncher Boots - Two-Tone Horween CXL | $530.00 | [View](https://standardandstrange.com/products/pre-order-for-early-autumn-2026-christmas-2026-donkey-puncher-boots-two-tone-horween-cxl) |
-| 3 | [Pre-order for Winter 2026] Christmas 2026 Wabash Engineer Boots - Two-Tone Horween CXL | $580.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-christmas-2026-wabash-engineer-boots-two-tone-horween-cxl) |
-| 4 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Saddle Brown Suede | $380.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-saddle-brown-suede) |
-| 5 | [Pre-order for Winter 2026] Wayfarer Derby Shoes - Brown Shinki Horsehide | $395.00 | [View](https://standardandstrange.com/products/pre-order-for-winter-2026-wayfarer-derby-shoes-brown-shinki-horsehide) |
+| 1 | Donkey Puncher Boots - Natural CXL | $1055.00 | [View](https://standardandstrange.com/products/donkey-puncher-boots-natural-cxl-2) |
+| 2 | Combat Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/combat-boots-black-ops-shinki-shell-cordovan) |
+| 3 | Monkey Boots - Black Ops Shinki Shell Cordovan | $1650.00 | [View](https://standardandstrange.com/products/monkey-boots-black-ops-shinki-shell-cordovan) |
+| 4 | Montgomery Boots - Havana Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-havana-horween-leather-shf) |
+| 5 | Montgomery Boots - Black Horween Leather SHF | $1055.00 | [View](https://standardandstrange.com/products/montgomery-boots-black-horween-leather-shf) |
 
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
