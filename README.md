@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-04-08 11:01:49 EDT
+Last updated: 2026-04-09 00:22:17 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -22,11 +22,11 @@ Last updated: 2026-04-08 11:01:49 EDT
 ## Franklin And Poe (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | (Pre-Order FW26) John Lofgren Fieldmaster - Havana Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-havana-horween-shf-horsehide) |
-| 2 | (Pre-Order FW26) John Lofgren Fieldmaster - Black Horween SHF Horsehide | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-fieldmaster-black-horween-shf-horsehide) |
-| 3 | (Pre-Order FW26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
-| 4 | (Pre-Order FW26) John Lofgren Bootmaker Railmaster Engineer Boot - Shinki Hikaku Horsebutt Black | $1500.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-railmaster-engineer-boot-shinki-hikaku-horsebutt-black) |
-| 5 | (Pre-Order FW26) John Lofgren Bootmaker Wayfarer Derby - Japanese Suede Saddle Brown | $760.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-wayfarer-derby-japanese-suede-saddle-brown) |
+| 1 | (Pre-Order FW26) John Lofgren M-43 Service Shoes - Horween CXL Natural Roughout | $900.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-m-43-service-shoes-horween-cxl-natural-roughout) |
+| 2 | (Pre-Order FW26) John Lofgren Bootmaker Railmaster Engineer Boot - Shinki Hikaku Horsebutt Black | $1500.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-bootmaker-railmaster-engineer-boot-shinki-hikaku-horsebutt-black) |
+| 3 | (Pre-Order FW26) John Lofgren Wabash Engineer Boots - Christmas 2026 Limited Edition - Horween CXL Olive/Natural Roughout | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-wabash-engineer-boots-christmas-2026-limited-edition-horween-cxl-olive-natural-roughout) |
+| 4 | (Pre-Order FW26) John Lofgren Wabash Engineer Boots - Horween CXL Natural | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-wabash-engineer-boots-horween-cxl-natural) |
+| 5 | (Pre-Order FW26) John Lofgren Wabash Engineer Boots - Horween CXL Black | $1155.00 | [View](https://franklinandpoe.com/products/pre-order-fw26-john-lofgren-wabash-engineer-boots-horween-cxl-black) |
 
 ## Bakers Exclusive (Top 5)
 | Rank | Name | Price | Link |
@@ -52,11 +52,11 @@ Last updated: 2026-04-08 11:01:49 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1026.78 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $875.46 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1095.23 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1044.79 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1026.78 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1029.08 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $877.43 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1097.68 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1047.13 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1029.08 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
@@ -117,8 +117,8 @@ Last updated: 2026-04-08 11:01:49 EDT
 | 1 | Ridgeline Hiking Boot 10.5 D - Ready To Ship! | $594.00 | [View](https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship) |
 | 2 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
 | 3 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 4 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
-| 5 | Ivan 10.5 D - Ready To Ship! | $554.00 | [View](https://nicksboots.com/products/ivan-10-5-d-ready-to-ship) |
+| 4 | Wickett & Craig Falcon 10.5 D - Ready To Ship! | $764.00 | [View](https://nicksboots.com/products/wickett-craig-falcon-10-5-d-ready-to-ship) |
+| 5 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |
