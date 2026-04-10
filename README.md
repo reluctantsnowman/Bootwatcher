@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-04-09 11:14:08 EDT
+Last updated: 2026-04-10 00:36:01 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -48,15 +48,20 @@ Last updated: 2026-04-09 11:14:08 EDT
 ## Lost And Found (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
+| 1 | John Lofgren Bootmaker US Navy N-1 Field Shoes Boondockers CXL Natural Roughout | $1215.00 | [View](https://shoplostfound.com/products/john-lofgren-bootmaker-us-navy-n-1-field-shoes-boondockers-cxl-natural-roughout) |
+| 2 | Old Joe 'The Engineer' Artisan Leather Engineer Boots Black Brown Horse Butt | $1225.00 | [View](https://shoplostfound.com/products/old-joe-the-engineer-artisan-leather-engineer-boots-black-brown-horse-butt) |
+| 3 | Old Joe 'The Welder' Stunning Leather Monkey Boots Black Horse Butt | $1175.00 | [View](https://shoplostfound.com/products/old-joe-the-welder-stunning-leather-monkey-boots-black-horsebutt) |
+| 4 | The Real McCoy's MA22104 Field Shoes, N-1 Brown | $2100.00 | [View](https://shoplostfound.com/products/the-real-mccoys-ma22104-field-shoes-n-1-brown) |
+| 5 | Viberg Service Boot 1035 Aged Bark Chamois Roughout | $1395.00 | [View](https://shoplostfound.com/products/viberg-service-boot-1035-aged-bark-chamois-roughout) |
 
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1029.08 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $877.43 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1097.68 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1047.13 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1029.08 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1030.82 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $878.91 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1099.54 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1048.91 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1030.82 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
@@ -114,9 +119,9 @@ Last updated: 2026-04-09 11:14:08 EDT
 ## Nicks Ready To Ship (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Ridgeline Hiking Boot 10.5 D - Ready To Ship! | $594.00 | [View](https://nicksboots.com/products/ridgeline-hiking-boot-10-5-d-ready-to-ship) |
-| 2 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
-| 3 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
+| 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
+| 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
+| 3 | FlexWorkPro 11 D - Seconds! | $513.00 | [View](https://nicksboots.com/products/flexworkpro-11-d-seconds) |
 | 4 | Wickett & Craig Falcon 10.5 D - Ready To Ship! | $764.00 | [View](https://nicksboots.com/products/wickett-craig-falcon-10-5-d-ready-to-ship) |
 | 5 | Safety BuilderPro® 11 D - Ready To Ship! | $639.00 | [View](https://nicksboots.com/products/safety-builderpro®-11-d-ready-to-ship) |
 
