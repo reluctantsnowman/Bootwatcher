@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-04-13 00:47:51 EDT
+Last updated: 2026-04-13 11:08:34 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -107,7 +107,7 @@ Last updated: 2026-04-13 00:47:51 EDT
 | Rank | Name | Price | Link |
 |---|---|---|---|
 | 1 | Buzz Rickson's BR02800 M-43 Service Shoes Camel | $870.00 | [View](https://redcastheritage.com/products/buzz-ricksons-br02800-m-43-service-shoes-camel) |
-| 2 | Viberg Service Navvy Boot 1040 Natural Cypress | $1080.00 | [View](https://redcastheritage.com/products/viberg-service-boot-2045-bct-natural-cypress) |
+| 2 | Viberg Service Navvy Boot 1940 Natural Cypress | $1080.00 | [View](https://redcastheritage.com/products/viberg-service-navvy-boot-1940-natural-cypress) |
 | 3 | Double Helix Matrix 5.0" Boots 901 Chocolate | $760.00 | [View](https://redcastheritage.com/products/double-helix-matrix-5-0-boots-901-chocolate) |
 | 4 | John Lofgren Chapman Boots Horween CXL Choco | $920.00 | [View](https://redcastheritage.com/products/john-lofgren-chapman-boots-horween-cxl-choco) |
 | 5 | John Lofgren Combat Boots Horween Leather CXL Black | $920.00 | [View](https://redcastheritage.com/products/john-lofgren-combat-boots-horween-leather-cxl-black) |
