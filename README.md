@@ -1,5 +1,5 @@
 # Boots Watcher
-Last updated: 2026-04-15 10:59:46 EDT
+Last updated: 2026-04-16 00:41:30 EDT
 
 ## Division Road (Top 5)
 | Rank | Name | Price | Link |
@@ -57,11 +57,11 @@ Last updated: 2026-04-15 10:59:46 EDT
 ## Brooklyn Clothing (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1035.46 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
-| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $882.87 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
-| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1104.49 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
-| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1053.63 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
-| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1035.46 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
+| 1 | Service Boot 2040 Horween Chromexcel Black Teacore | $1037.06 | [View](https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black) |
+| 2 | LK-017 M-43 Service Shoes Horween CXL Natural  R/O | $884.23 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural) |
+| 3 | LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black | $1106.19 | [View](https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black) |
+| 4 | Service Boot Core 1035 Horween Chromexcel Natural | $1055.25 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural) |
+| 5 | Service Boot Core 1035 Horween Chromexcel Brown | $1037.06 | [View](https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown) |
 
 ## Miloh Shop (Top 5)
 | Rank | Name | Price | Link |
@@ -119,11 +119,11 @@ Last updated: 2026-04-15 10:59:46 EDT
 ## Nicks Ready To Ship (Top 5)
 | Rank | Name | Price | Link |
 |---|---|---|---|
-| 1 | FireTrooper® 10.5 D - Ready To Ship! | $619.00 | [View](https://nicksboots.com/products/firetrooper®-10-5-d-ready-to-ship) |
-| 2 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
-| 3 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
-| 4 | FlexWorkPro 11 D - Seconds! | $513.00 | [View](https://nicksboots.com/products/flexworkpro-11-d-seconds) |
-| 5 | Hot Shot® Classic Arch - NFPA 10.5 D - Ready To Ship! | $624.00 | [View](https://nicksboots.com/products/hot-shot®-classic-arch-nfpa-10-5-d-ready-to-ship) |
+| 1 | Heritage Falcon 11 D - Ready To Ship! | $552.00 | [View](https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship) |
+| 2 | Strider - Zero Drop 11 D - Ready To Ship! | $520.00 | [View](https://nicksboots.com/products/strider-zero-drop-11-d-ready-to-ship) |
+| 3 | FlexWorkPro 11 D - Seconds! | $513.00 | [View](https://nicksboots.com/products/flexworkpro-11-d-seconds) |
+| 4 | DeltaArch Aldert 10.5 D - Ready To Ship! | $624.00 | [View](https://nicksboots.com/products/aldert-10-5-d-ready-to-ship-1) |
+| 5 | Safety BuilderPro HD 11 D - Seconds! | $692.00 | [View](https://nicksboots.com/products/builderpro-hd-11-d-seconds-copy) |
 
 ## Iron Heart Uk (Top 5)
 | Rank | Name | Price | Link |

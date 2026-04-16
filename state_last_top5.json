@@ -29,27 +29,27 @@
   "brooklyn_clothing": [
     {
       "name": "Service Boot 2040 Horween Chromexcel Black Teacore",
-      "price": "$1035.46",
+      "price": "$1037.06",
       "url": "https://brooklynclothing.com/products/service-boot-2040-bct-teacore-chromecel-black"
     },
     {
       "name": "LK-017 M-43 Service Shoes Horween CXL Natural  R/O",
-      "price": "$882.87",
+      "price": "$884.23",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m-43-service-shoes-horween-leather-cxl-ro-natural"
     },
     {
       "name": "LK-017 M-43 Service Shoes Shinki Hikaku Horsebutt Black",
-      "price": "$1104.49",
+      "price": "$1106.19",
       "url": "https://brooklynclothing.com/products/ss24-50-deposit-m43-service-shoes-shinki-hikaku-horse-butt-black"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Natural",
-      "price": "$1053.63",
+      "price": "$1055.25",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-natural"
     },
     {
       "name": "Service Boot Core 1035 Horween Chromexcel Brown",
-      "price": "$1035.46",
+      "price": "$1037.06",
       "url": "https://brooklynclothing.com/products/service-boot-1035-pct-chromexcel-brown"
     }
   ],
@@ -109,11 +109,6 @@
   ],
   "nicks_ready_to_ship": [
     {
-      "name": "FireTrooper\u00ae 10.5 D - Ready To Ship!",
-      "price": "$619.00",
-      "url": "https://nicksboots.com/products/firetrooper\u00ae-10-5-d-ready-to-ship"
-    },
-    {
       "name": "Heritage Falcon 11 D - Ready To Ship!",
       "price": "$552.00",
       "url": "https://nicksboots.com/products/heritage-falcon-11-d-ready-to-ship"
@@ -129,9 +124,14 @@
       "url": "https://nicksboots.com/products/flexworkpro-11-d-seconds"
     },
     {
-      "name": "Hot Shot\u00ae Classic Arch - NFPA 10.5 D - Ready To Ship!",
+      "name": "DeltaArch Aldert 10.5 D - Ready To Ship!",
       "price": "$624.00",
-      "url": "https://nicksboots.com/products/hot-shot\u00ae-classic-arch-nfpa-10-5-d-ready-to-ship"
+      "url": "https://nicksboots.com/products/aldert-10-5-d-ready-to-ship-1"
+    },
+    {
+      "name": "Safety BuilderPro HD 11 D - Seconds!",
+      "price": "$692.00",
+      "url": "https://nicksboots.com/products/builderpro-hd-11-d-seconds-copy"
     }
   ],
   "bakers_exclusive": [
